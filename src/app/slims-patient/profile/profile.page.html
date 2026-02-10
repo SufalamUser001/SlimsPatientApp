@@ -1,0 +1,266 @@
+<ion-content class="ion-padding">
+    <div class="card border-card p-3">
+        <div class="d-flex justify-content-start align-items-center mb-4">
+            <div class="w-20 h-20 rounded-circle bg-blue-100">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-user w-10 h-10 text-blue-600"
+                    data-fg-cnbm6="3.29:42.1820:/src/app/pages/Profile.tsx:219:15:6639:44:e:User::::::wpV">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <div class="ms-3">
+                <div class="text-2xl text-gray-900 font-700">
+                    {{ labCartPatientObj.PatientName }}
+                </div>
+                @if(labCartPatientObj.Mobile){
+                <div class="text-gray-600 font-500">
+                    <ion-icon name="call-outline"></ion-icon>
+                    {{ labCartPatientObj.Mobile }}
+                </div>
+                }
+                @if(labCartPatientObj.EmailId){
+                <div class="text-gray-600 font-500">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    {{ labCartPatientObj.EmailId }}
+                </div>
+                }
+
+            </div>
+        </div>
+        <div class="bg-blue-50 border-blue-200 rounded-2 px-4 py-3 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <ion-icon name="card-outline"></ion-icon>
+                <div class="ms-2 font-600">
+                    <p class="text-xs text-blue-600 m-0">Membership ID</p>
+                    <p class="text-sm text-blue-900 m-0">{{ labCartPatientObj.MembershipId }}</p>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <ion-icon name="person-outline"></ion-icon>
+                <div class="ms-2 font-600">
+                    <p class="text-xs text-blue-600 m-0">Patient ID</p>
+                    <p class="text-sm text-blue-900 m-0">{{ labCartPatientObj.PatientId }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card border-card p-3">
+        <ion-segment value="default" [scrollable]="true" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="default" content-id="default">
+                <ion-label>My Profile</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="members" content-id="members">
+                <ion-label>Family Members</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="address" content-id="address">
+                <ion-label>Addresses</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="security" content-id="security">
+                <ion-label>Security</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+        <ion-segment-view>
+            <ion-segment-content id="default" class="mt-2">
+                <ion-row>
+                    <ion-col size="12">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h2 class="text-xl font-700 text-gray-900">Personal Information</h2>
+                            @if(!IsPInfoEdit){
+                                <ion-button color="primary" size="small" fill="clear" (click)="onPEEdit()">
+                                    <ion-icon name="pencil-outline" ></ion-icon>
+                                </ion-button>
+                                }
+                        </div>
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-select name="RegistrationBranchId1" [(ngModel)]="labCartPatientObj.TitleId" required="true"
+                            interface="modal" mode="md" (ionChange)="onTitleChange()" labelPlacement="stacked" [disabled]="!IsPInfoEdit"
+                            fill="outline" placeholder="Select Title">
+                            @for (item of titleList; track item) {
+                            <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                            }
+                        </ion-select>
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-input label="First Name" name="firstname" mode="md" labelPlacement="stacked" fill="outline" [disabled]="!IsPInfoEdit"
+                            type="text" placeholder="First Name" [(ngModel)]="labCartPatientObj.FirstName"> </ion-input>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-input label="Middle Name" name="middleName" placeholder="Middle Name" [disabled]="!IsPInfoEdit"
+                            labelPlacement="stacked" fill="outline" type="text" mode="md"
+                            [(ngModel)]="labCartPatientObj.MiddleName"> </ion-input>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-input label="Last Name" name="lastname" mode="md" labelPlacement="stacked" fill="outline" [disabled]="!IsPInfoEdit"
+                            type="text" placeholder="Last Name" [(ngModel)]="labCartPatientObj.LastName"> </ion-input>
+                    </ion-col>
+
+                    <ion-col size="6">
+                        <ion-label>Birth Date</ion-label>
+                        @if (afterInit()) {
+                        <ion-datetime-button datetime="birthdate1" [disabled]="!IsPInfoEdit"></ion-datetime-button>
+                        }
+                    </ion-col>
+                    <ion-col size="6" class="d-flex ">
+                        <ion-input label="Year" name="AgeYYY" placeholder="Year" 
+                            labelPlacement="stacked" fill="outline" type="text" mode="md" max="150" min="0" maxlength="3" [disabled]="!IsPInfoEdit"
+                            [(ngModel)]="labCartPatientObj.AgeYYY" > </ion-input>
+                        <ion-input label="Month" name="AgeMM" placeholder="Month"
+                            labelPlacement="stacked" fill="outline" type="text" mode="md" max="12" min="0" maxlength="2" [disabled]="!IsPInfoEdit"
+                            [(ngModel)]="labCartPatientObj.AgeMM"> </ion-input>
+                        <ion-input label="Days" name="AgeDD" placeholder="Days"
+                            labelPlacement="stacked" fill="outline" type="text" mode="md"  max="31" min="0" maxlength="2" [disabled]="!IsPInfoEdit"
+                            [(ngModel)]="labCartPatientObj.AgeDD"> </ion-input>
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-select name="gender" [(ngModel)]="labCartPatientObj.Gender" required="true" [disabled]="!IsPInfoEdit"
+                        interface="modal" mode="md"  labelPlacement="stacked"
+                        fill="outline" placeholder="Select Gender">
+                        @for (item of genderList; track item) {
+                        <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                        }
+                    </ion-select>
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-input label="EmailId" name="emailid" mode="md" labelPlacement="stacked" fill="outline" [disabled]="!IsPInfoEdit"
+                        type="email" placeholder="EmailId" [(ngModel)]="labCartPatientObj.EmailId"> </ion-input>
+                    </ion-col>
+                    @if(IsPInfoEdit){
+                    <ion-col size="6">
+                        <ion-button fill="outline" expand="block" [size]="'medium'"  (click)="onMemberCancel()">
+                         Cancel
+                          </ion-button>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-button fill="solid" expand="block" [size]="'medium'" color="primary" (click)="onSaveClick()">
+                             Save changes
+                          </ion-button>
+                    </ion-col>
+                }
+                </ion-row>
+
+                <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                        <ion-datetime id="birthdate1" presentation="date" [showDefaultButtons]="true" (ionChange)="onBirthdateChange()"
+                            [max]="searchMaxDate" [formatOptions]="customFormatOptions" name="birthdate1"
+                            [(ngModel)]="labCartPatientObj.BirthDate" [preferWheel]="true">
+                        </ion-datetime>
+                    </ng-template>
+                </ion-modal>
+            </ion-segment-content>
+            <ion-segment-content id="members">
+                <ion-row class="w-100">
+                    <ion-col size="12">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h2 class="text-xl font-700 text-gray-900">Family members</h2>
+                            @if(!IsPInfoEdit){
+                                <ion-button color="primary" size="small" fill="clear" (click)="onAddMemberAddClick()">
+                                    <ion-icon name="add-outline" ></ion-icon>
+                                </ion-button>
+                                }
+
+                        </div>
+                    </ion-col>
+
+                    @if(this.labCartPatientObj.MemberList && this.labCartPatientObj.MemberList.length > 1){
+                        @for (data of this.labCartPatientObj.MemberList; track $index;let i = $index) {
+
+                        }
+                    }@else{
+                        <div class="text-center py-20 text-gray-500 w-100">
+                            <div class="mx-auto mb-4">
+                                <ion-icon name="people-outline" class="font-500 icon-big"></ion-icon>
+
+                            </div>
+                            <p class="text-base font-600">No family members added yet</p>
+                            <p class="text-sm mt-2 font-500">Add family members to book tests for them</p>
+                        </div>
+                    }
+               </ion-row>
+            </ion-segment-content>
+            <ion-segment-content id="address">
+                <ion-row class="w-100">
+                    <ion-col size="12">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h2 class="text-xl font-700 text-gray-900">Family members</h2>
+                            @if(!IsPInfoEdit){
+                                <ion-button color="primary"  size="small" fill="clear" (click)="onAddressAddClick()">
+                                    <ion-icon name="add-outline" ></ion-icon>
+                                </ion-button>
+                                }
+
+                        </div>
+                    </ion-col>
+
+                    @if(this.labCartPatientObj.MemberAddressList && this.labCartPatientObj.MemberAddressList.length > 0){
+                        @for (data of this.labCartPatientObj.MemberAddressList; track $index;let i = $index) {
+
+                        }
+                    }@else{
+                        <div class="text-center py-20 text-gray-500 w-100 ">
+                            <div class="mx-auto mb-4">
+                                <ion-icon name="location-outline" class="font-500 icon-big"></ion-icon>
+
+                            </div>
+                            <p class="text-base font-600 ">No addresses saved yet</p>
+                            <p class="text-sm mt-2 font-500">Add an address for order delivery</p>
+                        </div>
+                    }
+               </ion-row>
+           
+
+             
+            </ion-segment-content>
+            <ion-segment-content id="security">
+                <ion-row>
+                    <ion-col size="12">
+                        <div class="d-flex justify-content-between mb-3">
+                            @if(isPasswordAvailable){
+                            <h2 class="text-xl font-700 text-gray-900">
+                                Change Password
+                                
+                            </h2>
+                        }@else {
+                            <h2 class="text-xl font-700 text-gray-900">
+                                Set Password
+                                
+                            </h2>
+                           
+                        }
+                        </div>
+                    </ion-col>
+                    @if(isPasswordAvailable){
+                        <ion-col size="12">
+                            <ion-input label="Current Password" name="password" mode="md" labelPlacement="stacked" fill="outline"
+                                type="text" placeholder=" " [(ngModel)]="changePasswordObj.CurrentPassword"> </ion-input>
+                        </ion-col>
+                    }
+                    <ion-col size="12">
+                        <ion-input label="New Password" name="password" mode="md" labelPlacement="stacked" fill="outline"
+                            type="text" placeholder=" " [(ngModel)]="changePasswordObj.NewPassword"> </ion-input>
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-input label="Confirm Password" name="password" mode="md" labelPlacement="stacked" fill="outline"
+                            type="text" placeholder=" " [(ngModel)]="changePasswordObj.ConfirmPassword"> </ion-input>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-button fill="outline" expand="block" [size]="'medium'"  (click)="onchangePasswordCancel()">
+                         Cancel
+                          </ion-button>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-button fill="solid" expand="block" [size]="'medium'" color="primary" (click)="onChangePasswordFormSubmit()">
+                             Save changes
+                          </ion-button>
+                    </ion-col>
+               </ion-row>
+            </ion-segment-content>
+
+        </ion-segment-view>
+    </div>
+
+
+</ion-content>

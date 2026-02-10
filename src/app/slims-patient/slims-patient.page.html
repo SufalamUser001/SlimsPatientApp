@@ -1,0 +1,80 @@
+
+
+
+
+  <ion-modal [initialBreakpoint]="1" [breakpoints]="[0, 1]" [keepContentsMounted]="true" #optionsModal>
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>More Options</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeOptionsModal()" >
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content scrollY="false">
+        <div class="menu-modal-block">
+          <ion-list [inset]="true" lines="none">
+            <ion-item>
+  
+              <ion-button fill="clear" size="large"> <ion-icon slot="start" name="location-outline"
+                  color="success"></ion-icon><span class="text-gray-600"> Nearby Labs</span></ion-button>
+            </ion-item>
+            <ion-item>
+  
+              <ion-button fill="clear" size="large"><ion-icon slot="start" name="information-circle-outline"
+                  color="medium"></ion-icon><span class="text-gray-600">About Us</span></ion-button>
+            </ion-item>
+            <ion-item>
+  
+              <ion-button fill="clear" size="large"> <ion-icon slot="start" name="call-outline"
+                  color="primary"></ion-icon><span class="text-gray-600">Contact Us</span></ion-button>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+<ion-tabs>
+  <ion-header mode="ios">
+  <ion-toolbar mode="ios">
+     
+    @if(isDisplayBackButton){
+
+      <ion-buttons slot="start">
+        <ion-button fill="clear" (click)="onBackClick()" > <ion-icon aria-hidden="true" name="chevron-back-outline" slot="end" ></ion-icon> </ion-button>
+      </ion-buttons> 
+    }
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="oncartClick()" > <ion-icon aria-hidden="true" color="primary" name="cart-outline" slot="end" ></ion-icon> </ion-button>
+    </ion-buttons> 
+  </ion-toolbar>
+</ion-header>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" href="/lims-patient/home">
+      <ion-icon aria-hidden="true" name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="orders" href="/lims-patient/orders">
+      <ion-icon aria-hidden="true" name="document-text-outline"></ion-icon>
+      <ion-label>My Orders</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="profile" href="/lims-patient/profile">
+      <ion-icon aria-hidden="true" name="person-outline"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+    <ion-tab-button (click)="openOptionsModal()">
+      <ion-icon aria-hidden="true" name="menu-outline"></ion-icon>
+      <ion-label>More</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+
+
+
+
+

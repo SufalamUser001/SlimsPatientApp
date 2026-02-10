@@ -1,0 +1,196 @@
+
+
+    <ion-content class="ion-padding" mode="ios">
+        <ion-toolbar mode="ios">
+    
+        <ion-searchbar [(ngModel)]="searchKeyword" (ionInput)="FilterRegistrationList()" show-clear-button="always"
+          cancel-button-text="Cancel" placeholder="Search Here..." [debounce]="1000"
+          (ionCancel)="onSearchCancelClick()" (ionClear)="onSearchCancelClick()"></ion-searchbar>
+        <ion-buttons slot="end" class="ion-align-self-center">
+          <!-- <ion-button type="button" fill="clear" data-bs-toggle="collapse" data-bs-target="#registrationCollapse"
+            aria-expanded="false" aria-controls="registrationCollapse">
+            <ion-icon aria-hidden="true" name="funnel-outline" slot="start" style="font-size:17px;"></ion-icon> <span
+              style="color: rgb(97, 97, 97);font-weight: 600;"> Filters </span>
+          </ion-button> -->
+          <ion-datetime-button datetime="commonDate1"></ion-datetime-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <div class="collapse " id="registrationCollapse">
+      <div class="card border-card p-2 mb-0">
+    
+        <!-- <ion-toolbar mode="ios" class="ion-no-padding" style="--background: white;"> -->
+    
+        <ion-row>
+          @if(this.afterInit()){
+    
+          <ion-col size="4">
+            <ion-datetime-button datetime="commonDate1"></ion-datetime-button>
+            <!-- <ion-datetime-button datetime="registrationToDate1"></ion-datetime-button> -->
+          </ion-col>
+    
+  
+          }
+      
+        </ion-row>
+    
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime  id="commonDate1"  presentation="month-year" [showDefaultButtons]="true" [max]="searchMaxDate" [formatOptions]="customFormatOptions"
+              name="registrationDateSearch1" [(ngModel)]="searchObj.RegistrationFromDate" [preferWheel]="true" (ionChange)="onSearchClick()">
+            </ion-datetime>
+          </ng-template>
+        </ion-modal>
+
+    
+        </div>
+        </div>
+    
+        @if(filterRegistrationDetails && filterRegistrationDetails.length > 0){
+            @for(patient of filterRegistrationDetails; track patient; let i = $index){
+                <div class="card border-card" [class.mt-2]="i==0">
+                    <ion-accordion-group>
+                        <ion-accordion value="first">
+                            <div slot="header">
+                                <div class="title-row">
+                                    <span class="labid">
+                                        <h3 class="fw-bold">{{ patient.LabId }}</h3>
+                                    </span>
+                                    <div class="info-item ms-auto" style="max-width: 50dvw;">
+                                      <div [ngClass]="{ 
+                                     
+                                      'tested':patient.TestingStatus != 'A' ,
+                                  
+                                      'approved':patient.TestingStatus == 'A'
+                                      ,'badgeCustom ': true }"
+                                      style="overflow: visible;">
+                                                    @if(patient.TestingStatus == 'A'){
+                                                        <ion-icon name="checkmark-circle-outline"></ion-icon> Completed
+                                                    }
+                                                    @else {
+                                                        <ion-icon name="information-circle-outline"></ion-icon>     Under Testing
+                                                    }
+                                     
+                                   
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="font-600 card-list-text">
+                                      <div class="info-item ms-auto gap-1">
+                                        <ion-icon name="calendar-outline" color="primary"></ion-icon>
+                                        <span class="pt-1"> {{ patient.formattedRegistrationDate }}</span>
+                                      </div>
+                                    </div>
+                            
+                                            @if(patient.ReceivedAmount > 0 && patient.DueAmount > 0){
+                                            <div class="font-600  bg-orange-100 text-orange-700 rounded-2 px-2">
+                                                <span class="font-600 text-xs "> Partial Paid</span>
+                                            </div>
+                                          }
+                                        @else if (patient.DueAmount > 0){
+                                            <div class="font-600  bg-red-100 text-red-700 rounded-2 px-2">
+                                          <span class="font-600 text-xs  ">Due</span></div>
+                                        }
+                                        @else if(patient.DueAmount == 0){
+                                            <div class="font-600  bg-green-100 text-green-700 rounded-2 px-2">
+                                            <span class="font-600  text-xs">Paid</span></div>
+                                        }
+                                
+                                  </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="text-gray-600 font-600 ms-1">{{ patient.PatientName }}</span>
+                                    </div>
+                                
+                                    <div>
+                                        <ion-icon [style.color]="patient.Gender == 'M' ? 'blue': (patient.Gender == 'F' ? 'hotpink': 'black')"
+                                            [name]="patient.Gender == 'M' ? 'man-outline':'woman-outline'" class="genderIcon">
+                                        </ion-icon>
+                                        -
+                                        <span class="text-xs"> {{ patient.AgeString }}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                
+                                    
+                                    @if(patient.B2BId && patient.B2BId > 0){
+                                        <div class="font-600 card-list-text">
+                                            <span> {{ patient.B2BName }} </span>
+                                        </div>
+                                    }
+                                    <div class="text-gray-600 font-600 text-base card-list-text text-wrap">
+                                        <span> {{ patient.ServiceName }} </span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between gap-2 mt-1">
+                                        <div class="card border-0 bg-gray-50" style="width: 9.5rem;">
+                                          <div class="align-items-center">
+                                            <h6 class="text-xs mb-0 text-gray-600 m-0 ps-2 pt-3">Total</h6>
+                                            <h1 class="text-sm fw-bold m-0 ps-2 pb-3">₹ {{ patient.NetAmount }}</h1>
+                                          </div>
+                                        </div>
+                                        @if(patient.DiscountAmount > 0){
+                                        <div class="card border-0 bg-yellow-100" style="width: 9.5rem;">
+                                          <div class="align-items-center">
+                                            <h6 class="text-xs mb-0 text-gray-600 m-0 ps-2 pt-3">Discount</h6>
+                                            <h1 class="text-sm fw-bold m-0 ps-2 pb-3 text-yellow-700">₹ {{ patient.DiscountAmount }}</h1>
+                                          </div>
+                                        </div>
+                                        }
+                                        <div class="card border-0 bg-green-50" style="width: 9.5rem;">
+                                          <div class="align-items-center">
+                                            <h6 class="text-xs mb-0 text-gray-600 m-0 ps-2 pt-3">Paid</h6>
+                                            <h1 class="text-sm fw-bold text-green-600 m-0 ps-2 pb-3">₹ {{ patient.ReceivedAmount }}</h1>
+                                          </div>
+                                        </div>
+                                        @if(patient.DueAmount > 0){
+                                        <div class="card border-0 bg-orange-50 " style="width: 9.5rem;">
+                                          <div class="align-items-center">
+                                            <h6 class="text-xs mb-0 text-gray-600 m-0 ps-2 pt-3">Due</h6>
+                                            <h1 class="text-sm fw-bold m-0 ps-2 pb-3 text-orange-600">₹ {{ patient.DueAmount }}</h1>
+                                          </div>
+                                        </div>
+                                        }
+                                        @if(patient.DueAmount <= 0){ 
+                                            <div class="card border-0 bg-gray-50" style="width: 9.5rem;">
+                                                    <div class="align-items-center">
+                                                        <h6 class="text-xs mb-0 text-gray-600 m-0 ps-2 pt-3">Due</h6>
+                                                        <h1 class="text-sm fw-bold m-0 ps-2 pb-3">₹ {{ patient.DueAmount }}</h1>
+                                                    </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!-- <ion-row>
+                                      <ion-col size="6">
+                                        <ion-button expand="block" size="small" fill="solid" color="primary" (click)="onSearchClick()">Report</ion-button>
+                                      </ion-col>
+                                    
+                                      <ion-col size="6">
+                                        <ion-button expand="block" size="small" fill="solid" color="medium" (click)="onRegistrationFilterClick()">Receipt</ion-button>
+                                      </ion-col>
+                                    </ion-row> -->
+                                </div>
+                            </div>
+                        </ion-accordion>
+                    </ion-accordion-group>
+                    <!-- <div class="btn-card-bottom d-flex ">
+                        <div class="col-6 btn-border-r d-grid">
+                            <button type="button" class="btn text-primary" (click)="onClickRegistrationStatusbtn(patient)">
+                                Status
+                            </button>
+                        </div>
+                        <div class="col-6  d-grid">
+                           <button type="button" class="btn text-primary" (click)="onClickInfobtn(patient.LabId)">
+                                Registration Info
+                            </button>
+                        </div>
+                    </div> -->
+                </div>
+            }
+        }
+    
+    
+ 
+    </ion-content>
+    
+

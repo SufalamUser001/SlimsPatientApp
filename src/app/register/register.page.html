@@ -1,0 +1,96 @@
+<ion-header collapse="fade">
+    <ion-toolbar>
+      <ion-title> </ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+        
+            <ion-buttons>
+                <ion-button fill="clear" (click)="onbackClick()" color="medium">
+    
+                    <ion-icon slot="start" name="chevron-back-outline"></ion-icon><span> Back</span>
+                </ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+
+
+
+
+<ion-row class="ion-padding gap-4">
+    <ion-col size="12">
+        <h1 class="text-4xl text-primary font-600 mt-4"> Sign Up </h1>
+        @if(this.sharedService.authService.IsUserOTPVerified){
+        <p class="text-gray-600 mt-2 font-600">Please Create a new Lims Account</p>
+        }
+        @else {
+            <p class="text-gray-600 mt-2 font-600">Please Verify Mobile to Create new Lims Account</p>
+        }
+    </ion-col>
+  
+    @if(sharedService.authService.IsUserOTPVerified){
+    <ion-col size="12">
+        <ion-input label="Mobile" labelPlacement="stacked" fill="outline" inputmode="tel" id="input1" name="userid" disabled="true"
+            mode="md" pattern="tel" [(ngModel)]="PatientObj.Mobile" placeholder="Mobile" required="true" type="tel"
+            maxlength="10" minlength="10">
+        </ion-input>
+    </ion-col>
+        <ion-col size="12">
+            <ion-input label="First Name" labelPlacement="stacked" fill="outline" inputmode="text" id="input1" name="userid"
+                mode="md" [(ngModel)]="PatientObj.FirstName" placeholder="First Name" required="true" type="text"
+                maxlength="50" >
+            </ion-input>
+        </ion-col>
+       
+        <ion-col size="12">
+                <ion-input label="New Password" labelPlacement="stacked" fill="outline" inputmode="text" id="input1" name="password"
+                    mode="md"  [(ngModel)]="PatientObj.Password" placeholder="New Password" required="true" type="password"
+                    maxlength="15" minlength="3">
+                    <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+                </ion-input>
+        </ion-col>
+        <ion-col size="12">
+            <ion-input label="Confirm Password" labelPlacement="stacked" fill="outline" inputmode="text" id="input1" name="ConfirmPassword"
+                mode="md"  [(ngModel)]="PatientObj.ConfirmPassword" placeholder="Confirm Password" required="true" type="password"
+                maxlength="15" minlength="3">
+            </ion-input>
+        </ion-col>
+            <ion-col size="12">
+                <ion-checkbox label-placement="end" [(ngModel)]="PatientObj.IsCardPrinted"  > <span class="text-gray-600 mb-1 font-600">Agree the terms of use and privacy policy</span></ion-checkbox>
+                <ion-button expand="block" (click)="onRegisterClick()" [disabled]="!PatientObj.IsCardPrinted">Sign Up</ion-button>
+            </ion-col >
+    }@else{
+
+        <ion-col size="12">
+            <ion-input label="Mobile" labelPlacement="stacked" fill="outline" inputmode="tel" id="input2" name="mobile"
+                mode="md" pattern="tel" [(ngModel)]="signupObj.UserId" placeholder="Mobile" required="true" type="tel"
+                maxlength="10" minlength="10">
+            </ion-input>
+        </ion-col>
+
+        @if(!isOTPSentOnce){
+            <ion-col size="12">
+                <ion-button expand="block" (click)="onSendOTPClick()">Send OTP</ion-button>
+            </ion-col >
+        }
+        @else {
+            <ion-col size="12">
+                <ion-input-otp length="6" pattern="[0-9]" type="text" [(ngModel)]="signupObj.OTP"  name="otp1" fill="outline" inputmode="numeric" > 
+               
+                    Didn't get a code? <a (click)="onSendOTPClick()" [class.disabled]="isDisableResendbtn">Resend the code</a> 
+               
+                </ion-input-otp>
+            </ion-col>
+
+            <ion-col size="12">
+                <ion-button expand="block" (click)="onValidateOTPClick()" >Verify And Proceed</ion-button>
+            </ion-col >
+        }
+    }
+
+
+</ion-row>
+</ion-content>
