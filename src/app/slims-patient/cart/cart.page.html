@@ -1,0 +1,75 @@
+<ion-content class="ion-padding">
+    <div class="card border-card p-3">
+        <div class="text-center py-10  w-100">
+            <div class="mx-auto mb-4">
+                <ion-icon name="bag-handle-outline" class="text-gray-500 font-500 icon-big"></ion-icon>
+            </div>
+            <h3 class="text-large font-600">Your Cart is Empty</h3>
+            <p class="text-gray-500 text-sm mt-1 pt-1 font-500" >Add some test to get started</p>
+            <ion-button class="ps-6 py-3" color="primary" (click)="onContinueShoppingClick()">
+            Browse Test</ion-button>
+        </div>
+    </div>
+    <div class="d-flex flex-column gap-2 mt-2 mb-2">
+      <div class="d-flex justify-content-between ">
+        <div class="d-flex flex-column">
+          <h2 class="font-700">
+            Shopping Cart
+          </h2>
+        </div>
+            <div class="text-red-500 font-500" (click)="onClearCart()">Clear Cart</div>
+        </div>
+        
+    </div>
+    <div class="d-flex flex-column gap-1">
+        @if(popular_packages && popular_packages.length > 0){
+            @for(package of popular_packages; track package;){
+            <div class="card border-card p-3 w-100">
+                <div class="d-flex justify-content-between align-items-center title-row">
+                    <h6 class="font-600 w-70 text-gray-700">{{ package.ServiceName }}</h6>
+                    <div class="p-0" >
+                        <ion-button color="danger" size="small" fill="clear" (click)="onCartServiceDelete()">
+                            <ion-icon slot="icon-only" name="trash-outline" ></ion-icon>
+                        </ion-button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start w-70 text-xs text-gray-500">
+                    <p class="mb-0">{{ package.subtext }}</p>
+                </div>
+                <div class="d-flex justify-content-end text-base pt-1 text-blue-600 font-700">
+                    <p class="mb-0">₹{{ package.Amount }}</p>
+                </div>
+                
+            </div>
+            }
+        }
+        
+    </div>
+    <div class="card border-card mt-4 m-0 p-3 w-100">
+        <div class="d-flex justify-content-between mb-3 align-items-center title-row">
+            <h6 class="font-600">Order Summary</h6>
+        </div>
+        <div class="d-flex justify-content-between text-sm font-500 text-gray-600">
+            <div>Amount</div>
+            <div>₹1000</div>
+        </div>
+        <div class="d-flex justify-content-between text-sm font-500 text-gray-600 pt-2 pb-2">
+            <div>Service Charges</div>
+            <div >₹0</div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center border-top pt-2 pb-2">
+            <h6 class="font-600">Total</h6>
+            <h6 class="font-600">₹1000</h6>
+        </div>
+        <ion-row>
+            <ion-col size="12" class="font-700 p-0">
+                <ion-button color="primary" expand="block" (click)="onCheckoutClick()">Proceed to checkout</ion-button>
+            </ion-col>
+        </ion-row>
+         <ion-row>
+            <ion-col size="12" class="font-700 p-0">
+                <ion-button color="light" expand="block" (click)="onContinueShoppingClick()">Continue shopping</ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>

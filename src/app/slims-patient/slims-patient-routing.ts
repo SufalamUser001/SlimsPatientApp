@@ -41,6 +41,21 @@ export const PatientAppRouting: Routes = [
         canActivate : [AuthGuardLogin],
         loadComponent: () => import('./disease/disease.page').then(m => m.DiseasePage),
         data: { isShowBackButton: true }
+      },
+      {
+        path: 'cart',
+        canActivate : [AuthGuardLogin],
+        loadComponent: () => import('./cart/cart.page').then(m => m.CartPage),
+        data: { isShowBackButton: true },
+       
+      },
+        {
+        path: 'cart/checkout',
+        canActivate : [AuthGuardLogin],
+        loadComponent: () => import('./cart/checkout/checkout.page').then(m => m.CheckoutPage),
+        data: { isShowBackButton: true },
       }
+
+
 ];
 
