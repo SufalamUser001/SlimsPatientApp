@@ -42,8 +42,9 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+<div class="ion-page">
 
-<ion-tabs>
+
   <ion-header mode="ios">
   <ion-toolbar mode="ios">
      
@@ -59,16 +60,20 @@
     </ion-buttons> 
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+</ion-content>  
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home" href="/lims-patient/home">
+    <ion-tab-button tab="home" (click)="onNavClick('/lims-patient/home')">
       <ion-icon aria-hidden="true" name="home-outline"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="orders" href="/lims-patient/orders">
+    <ion-tab-button tab="orders" (click)="onNavClick('/lims-patient/orders')">
       <ion-icon aria-hidden="true" name="document-text-outline"></ion-icon>
       <ion-label>My Orders</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="profile" href="/lims-patient/profile">
+    <ion-tab-button tab="profile" (click)="onNavClick('/lims-patient/profile')">
       <ion-icon aria-hidden="true" name="person-outline"></ion-icon>
       <ion-label>Profile</ion-label>
     </ion-tab-button>
@@ -77,9 +82,5 @@
       <ion-label>More</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-</ion-tabs>
-
-
-
-
+</div>
 
