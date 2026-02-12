@@ -19,18 +19,23 @@
           <ion-list [inset]="true" lines="none">
             <ion-item>
   
-              <ion-button fill="clear" size="large"> <ion-icon slot="start" name="location-outline"
+              <ion-button fill="clear"> <ion-icon slot="start" name="location-outline"
                   color="success"></ion-icon><span class="text-gray-600"> Nearby Labs</span></ion-button>
             </ion-item>
             <ion-item>
   
-              <ion-button fill="clear" size="large"><ion-icon slot="start" name="information-circle-outline"
+              <ion-button fill="clear"><ion-icon slot="start" name="information-circle-outline"
                   color="medium"></ion-icon><span class="text-gray-600">About Us</span></ion-button>
             </ion-item>
             <ion-item>
   
-              <ion-button fill="clear" size="large"> <ion-icon slot="start" name="call-outline"
+              <ion-button fill="clear"> <ion-icon slot="start" name="call-outline"
                   color="primary"></ion-icon><span class="text-gray-600">Contact Us</span></ion-button>
+            </ion-item>
+            <ion-item>
+  
+              <ion-button fill="clear" (click)="onClickLogOut()"> <ion-icon slot="start" name="power-outline"
+                  color="danger"></ion-icon><span class="text-gray-600">Log Out</span></ion-button>
             </ion-item>
           </ion-list>
         </div>

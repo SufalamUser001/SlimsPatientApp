@@ -14,3 +14,19 @@ ion-segment-content {
     height: 50px;
     width: 50px;
 }
+
+.filter-modal {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  ion-input {
+    --color: rgb(78, 78, 78);
+    font-weight: 400;
+  }
+}
+
+ion-modal {
+  &:has(.filter-modal) {
+    --height: auto;
+  }
+}

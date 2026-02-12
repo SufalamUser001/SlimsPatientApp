@@ -1,0 +1,80 @@
+@if(!IsCompactView){
+<ion-content class="ion-padding">
+  <ng-template [ngTemplateOutlet]="organ">
+  </ng-template>
+  @if(tests_organ && filterOragnList.length > 0){
+    @for(organData of filterOragnList; track organData; let i = $index){
+        <div class="card border-card mt-3 p-3 w-100">
+            <div class="d-flex justify-content-between align-items-center title-row">
+                <h6 class="font-600 text-gray-700">{{ organData.TestName }}</h6>
+            </div>
+            <div class="d-flex justify-content-start text-sm text-gray-500 font-500 mt-2">
+               {{ organData.TestDescription }}
+            </div>
+            <div class="d-flex justify-content-start text-lg text-blue-600 font-800 mt-2">
+              ₹ {{ organData.Amount }}
+            </div>
+            <div class="d-flex justify-content-start text-sm  font-500 mt-1">
+              @if(selectedOrganIndex && selectedOrganIndex >= 0){
+                <ion-chip class="text-{{colorsList[selectedOrganIndex]}}-700 bg-{{colorsList[selectedOrganIndex]}}-100">{{ organData.Organ }}</ion-chip>
+              }
+              @else {
+                <ion-chip color="tertiary">{{ organData.Organ }}</ion-chip>
+              }
+            </div>
+            <ion-row>
+              <ion-col size="12">
+                     @if(organData.IsAddedInCart){
+                  <ion-button color="success" expand="block">
+                    <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                  Added To Cart</ion-button>
+                }
+                @else{
+                <ion-button color="primary" expand="block"><ion-icon name="cart-outline" slot="start"></ion-icon>Add To Cart</ion-button>
+                }
+              </ion-col>
+            </ion-row>
+        </div>
+    }
+  }
+</ion-content>
+}
+@else{
+<ng-template [ngTemplateOutlet]="organ">
+</ng-template>
+}
+
+<ng-template #organ>
+<div class="d-flex flex-column gap-2 mt-4">
+  <div class="d-flex justify-content-between ">
+    <div class="d-flex flex-column">
+      <h2 class="font-700">
+        Tests by Organ
+      </h2>
+      <p class="text-sm text-gray-600 font-500 mb-2">Select organ to view related tests</p>
+    </div>
+    @if(IsCompactView){
+    <ion-button fill="clear" class="text-indigo-600" (click)="organViewAllClick.emit()">
+      <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
+        View more
+    </ion-button>
+    }
+   
+  </div>
+  
+  <div class="d-flex gap-2 container-h-scoll" >
+    @for (org of organtest; track $index;let i = $index) {
+      @if(IsCompactView){
+      <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterOrgan(org)">
+          <i class="fa {{ org.icon }} text-3xl" aria-hidden="true"></i>
+          <p class="mb-0 mt-1 text-sm font-600"> {{org.name}} </p>
+          <div class="overlay"></div>
+      </button>
+      }
+      @else{
+        <ion-button [color]="selectedOrgan?.OrganId == org.OrganId ?'tertiary' : 'light'" (click)="filterOrgan(org, i)">{{org.name}} </ion-button>
+      }
+    }
+  </div>
+</div>
+</ng-template>

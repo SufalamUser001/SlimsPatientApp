@@ -1,0 +1,80 @@
+@if(!IsCompactView){
+<ion-content class="ion-padding">
+  <ng-template [ngTemplateOutlet]="organ">
+  </ng-template>
+  @if(filterDiseaseList && filterDiseaseList.length > 0){
+    @for(diseaseData of filterDiseaseList; track diseaseData; let i = $index){
+        <div class="card border-card mt-3 p-3 w-100">
+            <div class="d-flex justify-content-between align-items-center title-row">
+                <h6 class="font-600 text-gray-700">{{ diseaseData.TestName }}</h6>
+            </div>
+            <div class="d-flex justify-content-start text-sm text-gray-500 font-500 mt-2">
+               {{ diseaseData.TestDescription }}
+            </div>
+            <div class="d-flex justify-content-start text-lg text-blue-600 font-800 mt-2">
+              ₹ {{ diseaseData.Amount }}
+            </div>
+            <div class="d-flex justify-content-start text-sm  font-500 mt-1">
+              @if(selectedDiseaseIndex && selectedDiseaseIndex >= 0){
+                <ion-chip class="text-{{colorsList[selectedDiseaseIndex]}}-700 bg-{{colorsList[selectedDiseaseIndex]}}-100">{{ diseaseData.Disease }}</ion-chip>
+              }
+              @else {
+                <ion-chip color="tertiary">{{ diseaseData.Disease }}</ion-chip>
+              }
+            </div>
+            <ion-row>
+              <ion-col size="12">
+               @if(diseaseData.IsAddedInCart){
+                  <ion-button color="success" expand="block">
+                    <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                  Added To Cart</ion-button>
+                }
+                @else{
+                <ion-button  color="primary" expand="block"><ion-icon name="cart-outline" slot="start"></ion-icon>Add To Cart</ion-button>
+                }
+              </ion-col>
+            </ion-row>
+        </div>
+    }
+  }
+</ion-content>
+}
+@else{
+<ng-template [ngTemplateOutlet]="organ">
+</ng-template>
+}
+
+<ng-template #organ>
+<div class="d-flex flex-column gap-2 mt-4">
+  <div class="d-flex justify-content-between ">
+    <div class="d-flex flex-column">
+      <h2 class="font-700">
+        Tests by Disease
+      </h2>
+      <p class="text-sm text-gray-600 font-500 mb-2">Select disease to view related tests</p>
+    </div>
+    @if(IsCompactView){
+    <ion-button fill="clear" class="text-indigo-600" (click)="diseaseViewAllClick.emit()">
+      <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
+        View more
+    </ion-button>
+    }
+   
+  </div>
+  
+  <div class="d-flex gap-2 container-h-scoll" >
+    @for (disease of diseasetest; track $index;let i = $index) {
+      @if(IsCompactView){
+      <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterOrgan(disease)">
+          <i class="fa {{ disease.icon }} text-3xl" aria-hidden="true"></i>
+          <p class="mb-0 mt-1 text-sm font-600"> {{disease.name}} </p>
+          <div class="overlay"></div>
+      </button>
+      }
+      @else{
+        <ion-button [color]="selectedDisease?.DiseaseId == disease.DiseaseId ?'tertiary' : 'light'" (click)="filterOrgan(disease, i)">{{disease.name}} </ion-button>
+      }
+    }
+  </div>
+</div>
+</ng-template>

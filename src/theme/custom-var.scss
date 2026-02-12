@@ -25,14 +25,14 @@
 
 	--ion-color-tertiary: #b053ee;
 	--ion-color-tertiary-rgb: 176,83,238;
-	--ion-color-tertiary-contrast: #000000;
+	--ion-color-tertiary-contrast: #ffffff;
 	--ion-color-tertiary-contrast-rgb: 0,0,0;
 	--ion-color-tertiary-shade: #9b49d1;
 	--ion-color-tertiary-tint: #b864f0;
 
 	--ion-color-success: #00b330;
 	--ion-color-success-rgb: 0,179,48;
-	--ion-color-success-contrast: #000000;
+	--ion-color-success-contrast: #ffffff;
 	--ion-color-success-contrast-rgb: 0,0,0;
 	--ion-color-success-shade: #009e2a;
 	--ion-color-success-tint: #1abb45;
@@ -304,8 +304,9 @@ $colors-names : (
 
 
 $theme-colors: (
-  "custom": #826595,
-  "custom-2": #0092b8
+  "myorange": #f54900,
+  "mygreen": #008236,
+  
 );
 
 @function get-contrast-color($color) {

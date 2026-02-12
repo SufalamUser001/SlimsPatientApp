@@ -1,14 +1,16 @@
 import { LocationStrategy } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, viewChild, ViewChild } from '@angular/core';
-import { IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs, IonModal, IonContent, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonList, IonItem } from "@ionic/angular/standalone";
-
+import { IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs, IonModal, IonContent, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonList, IonItem, ActionSheetController } from "@ionic/angular/standalone";
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { SharedService } from '../service/shared-service/shared.service';
+import { filter, map } from 'rxjs';
 
 @Component({
     selector: 'app-slims-patient',
     templateUrl: 'slims-patient.page.html',
     styleUrls: ['slims-patient.page.scss'],
     standalone : true,
-    imports: [IonItem, IonList, IonTitle, IonButtons, IonToolbar, IonHeader, IonButton, IonContent, IonModal, IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs],
+    imports: [IonItem, IonList, IonTitle, IonButtons, IonToolbar, IonHeader, IonButton, IonContent, IonModal, IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs ],
     
 })
 
@@ -17,9 +19,32 @@ export class SlimsPatientComponent {
   public isDisplayBackButton = false;
   optionsModal = viewChild<IonModal>("optionsModal");
   public title = 'LIMS Patient';
-  constructor(public locationStrategy : LocationStrategy) 
+  constructor(public locationStrategy : LocationStrategy, private actionSheetCtrl: ActionSheetController, public router: Router, public sharedService: SharedService, private activatedRoute: ActivatedRoute) 
   {
    
+  }
+
+  async ngOnInit(){
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => {
+       // debugger
+        let activeRoute = this.activatedRoute.root;
+        while (activeRoute.firstChild) { activeRoute = activeRoute.firstChild; }
+        return activeRoute.snapshot.data // Or activeRoute.snapshot.data['title'] for older apps
+      })
+    ).subscribe((data) => {
+      if (data && data['title']) {
+        this.title = data['title'];
+      }else{
+        this.title  = 'SLIMS';
+      }
+      if(data && data['isShowBackButton']){
+        this.isDisplayBackButton = data['isShowBackButton'];
+      }else{
+        this.isDisplayBackButton = false;
+      }
+    });
   }
 
   openOptionsModal(){
@@ -46,4 +71,36 @@ export class SlimsPatientComponent {
     
   }
 
+  async onClickLogOut(){
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Are You Sure To Logout?',
+      subHeader: '',
+      mode : 'ios',
+      buttons: [
+        {
+          text: 'Logout',
+          role: 'destructive',
+          data: {
+            action: true,
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass : 'CancelClass',
+          data: {
+            action: false,
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
+    const result = await actionSheet.onDidDismiss();
+    if(result && result.data && result.data.action){
+      this.closeOptionsModal();
+      this.sharedService.authService.userLogout();
+    }
+  }
 }

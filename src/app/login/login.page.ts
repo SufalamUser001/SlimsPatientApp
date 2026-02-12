@@ -184,4 +184,8 @@ export class LoginPage {
         this.LastloginObj = new LoginModel();
       });
   }
+
+  onSingUpbtnClick(){
+    this.sharedService.authService.navigateToRegister();
+  }
 }

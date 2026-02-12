@@ -99,7 +99,7 @@
                                   </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <span class="text-gray-600 font-600 ms-1">{{ patient.PatientName }}</span>
+                                        <span class="text-gray-600 font-600">{{ patient.PatientName }}</span>
                                     </div>
                                 
                                     <div>
@@ -159,7 +159,17 @@
                                                     </div>
                                             </div>
                                         }
-                                    </div>
+
+                                         
+                                </div>
+                                @if(patient.DueAmount > 0){ 
+                                  <ion-chip  class="pt-1 m-0 mt-1 text-xs"><ion-icon name="alert-circle-outline" class="m-0 p-0 pe-1"></ion-icon>Complete payment to download report</ion-chip>
+                                }
+                                
+                                <!-- </div> -->
+                                   
+                                
+                                
                                     <!-- <ion-row>
                                       <ion-col size="6">
                                         <ion-button expand="block" size="small" fill="solid" color="primary" (click)="onSearchClick()">Report</ion-button>
@@ -173,6 +183,22 @@
                             </div>
                         </ion-accordion>
                     </ion-accordion-group>
+                    <ion-row>
+                      <ion-col size="6">
+                        <ion-button  expand="full"  size="small" fill="solid" color="primary" (click)="GetPaymentReceipt(patient)">Receipt</ion-button>
+                      </ion-col>
+                    @if(patient.DueAmount > 0){
+                      <ion-col size="6">
+                        <ion-button  expand="full"  size="small" fill="solid" color="myorange"
+                          (click)="GetPatientPayment(patient)">Pay Due</ion-button>
+                      </ion-col>
+                    }
+                    @else{
+                      <ion-col size="6">
+                        <ion-button expand="full"  size="small" fill="solid" color="mygreen" (click)="GenerateLabReport(patient)">Report</ion-button>
+                      </ion-col>
+                    }
+                    </ion-row>
                     <!-- <div class="btn-card-bottom d-flex ">
                         <div class="col-6 btn-border-r d-grid">
                             <button type="button" class="btn text-primary" (click)="onClickRegistrationStatusbtn(patient)">

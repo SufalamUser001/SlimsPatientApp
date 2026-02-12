@@ -70,11 +70,12 @@
                             <h2 class="text-xl font-700 text-gray-900">Personal Information</h2>
                             @if(!IsPInfoEdit){
                                 <ion-button color="primary" size="small" fill="clear" (click)="onPEEdit()">
-                                    <ion-icon name="pencil-outline" ></ion-icon>
+                                    <ion-icon slot="icon-only" name="pencil-outline" ></ion-icon>
                                 </ion-button>
                                 }
                         </div>
                     </ion-col>
+                    @if(IsPInfoEdit){
                     <ion-col size="12">
                         <ion-select name="RegistrationBranchId1" [(ngModel)]="labCartPatientObj.TitleId" required="true"
                             interface="modal" mode="md" (ionChange)="onTitleChange()" labelPlacement="stacked" [disabled]="!IsPInfoEdit"
@@ -128,7 +129,11 @@
                         <ion-input label="EmailId" name="emailid" mode="md" labelPlacement="stacked" fill="outline" [disabled]="!IsPInfoEdit"
                         type="email" placeholder="EmailId" [(ngModel)]="labCartPatientObj.EmailId"> </ion-input>
                     </ion-col>
-                    @if(IsPInfoEdit){
+                    <ion-col size="12">
+                        <ion-input label="Mobile No" name="mobileNo" mode="md" labelPlacement="stacked" fill="outline"
+                            type="text" placeholder="Mobile No" [(ngModel)]="labCartPatientObj.Mobile"> </ion-input>
+                    </ion-col>
+                   
                     <ion-col size="6">
                         <ion-button fill="outline" expand="block" [size]="'medium'"  (click)="onMemberCancel()">
                          Cancel
@@ -139,7 +144,38 @@
                              Save changes
                           </ion-button>
                     </ion-col>
-                }
+                    }
+                    @else{
+                        <ion-col size="12">
+                            <div class="text-gray-600 font-600">Full Name</div>
+                            <div class="text-sm">{{ labCartPatientObj.PatientName }}</div>
+                        </ion-col>
+                        @if(labCartPatientObj.GenderName){
+                        <ion-col size="12">
+                           <div class="text-gray-600 font-600">Gender</div>
+                            <div class="text-sm">{{ labCartPatientObj.GenderName }}</div>
+                        </ion-col>
+                        }
+                        @if(labCartPatientObj.AgeString){
+                        <ion-col size="12">
+                           <div class="text-gray-600 font-600">Age</div>
+                            <div class="text-sm">{{ labCartPatientObj.AgeString }}</div>
+                        </ion-col>
+                        }
+                        @if(labCartPatientObj.EmailId){
+                        <ion-col size="12">
+                            <div class="text-gray-600 font-600">Email Id</div>
+                            <div class="text-sm">{{ labCartPatientObj.EmailId }}</div>
+                        </ion-col>
+                        }
+                        @if(labCartPatientObj.Mobile){
+                        <ion-col size="12">
+                            <div class="text-gray-600 font-600">Mobile No</div>
+                            <div class="text-sm">{{ labCartPatientObj.Mobile }}</div>
+                        </ion-col>
+                        }
+                       
+                    }
                 </ion-row>
 
                 <ion-modal [keepContentsMounted]="true">
@@ -167,7 +203,55 @@
 
                     @if(this.labCartPatientObj.MemberList && this.labCartPatientObj.MemberList.length > 1){
                         @for (data of this.labCartPatientObj.MemberList; track $index;let i = $index) {
-
+                            @if(i > 0){
+                            <div class="card border-card p-3 w-100">
+                                <div class="d-flex justify-content-between align-items-center title-row">
+                                    <h6 class="font-600 text-gray-700">{{ data.PatientName }}</h6>
+                                    <div class="p-0" >
+                                        <ion-button color="primary" size="small" fill="clear" (click)="onAddMemberAddClick(data)">
+                                            <ion-icon slot="icon-only" name="pencil-outline" ></ion-icon>
+                                        </ion-button>
+                                        <ion-button color="danger" size="small" fill="clear" (click)="onDeleteMemberClick(data)">
+                                            <ion-icon slot="icon-only" name="trash-outline" ></ion-icon>
+                                        </ion-button>
+                                    </div>
+                                </div>
+                            
+                                <div class="d-flex mb-1 align-items-center">
+                                    <ion-icon name="card-outline" class="text-blue-900"></ion-icon>
+                                    <p class="text-sm ms-1 text-blue-900 m-0">{{ data.MembershipId }}</p>
+                                </div>
+                                <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
+                                      <p class="mb-0">Relation : </p>
+                                    <p class="ps-1 mb-0">{{ data.Relation }}</p>
+                                </div>
+                                @if(data.GenderName) {
+                                    <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
+                                        <p class="mb-0">Gender : </p>
+                                        <p class="ps-1 mb-0">{{ data.GenderName }}</p>
+                                    </div>
+                                }
+                                @if(data.AgeString) {
+                                    <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
+                                        <p class="mb-0">Age : </p>
+                                        <p class="ps-1 mb-0">{{ data.AgeString }}</p>
+                                    </div>
+                                }
+                                 @if (data.EmailId) {
+                                    <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
+                                        <p class="mb-0">Email Id : </p>
+                                        <p class="ps-1 mb-0">{{ data.EmailId }}</p>
+                                    </div>
+                                }
+                                @if (data.Mobile) {
+                                    <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
+                                        <p class="mb-0">Mobile No : </p>
+                                        <p class="ps-1 mb-0">{{ data.Mobile }}</p>
+                                    </div>
+                                }
+                            </div>
+                            }
+                           
                         }
                     }@else{
                         <div class="text-center py-20 text-gray-500 w-100">
@@ -185,7 +269,7 @@
                 <ion-row class="w-100">
                     <ion-col size="12">
                         <div class="d-flex justify-content-between mb-3">
-                            <h2 class="text-xl font-700 text-gray-900">Family members</h2>
+                            <h2 class="text-xl font-700 text-gray-900">Family Addresses</h2>
                             @if(!IsPInfoEdit){
                                 <ion-button color="primary"  size="small" fill="clear" (click)="onAddressAddClick()">
                                     <ion-icon name="add-outline" ></ion-icon>
@@ -197,7 +281,34 @@
 
                     @if(this.labCartPatientObj.MemberAddressList && this.labCartPatientObj.MemberAddressList.length > 0){
                         @for (data of this.labCartPatientObj.MemberAddressList; track $index;let i = $index) {
-
+                            <div class="card border-card p-3 w-100">
+                                <div class="d-flex justify-content-between align-items-center title-row">
+                                    <div class="d-flex align-items-center">
+                                        <ion-icon color="primary" name="location-outline"></ion-icon>
+                                        <span class="font-600 text-gray-700 ms-1 ">{{ data.Address }}</span>
+                                    </div>
+                                    <div class="p-0" >
+                                        <ion-button color="primary" size="small" fill="clear" (click)="onAddressAddClick(data)">
+                                            <ion-icon slot="icon-only" name="pencil-outline" ></ion-icon>
+                                        </ion-button>
+                                        <ion-button color="danger" size="small" fill="clear" (click)="onDeleteAddress(data)">
+                                            <ion-icon slot="icon-only" name="trash-outline" ></ion-icon>
+                                        </ion-button>
+                                    </div>
+                                </div>
+                                @if(data.AreaName){
+                                    <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
+                                        <p class="mb-0">Area: </p>
+                                        <p class="ps-1 mb-0">{{ data.AreaName }}</p>
+                                    </div>
+                                }
+                                @if(data.CityName){
+                                    <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
+                                        <p class="mb-0">City: </p>
+                                        <p class="ps-1 mb-0">{{ data.CityName }}</p>
+                                    </div>
+                                }
+                            </div>
                         }
                     }@else{
                         <div class="text-center py-20 text-gray-500 w-100 ">
@@ -240,7 +351,7 @@
                     }
                     <ion-col size="12">
                         <ion-input label="New Password" name="password" mode="md" labelPlacement="stacked" fill="outline"
-                            type="text" placeholder=" " [(ngModel)]="changePasswordObj.NewPassword"> </ion-input>
+                            type="text" placeholder=" " helperText="Password must be at least 6 characters long" [(ngModel)]="changePasswordObj.NewPassword"> </ion-input>
                     </ion-col>
                     <ion-col size="12">
                         <ion-input label="Confirm Password" name="password" mode="md" labelPlacement="stacked" fill="outline"
@@ -262,5 +373,156 @@
         </ion-segment-view>
     </div>
 
+    <!-- Family Members -->
+    <ion-modal [initialBreakpoint]="1" [breakpoints]="[0, 1]" #FamilyMemberModal>
+        <ng-template>
+        <ion-row class="p-2 filter-modal">
+            <ion-col size="12" class="m-1">
+                <h3 class="text-xl text-gray-900 font-700">
+                @if(this.labCartMemberObj.PatientId > 0){
+                    Edit 
+                }
+                @else {
+                    Add 
+                }
+                Family Member</h3>
+            </ion-col>
+            <ion-col size="12">
+                <ion-select name="memberTitle" [(ngModel)]="labCartMemberObj.TitleId" required="true"
+                    interface="modal" mode="md" labelPlacement="stacked"
+                    fill="outline" placeholder="Select Title">
+                    @for (item of titleList; track item) {
+                        <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-col>
+            <ion-col size="12">
+                <ion-input label="First Name" name="memberFirstName" mode="md" labelPlacement="stacked" fill="outline" required="true"
+                    type="text" placeholder="First Name" [(ngModel)]="labCartMemberObj.FirstName"> </ion-input>
+            </ion-col>
+            <ion-col size="6">
+                <ion-input label="Middel Name" name="memberMiddelName" mode="md" labelPlacement="stacked" fill="outline"
+                    type="text" placeholder="Middel Name" [(ngModel)]="labCartMemberObj.MiddleName"> </ion-input>
+            </ion-col>
+            <ion-col size="6">
+                <ion-input label="Last Name" name="memberLastName" mode="md" labelPlacement="stacked" fill="outline" required="true"
+                    type="text" placeholder="Last Name" [(ngModel)]="labCartMemberObj.LastName"> </ion-input>
+            </ion-col>
+            <ion-col size="12">
+                <ion-select name="memberRelation" [(ngModel)]="labCartMemberObj.Relation" required="true" 
+                    interface="modal" mode="md"  labelPlacement="stacked"
+                    fill="outline" placeholder="Select Relation">
+                    @for (item of relationList; track item) {
+                        <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-col>
+            <ion-col size="6">
+                <ion-label>Birth Date</ion-label>
+                @if (afterInit()) {
+                    <ion-datetime-button datetime="memberbirthdate"></ion-datetime-button>
+                }
+            </ion-col>
+            <ion-col size="6" class="d-flex ">
+                <ion-input label="Year" name="memberAgeYYY" placeholder="Year" 
+                    labelPlacement="stacked" fill="outline" type="text" mode="md" max="150" min="0" maxlength="3"
+                    [(ngModel)]="labCartMemberObj.AgeYYY" > </ion-input>
+                <ion-input label="Month" name="memberAgeMM" placeholder="Month"
+                    labelPlacement="stacked" fill="outline" type="text" mode="md" max="12" min="0" maxlength="2"
+                    [(ngModel)]="labCartMemberObj.AgeMM"> </ion-input>
+                <ion-input label="Days" name="memberAgeDD" placeholder="Days"
+                    labelPlacement="stacked" fill="outline" type="text" mode="md"  max="31" min="0" maxlength="2" 
+                    [(ngModel)]="labCartMemberObj.AgeDD"> </ion-input>
+            </ion-col>
+            <ion-col size="12">
+                <ion-select name="memberGender" [(ngModel)]="labCartMemberObj.Gender" required="true" 
+                interface="modal" mode="md"  labelPlacement="stacked"
+                fill="outline" placeholder="Select Gender">
+                @for (item of genderList; track item) {
+                    <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                }
+            </ion-select>
+            </ion-col>
+            <ion-col size="12">
+                <ion-input label="Email Id" name="memberEmailid" mode="md" labelPlacement="stacked" fill="outline"
+                type="email" placeholder="Email Id" [(ngModel)]="labCartMemberObj.EmailId"> </ion-input>
+            </ion-col>
+            <ion-col size="12">
+                <ion-input label="Mobile No" name="memberMobileNo" mode="md" labelPlacement="stacked" fill="outline"
+                type="text" placeholder="Mobile No" [(ngModel)]="labCartMemberObj.Mobile"> </ion-input>
+            </ion-col>
+            <ion-col size="6">
+            <ion-button fill="outline" expand="block" [size]="'medium'" (click)="onFamilyMemberCancel()">
+                Cancel
+            </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button fill="solid" expand="block" [size]="'medium'" color="primary" (click)="onMemberSaveClick()">
+                    Save Member
+                </ion-button>
+            </ion-col>
+        </ion-row>
+         <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+                <ion-datetime id="memberbirthdate" presentation="date" [showDefaultButtons]="true" (ionChange)="onMemberBirthdateChange()"
+                    [max]="searchMaxDate" [formatOptions]="customFormatOptions" name="memberbirthdate"
+                    [(ngModel)]="labCartMemberObj.BirthDate" [preferWheel]="true">
+                </ion-datetime>
+            </ng-template>
+        </ion-modal>
+        </ng-template>
+    </ion-modal>
+    <!-- Family Members -->
+    
+    <!-- Family Addresses -->
+    <ion-modal [initialBreakpoint]="1" [breakpoints]="[0, 1]" #FamilyAddressesModal>
+        <ng-template>
+            <ion-row class="p-2 filter-modal">
+                <ion-col size="12" class="m-1">
+                    <h3 class="text-xl text-gray-900 font-700">
+                    @if(this.labCartMemberAddressObj.MemberAddressId > 0){
+                        Edit 
+                    }
+                    @else {
+                        Add 
+                    }
+                    Address</h3>
+                </ion-col>
+                <ion-col size="12">
+                    <ion-textarea label="Member Address" name="memberAddress" mode="md" labelPlacement="stacked" fill="outline"
+                            type="text" placeholder="Enter Address" [(ngModel)]="labCartMemberAddressObj.Address"> </ion-textarea>
+                </ion-col>
+                <ion-col size="12">
+                    <ion-select name="memberCity" [(ngModel)]="labCartMemberAddressObj.CityId" required="true"
+                        interface="modal" mode="md" (ionChange)="onCityChange()" labelPlacement="stacked"
+                        fill="outline" placeholder="Select City">
+                        @for (item of cityList; track item) {
+                            <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-col>
+                <ion-col size="12">
+                    <ion-select name="memberArea" [(ngModel)]="labCartMemberAddressObj.AreaId" required="true"
+                        interface="modal" mode="md" labelPlacement="stacked"
+                        fill="outline" placeholder="Select Area">
+                        @for (item of filterAreaList; track item) {
+                            <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button fill="outline" expand="block" [size]="'medium'" (click)="onAddressCancel()">
+                        Cancel
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button fill="solid" expand="block" [size]="'medium'" color="primary" (click)="onAddressSaveClick()">
+                        Save Address
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+            
+        </ng-template>
+    </ion-modal>
 
 </ion-content>

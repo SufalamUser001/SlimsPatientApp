@@ -1,0 +1,61 @@
+@if(!isShowViewMore){
+<ion-content class="ion-padding">
+  <ng-template [ngTemplateOutlet]="packages">
+  </ng-template>
+</ion-content>
+}
+@else{
+<ng-template [ngTemplateOutlet]="packages">
+</ng-template>
+}
+
+<ng-template #packages>
+<div class="d-flex flex-column gap-2 mt-4">
+  <div class="d-flex justify-content-between ">
+    <div class="d-flex flex-column">
+      <h2 class="font-700">
+        Popular Test Packages
+      </h2>
+      <p class="text-sm text-gray-600 font-500 mb-2">Most frequently booked diagnostic tests and health checkup packages</p>
+    </div>
+    @if(isShowViewMore){
+    <ion-button fill="clear" class="text-blue-600" (click)="packageViewAllClick.emit()">
+      <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
+      View more</ion-button>
+    }
+  </div>
+  <div class="d-flex flex-column flex-md-row gap-2">
+    @for (package of popular_packages; track $index; let i = $index) {
+          <ion-card class="m-0 package-card">
+            <div class="package-card-img">
+              @if(package.image && package.image.length > 0){
+                <img alt="" [src]="'data:image/jpeg;base64,' + package.image" style="width:100%; height:100%">
+              }@else{
+                <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+              }
+            </div>
+         
+            
+              <ion-card-header>
+                <ion-card-title>{{package.ServiceName}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <p class="text-xs text-gray-600 font-500">{{package.subtext}}</p>
+                <span class="text-primary font-700 mt-2 mb-3 text-3xl"> &#8377;{{package.Amount}}</span>
+                @if(package.IsAddedInCart){
+                  <ion-button color="success" expand="block">
+                    <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                  Added To Cart</ion-button>
+                }
+                @else{
+                  <ion-button color="primary" expand="block">
+                    <ion-icon name="cart-outline" slot="start"></ion-icon>
+                  Add To Cart</ion-button>
+                }
+                
+              </ion-card-content>
+          </ion-card>
+      }
+  </div>
+</div>
+</ng-template>
