@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon, IonSelect, IonCol, IonSelectOption, IonDatetimeButton, IonAccordionGroup, IonAccordion, IonModal, IonText, IonList, IonItem, IonLabel, IonDatetime } from "@ionic/angular/standalone";
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon, IonSelect, IonCol, IonSelectOption, IonDatetimeButton, IonAccordionGroup, IonAccordion, IonModal, IonText, IonList, IonItem, IonLabel, IonDatetime, IonChip, IonGrid } from "@ionic/angular/standalone";
 import { SharedService } from '../../service/shared-service/shared.service';
 import { SlimsPatientApplicationService } from '../../service/laboratory-service/lims-patientapp.service';
 import { FormsModule } from '@angular/forms';
@@ -10,10 +10,10 @@ import { CommonModule } from '@angular/common';
     templateUrl: 'orders.page.html',
     styleUrls: ['orders.page.scss'],
     standalone : true,
-    imports: [IonLabel, IonItem, IonList, IonText, IonContent, IonToolbar, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon, 
-      IonSelect, IonCol, IonSelectOption, IonDatetimeButton,IonDatetime,
+    imports: [IonChip, IonLabel, IonItem, IonList, IonText, IonContent, IonToolbar, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon,
+    IonSelect, IonCol, IonSelectOption, IonDatetimeButton, IonDatetime,
     IonAccordionGroup, CommonModule, FormsModule,
-    IonAccordion, IonModal],
+    IonAccordion, IonModal, IonGrid],
 })
 export class OrdersPage {
 
@@ -97,6 +97,38 @@ export class OrdersPage {
       }
     }
     this.filterRegistrationDetails = Object.assign([],mylist);
+  }
+
+    public GetPaymentReceipt(data) {
+      this.sharedService.isBusy = true;
+      this.slimsPatientService.DownloadReceiptForLabCartPatient(data.LabId, data.B2CPassword).subscribe(
+      (response: any) => {
+        this.sharedService.isBusy = false;
+        if (response.IsSuccess) {
+
+        } else {
+          this.sharedService.isBusy = false;
+          this.sharedService.HandleAuthenticationError(response.Error);
+        }
+      });
+    }
+
+  public GenerateLabReport(data) {
+    this.sharedService.isBusy = true;
+    this.slimsPatientService.DownloadReportForLabCartPatient(data.LabId, data.B2CPassword).subscribe(
+      (response: any) => {
+        this.sharedService.isBusy = false;
+        if (response.IsSuccess) {
+
+        } else {
+          this.sharedService.isBusy = false;
+          this.sharedService.HandleAuthenticationError(response.Error);
+        }
+      });
+  }
+
+  GetPatientPayment(data){
+
   }
 
 }

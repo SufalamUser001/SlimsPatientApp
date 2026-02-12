@@ -53,7 +53,6 @@ export class AuthService {
     }
 
     public checkUserLogin() {
-debugger
         Preferences.get({ key: 'auth' }).then((res)=>{
             if (res.value) {
                 let auth = res.value;
@@ -75,7 +74,6 @@ debugger
     
 
     public async navigateToLogin() {
-        debugger
       var IsLoginOnce = await  Preferences.get({ key: 'IsLoginOnce' }).then((res) => {
             return res.value;
        

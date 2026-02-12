@@ -16,115 +16,34 @@
     }
   </swiper-container>
 
-<div class="d-flex flex-column gap-2 mt-4">
-  <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column">
-      <h2 class="font-700">
-        Popular Test Packages
-      </h2>
-      <p class="text-sm text-gray-600 font-500 mb-2">Most booked diagnostic tests</p>
-    </div>
-    <ion-button fill="clear" class="text-blue-600">
-      <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
-      View more</ion-button>
+<app-packages [isShowViewMore]="true"  (packageViewAllClick)="onPackagesViewClick()"></app-packages>
+
+<app-organ [IsCompactView]="true"  (organViewAllClick)="onOrganViewAllClick()" (organClickemit)="onOrganViewAllClick($event)"></app-organ>
+
+<app-disease [IsCompactView]="true"  (diseaseViewAllClick)="onDiseaseViewAllClick()" (diseaseClickemit)="onDiseaseViewAllClick($event)"></app-disease>
+
+<div class="d-flex flex-column  flex-md-row gap-2 mt-3">
+  <div class="bg-blue-50 px-3 py-2 rounded-3 ">
+    <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
+      <ion-icon name="earth-outline" class="text-blue-600"></ion-icon>
+      Wide Networks
+    </h4>
+    <p class="font-500 text-gray-500"> Access to 500+ diagnostic centers across the country</p>
   </div>
-  <div class="d-flex flex-column flex-md-row gap-2">
-    @for (package of popular_packages; track $index) {
-          <ion-card class="m-0 package-card">
-            <div class="package-card-img">
-              @if(package.image && package.image.length > 0){
-                <img alt="" [src]="'data:image/jpeg;base64,' + package.image" style="width:100%; height:100%">
-              }@else{
-                <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-              }
-            </div>
-         
-            
-              <ion-card-header>
-                <ion-card-title>{{package.ServiceName}}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <p class="text-xs text-gray-600 font-500">{{package.subtext}}</p>
-                <span class="text-primary font-700 mt-2 mb-3 text-3xl"> &#8377;{{package.Amount}}</span>
-                <ion-button color="primary" expand="block">
-                  <ion-icon name="cart-outline" slot="start"></ion-icon>
-                  Add To Cart</ion-button>
-              </ion-card-content>
-          </ion-card>
-      }
+  <div class="bg-green-50 p-3 rounded-3 ">
+    <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
+      <ion-icon name="earth-outline" class="text-green-600"></ion-icon>
+      Fast Results
+    </h4>
+    <p class="font-500 text-gray-500"> Get your reports within 24-48 hours digitally</p>
+  </div>
+  <div class="bg-purple-50 p-3 rounded-3 ">
+    <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
+      <ion-icon name="earth-outline" class="text-purple-600"></ion-icon>
+      Best Prices
+    </h4>
+    <p class="font-500 text-gray-500"> Competitive pricing with no hidden charges</p>
   </div>
 </div>
-
-<div class="d-flex flex-column gap-2 mt-4">
-  <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column">
-      <h2 class="font-700">
-        Tests by Organ
-      </h2>
-      <p class="text-sm text-gray-600 font-500 mb-2">Select organ to view related tests</p>
-    </div>
-    <ion-button fill="clear" class="text-indigo-600">
-      <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
-      View more
-    </ion-button>
-  </div>
-  <div class="d-flex gap-2 container-h-scoll" >
-    @for (org of organtest; track $index;let i = $index) {
-    <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3">
-        <i class="fa {{ org.icon }} text-3xl" aria-hidden="true"></i>
-        <p class="mb-0 mt-1 text-sm font-600"> {{org.name}} </p>
-        <div class="overlay"></div>
-    </button>
-  }
-  </div>
-</div>
-
-<div class="d-flex flex-column gap-2 mt-4">
-  <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column">
-      <h2 class="font-700">
-        Tests by Disease
-      </h2>
-      <p class="text-sm text-gray-600 font-500 mb-2">Select disease to view related tests</p>
-    </div>
-    <ion-button fill="clear" class="text-orange-600">
-      <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
-      View more
-    </ion-button>
-  </div>
-  <div class="d-flex gap-2 container-h-scoll" >
-    @for (dis of Diseasetest; track $index;let i = $index) {
-    <button class=" btn-box-{{colorsList2[i]}} dash-btn p-4 rounded-3">
-        <i class="fa {{dis.icon }} text-3xl" aria-hidden="true"></i>
-        <p class="mb-0 mt-1 text-sm font-600"> {{dis.name}} </p>
-        <div class="overlay"></div>
-    </button>
-  }
-  </div>
-</div>
-
-  <div class="d-flex flex-column  flex-md-row gap-2 mt-3">
-    <div class="bg-blue-50 px-3 py-2 rounded-3 ">
-      <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
-        <ion-icon name="earth-outline" class="text-blue-600"></ion-icon>
-        Wide Networks
-      </h4>
-      <p class="font-500 text-gray-500"> Access to 500+ diagnostic centers across the country</p>
-    </div>
-    <div class="bg-green-50 p-3 rounded-3 ">
-      <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
-        <ion-icon name="earth-outline" class="text-green-600"></ion-icon>
-        Fast Results
-      </h4>
-      <p class="font-500 text-gray-500"> Get your reports within 24-48 hours digitally</p>
-    </div>
-    <div class="bg-purple-50 p-3 rounded-3 ">
-      <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
-        <ion-icon name="earth-outline" class="text-purple-600"></ion-icon>
-        Best Prices
-      </h4>
-      <p class="font-500 text-gray-500"> Competitive pricing with no hidden charges</p>
-    </div>
-  </div>
 
 </ion-content>
