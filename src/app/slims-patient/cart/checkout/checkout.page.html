@@ -1,5 +1,92 @@
 
 
-<ion-content >
-Test
+<ion-content class="ion-padding">
+<div class="d-flex flex-column gap-2 mt-3 mb-2">
+  <div class="d-flex justify-content-between ">
+    <div class="d-flex flex-column">
+      <h2 class="font-700">
+        Checkout
+      </h2>
+    </div>
+  </div>
+</div>
+    <div class="d-flex flex-column gap-1">
+        <div class="d-flex card border-card p-3 ps-4 pe-4 w-100">
+            <div class="title-row">
+                <span class="text-base w-70 font-600">Select Family Member</span>
+                <ion-radio-group [allowEmptySelection]="true" (ionChange)="patientChange($event)">
+                    @if(labCartPatientObj){
+                        @if(labCartPatientObj.MemberList && labCartPatientObj.MemberList.length > 0){
+                            @for(memberData of labCartPatientObj.MemberList;track memberData; let i = $index){
+                            <div class="d-flex card border-card p-3 mt-3 w-100">
+                                <ion-radio justify="start" labelPlacement="end" [value]="memberData.PatientId"><span class="font-600">{{ memberData.PatientName }}</span>
+                                    <div class="text-sm text-gray-500 font-600">
+                                        {{memberData.Relation}} • {{memberData.AgeString}} • {{memberData.GenderName}}
+                                    </div>
+                                </ion-radio>
+                            </div>
+                            }
+                        }
+                    }
+                    @else{
+                        <div class="text-center py-5  w-100">
+                            <p class="text-gray-500 text-sm mt-1 pt-1 font-500" >No family members added</p>
+                            <ion-button color="primary" class="font-600" (click)="openProfilePage()">Add Family Member</ion-button>
+                        </div>
+                    }
+                </ion-radio-group>
+                
+            </div>
+        </div>
+        <div class="d-flex card border-card p-3 ps-4 pe-4 w-100">
+            <div class="title-row">
+                <span class="text-base w-70 font-600">Select Address</span>
+                @if(labCartPatientObj){
+                    @if(labCartPatientObj.MemberAddressList && labCartPatientObj.MemberAddressList.length > 0){
+                        @for(memberAddressData of labCartPatientObj.MemberAddressList; track memberAddressData; let j = $index){
+                        <ion-radio-group [allowEmptySelection]="true">
+                            <div class="d-flex card border-card p-3 mt-3 w-100">
+                                <ion-radio justify="start" labelPlacement="end" [value]="j"><span class="font-600">{{ memberAddressData.Address }}</span>
+                                    <div class="text-sm text-gray-500 font-600">
+                                        {{ memberAddressData.AreaName }}, {{ memberAddressData.CityName }}
+                                    </div>
+                                </ion-radio>
+                            </div>
+                        </ion-radio-group>
+                        }
+                    }
+                }
+                @else {
+                <div class="text-center py-5 w-100">
+                    <p class="text-gray-500 text-sm mt-1 pt-1 font-500" >No addresses added</p>
+                    <ion-button color="primary" class="font-600" (click)="openProfilePage()">Add Addresses</ion-button>
+                </div>
+                }
+                
+                
+            </div>
+        </div>
+        <div class="d-flex card border-card p-3 ps-4 pe-4 w-100">
+        <div class="d-flex justify-content-between mb-3 align-items-center title-row">
+            <h6 class="font-600">Order Summary</h6>
+        </div>
+        @if(popular_packages && popular_packages.length > 0){
+            @for(service of popular_packages; track service; let k = $index){
+            <div class="d-flex justify-content-between text-sm font-500 text-gray-600 pb-2">
+                <div>{{service.ServiceName}}</div>
+                <div>₹{{service.Amount}}</div>
+            </div>
+            }
+        }
+        <div class="d-flex justify-content-between align-items-center border-top pt-2 pb-3">
+            <h6 class="font-600">Total</h6>
+            <h6 class="font-600">₹1000</h6>
+        </div>
+        <ion-row>
+            <ion-col size="12" class="p-0">
+                <ion-button color="primary" class="font-600" expand="block" (click)="onPlaceOrderClick()">Place Order</ion-button>
+            </ion-col>
+        </ion-row>
+        </div>
+    </div>
 </ion-content>

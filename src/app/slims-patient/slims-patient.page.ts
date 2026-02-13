@@ -1,6 +1,6 @@
 import { LocationStrategy } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, viewChild, ViewChild } from '@angular/core';
-import { IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs, IonModal, IonContent, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonList, IonItem, ActionSheetController, IonRouterOutlet, IonTab } from "@ionic/angular/standalone";
+import { IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs, IonModal, IonContent, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonList, IonItem, ActionSheetController, IonRouterOutlet, IonTab, IonBadge } from "@ionic/angular/standalone";
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SharedService } from '../service/shared-service/shared.service';
 import { filter, map } from 'rxjs';
@@ -10,7 +10,7 @@ import { filter, map } from 'rxjs';
     templateUrl: 'slims-patient.page.html',
     styleUrls: ['slims-patient.page.scss'],
     standalone : true,
-    imports: [IonTab, IonRouterOutlet, IonItem, IonList, IonTitle, IonButtons, IonToolbar, IonHeader, IonButton, IonContent, IonModal, IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs ],
+    imports: [IonBadge, IonTab, IonRouterOutlet, IonItem, IonList, IonTitle, IonButtons, IonToolbar, IonHeader, IonButton, IonContent, IonModal, IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs,IonBadge ],
     
 })
 

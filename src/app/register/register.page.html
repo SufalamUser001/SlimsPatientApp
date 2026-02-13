@@ -80,7 +80,7 @@
             <ion-col size="12">
                 <ion-input-otp length="6" pattern="[0-9]" type="text" [(ngModel)]="signupObj.OTP"  name="otp1" fill="outline" inputmode="numeric" > 
                
-                    Didn't get a code? <a (click)="onSendOTPClick()" [class.disabled]="isDisableResendbtn">Resend the code</a> 
+                    Didn't get a code? <a (click)="onSendOTPClick()" [class.disabledDiv]="isDisableResendbtn">Resend the code</a> 
                
                 </ion-input-otp>
             </ion-col>

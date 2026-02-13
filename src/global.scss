@@ -163,3 +163,8 @@ a {
     height: 50px;
     width: 50px;
 }
+
+.disabledDiv{
+  pointer-events: none;
+  opacity: 0.8;
+}

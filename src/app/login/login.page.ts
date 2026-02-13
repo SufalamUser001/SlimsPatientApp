@@ -188,4 +188,8 @@ export class LoginPage {
   onSingUpbtnClick(){
     this.sharedService.authService.navigateToRegister();
   }
+
+  onForgotPasswordClick(){
+    this.router.navigate(['forgot-password'])
+  }
 }

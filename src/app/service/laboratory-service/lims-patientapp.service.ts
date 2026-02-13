@@ -42,6 +42,18 @@ export class SlimsPatientApplicationService {
       ChangeLabCartPassword(data){
         return this.baseService.post(this.labcartApiEndPoint + 'ChangeLabCartPassword', data);
       }
+
+      SendLabCartPatientForgotPasswordOTP(data) {
+        return this.baseService.post(this.labcartApiEndPoint + 'SendLabCartPatientForgotPasswordOTP', {Mobile : data.UserId});
+      }
+    
+      CheckForgotPasswordOTPForLabCart(data: ForgotPasswordModel) {
+        return this.baseService.post(this.labcartApiEndPoint + 'CheckForgotPasswordOTPForLabCart', {Mobile : data.UserId,OTP : data.OTP});
+      }
+
+      ChangeLabCartPasswordWithOTP(data){
+        return this.baseService.post(this.labcartApiEndPoint + 'ChangeLabCartPasswordWithOTP', data);
+      }
     
       SetLabCartPassword(data){
         return this.baseService.post(this.labcartApiEndPoint + 'SetLabCartPassword', data);

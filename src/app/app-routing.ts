@@ -27,5 +27,9 @@ export const approutes: Routes = [
     loadComponent: () => import('./slims-patient/slims-patient.page').then(m => m.SlimsPatientComponent),
     children: PatientAppRouting
   },
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage),
+  },
 ];
 
