@@ -1,6 +1,6 @@
 <ion-content class="ion-padding">
     <div class="card border-card p-3">
-        <div class="d-flex justify-content-start align-items-center mb-4">
+        <div class="d-flex justify-content-start align-items-center mb-2">
             <div class="w-20 h-20 rounded-circle bg-blue-100">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -11,19 +11,19 @@
                 </svg>
             </div>
             <div class="ms-3">
-                <div class="text-2xl text-gray-900 font-700">
-                    {{ labCartPatientObj.PatientName }}
+                <div class="text-xl text-gray-900 font-700">
+                    {{ sharedService.labCartPatientObj.PatientName }}
                 </div>
-                @if(labCartPatientObj.Mobile){
-                <div class="text-gray-600 font-500">
+                @if(sharedService.labCartPatientObj.Mobile){
+                <div class="text-gray-600 font-500 text-sm">
                     <ion-icon name="call-outline"></ion-icon>
-                    {{ labCartPatientObj.Mobile }}
+                    {{ sharedService.labCartPatientObj.Mobile }}
                 </div>
                 }
-                @if(labCartPatientObj.EmailId){
-                <div class="text-gray-600 font-500">
+                @if(sharedService.labCartPatientObj.EmailId){
+                <div class="text-gray-600 font-500 text-sm">
                     <ion-icon name="mail-outline"></ion-icon>
-                    {{ labCartPatientObj.EmailId }}
+                    {{ sharedService.labCartPatientObj.EmailId }}
                 </div>
                 }
 
@@ -34,14 +34,14 @@
                 <ion-icon name="card-outline"></ion-icon>
                 <div class="ms-2 font-600">
                     <p class="text-xs text-blue-600 m-0">Membership ID</p>
-                    <p class="text-sm text-blue-900 m-0">{{ labCartPatientObj.MembershipId }}</p>
+                    <p class="text-sm text-blue-900 m-0">{{ sharedService.labCartPatientObj.MembershipId }}</p>
                 </div>
             </div>
             <div class="d-flex align-items-center">
                 <ion-icon name="person-outline"></ion-icon>
                 <div class="ms-2 font-600">
                     <p class="text-xs text-blue-600 m-0">Patient ID</p>
-                    <p class="text-sm text-blue-900 m-0">{{ labCartPatientObj.PatientId }}</p>
+                    <p class="text-sm text-blue-900 m-0">{{ sharedService.labCartPatientObj.PatientId }}</p>
                 </div>
             </div>
         </div>
@@ -63,10 +63,10 @@
             </ion-segment-button>
         </ion-segment>
         <ion-segment-view>
-            <ion-segment-content id="default" class="mt-2">
+            <ion-segment-content id="default" >
                 <ion-row>
                     <ion-col size="12">
-                        <div class="d-flex justify-content-between mb-3">
+                        <div class="d-flex justify-content-between mb-1">
                             <h2 class="text-xl font-700 text-gray-900">Personal Information</h2>
                             @if(!IsPInfoEdit){
                                 <ion-button color="primary" size="small" fill="clear" (click)="onPEEdit()">
@@ -77,7 +77,7 @@
                     </ion-col>
                     @if(IsPInfoEdit){
                     <ion-col size="12">
-                        <ion-select name="RegistrationBranchId1" [(ngModel)]="labCartPatientObj.TitleId" required="true"
+                        <ion-select name="RegistrationBranchId1" [(ngModel)]="sharedService.labCartPatientObj.TitleId" required="true"
                             interface="modal" mode="md" (ionChange)="onTitleChange()" labelPlacement="stacked" [disabled]="!IsPInfoEdit"
                             fill="outline" placeholder="Select Title">
                             @for (item of titleList; track item) {
@@ -87,16 +87,16 @@
                     </ion-col>
                     <ion-col size="12">
                         <ion-input label="First Name" name="firstname" mode="md" labelPlacement="stacked" fill="outline" [disabled]="!IsPInfoEdit"
-                            type="text" placeholder="First Name" [(ngModel)]="labCartPatientObj.FirstName"> </ion-input>
+                            type="text" placeholder="First Name" [(ngModel)]="sharedService.labCartPatientObj.FirstName"> </ion-input>
                     </ion-col>
                     <ion-col size="6">
                         <ion-input label="Middle Name" name="middleName" placeholder="Middle Name" [disabled]="!IsPInfoEdit"
                             labelPlacement="stacked" fill="outline" type="text" mode="md"
-                            [(ngModel)]="labCartPatientObj.MiddleName"> </ion-input>
+                            [(ngModel)]="sharedService.labCartPatientObj.MiddleName"> </ion-input>
                     </ion-col>
                     <ion-col size="6">
                         <ion-input label="Last Name" name="lastname" mode="md" labelPlacement="stacked" fill="outline" [disabled]="!IsPInfoEdit"
-                            type="text" placeholder="Last Name" [(ngModel)]="labCartPatientObj.LastName"> </ion-input>
+                            type="text" placeholder="Last Name" [(ngModel)]="sharedService.labCartPatientObj.LastName"> </ion-input>
                     </ion-col>
 
                     <ion-col size="6">
@@ -108,16 +108,16 @@
                     <ion-col size="6" class="d-flex ">
                         <ion-input label="Year" name="AgeYYY" placeholder="Year" 
                             labelPlacement="stacked" fill="outline" type="text" mode="md" max="150" min="0" maxlength="3" [disabled]="!IsPInfoEdit"
-                            [(ngModel)]="labCartPatientObj.AgeYYY" > </ion-input>
+                            [(ngModel)]="sharedService.labCartPatientObj.AgeYYY" > </ion-input>
                         <ion-input label="Month" name="AgeMM" placeholder="Month"
                             labelPlacement="stacked" fill="outline" type="text" mode="md" max="12" min="0" maxlength="2" [disabled]="!IsPInfoEdit"
-                            [(ngModel)]="labCartPatientObj.AgeMM"> </ion-input>
+                            [(ngModel)]="sharedService.labCartPatientObj.AgeMM"> </ion-input>
                         <ion-input label="Days" name="AgeDD" placeholder="Days"
                             labelPlacement="stacked" fill="outline" type="text" mode="md"  max="31" min="0" maxlength="2" [disabled]="!IsPInfoEdit"
-                            [(ngModel)]="labCartPatientObj.AgeDD"> </ion-input>
+                            [(ngModel)]="sharedService.labCartPatientObj.AgeDD"> </ion-input>
                     </ion-col>
                     <ion-col size="12">
-                        <ion-select name="gender" [(ngModel)]="labCartPatientObj.Gender" required="true" [disabled]="!IsPInfoEdit"
+                        <ion-select name="gender" [(ngModel)]="sharedService.labCartPatientObj.Gender" required="true" [disabled]="!IsPInfoEdit"
                         interface="modal" mode="md"  labelPlacement="stacked"
                         fill="outline" placeholder="Select Gender">
                         @for (item of genderList; track item) {
@@ -127,11 +127,11 @@
                     </ion-col>
                     <ion-col size="12">
                         <ion-input label="EmailId" name="emailid" mode="md" labelPlacement="stacked" fill="outline" [disabled]="!IsPInfoEdit"
-                        type="email" placeholder="EmailId" [(ngModel)]="labCartPatientObj.EmailId"> </ion-input>
+                        type="email" placeholder="EmailId" [(ngModel)]="sharedService.labCartPatientObj.EmailId"> </ion-input>
                     </ion-col>
                     <ion-col size="12">
                         <ion-input label="Mobile No" name="mobileNo" mode="md" labelPlacement="stacked" fill="outline"
-                            type="text" placeholder="Mobile No" [(ngModel)]="labCartPatientObj.Mobile"> </ion-input>
+                            type="text" placeholder="Mobile No" [(ngModel)]="sharedService.labCartPatientObj.Mobile"> </ion-input>
                     </ion-col>
                    
                     <ion-col size="6">
@@ -148,30 +148,30 @@
                     @else{
                         <ion-col size="12">
                             <div class="text-gray-600 font-600">Full Name</div>
-                            <div class="text-sm">{{ labCartPatientObj.PatientName }}</div>
+                            <div class="text-sm">{{ sharedService.labCartPatientObj.PatientName }}</div>
                         </ion-col>
-                        @if(labCartPatientObj.GenderName){
+                        @if(sharedService.labCartPatientObj.GenderName){
                         <ion-col size="12">
                            <div class="text-gray-600 font-600">Gender</div>
-                            <div class="text-sm">{{ labCartPatientObj.GenderName }}</div>
+                            <div class="text-sm">{{ sharedService.labCartPatientObj.GenderName }}</div>
                         </ion-col>
                         }
-                        @if(labCartPatientObj.AgeString){
+                        @if(sharedService.labCartPatientObj.AgeString){
                         <ion-col size="12">
                            <div class="text-gray-600 font-600">Age</div>
-                            <div class="text-sm">{{ labCartPatientObj.AgeString }}</div>
+                            <div class="text-sm">{{ sharedService.labCartPatientObj.AgeString }}</div>
                         </ion-col>
                         }
-                        @if(labCartPatientObj.EmailId){
+                        @if(sharedService.labCartPatientObj.EmailId){
                         <ion-col size="12">
                             <div class="text-gray-600 font-600">Email Id</div>
-                            <div class="text-sm">{{ labCartPatientObj.EmailId }}</div>
+                            <div class="text-sm">{{ sharedService.labCartPatientObj.EmailId }}</div>
                         </ion-col>
                         }
-                        @if(labCartPatientObj.Mobile){
+                        @if(sharedService.labCartPatientObj.Mobile){
                         <ion-col size="12">
                             <div class="text-gray-600 font-600">Mobile No</div>
-                            <div class="text-sm">{{ labCartPatientObj.Mobile }}</div>
+                            <div class="text-sm">{{ sharedService.labCartPatientObj.Mobile }}</div>
                         </ion-col>
                         }
                        
@@ -182,7 +182,7 @@
                     <ng-template>
                         <ion-datetime id="birthdate1" presentation="date" [showDefaultButtons]="true" (ionChange)="onBirthdateChange()"
                             [max]="searchMaxDate" [formatOptions]="customFormatOptions" name="birthdate1"
-                            [(ngModel)]="labCartPatientObj.BirthDate" [preferWheel]="true">
+                            [(ngModel)]="sharedService.labCartPatientObj.BirthDate" [preferWheel]="true">
                         </ion-datetime>
                     </ng-template>
                 </ion-modal>
@@ -190,20 +190,17 @@
             <ion-segment-content id="members">
                 <ion-row class="w-100">
                     <ion-col size="12">
-                        <div class="d-flex justify-content-between mb-3">
+                        <div class="d-flex justify-content-between mb-1">
                             <h2 class="text-xl font-700 text-gray-900">Family members</h2>
-                            @if(!IsPInfoEdit){
                                 <ion-button color="primary" size="small" fill="clear" (click)="onAddMemberAddClick()">
                                     <ion-icon name="add-outline" ></ion-icon>
                                 </ion-button>
-                                }
-
                         </div>
                     </ion-col>
 
-                    @if(this.labCartPatientObj.MemberList && this.labCartPatientObj.MemberList.length > 1){
-                        @for (data of this.labCartPatientObj.MemberList; track $index;let i = $index) {
-                            @if(i > 0){
+                    @if(this.sharedService.labCartPatientObj.MemberList && this.sharedService.labCartPatientObj.MemberList.length > 1){
+                        @for (data of this.sharedService.labCartPatientObj.MemberList; track $index;let i = $index) {
+                            @if(data.PatientId != this.sharedService.labCartPatientObj.PatientId){
                             <div class="card border-card p-3 w-100">
                                 <div class="d-flex justify-content-between align-items-center title-row">
                                     <h6 class="font-600 text-gray-700">{{ data.PatientName }}</h6>
@@ -211,9 +208,11 @@
                                         <ion-button color="primary" size="small" fill="clear" (click)="onAddMemberAddClick(data)">
                                             <ion-icon slot="icon-only" name="pencil-outline" ></ion-icon>
                                         </ion-button>
-                                        <ion-button color="danger" size="small" fill="clear" (click)="onDeleteMemberClick(data)">
-                                            <ion-icon slot="icon-only" name="trash-outline" ></ion-icon>
-                                        </ion-button>
+                                       
+                                            <ion-button color="danger" size="small" fill="clear" (click)="onDeleteMemberClick(data)">
+                                                <ion-icon slot="icon-only" name="trash-outline" ></ion-icon>
+                                            </ion-button>
+                                   
                                     </div>
                                 </div>
                             
@@ -268,19 +267,16 @@
             <ion-segment-content id="address">
                 <ion-row class="w-100">
                     <ion-col size="12">
-                        <div class="d-flex justify-content-between mb-3">
+                        <div class="d-flex justify-content-between mb-1">
                             <h2 class="text-xl font-700 text-gray-900">Family Addresses</h2>
-                            @if(!IsPInfoEdit){
                                 <ion-button color="primary"  size="small" fill="clear" (click)="onAddressAddClick()">
                                     <ion-icon name="add-outline" ></ion-icon>
                                 </ion-button>
-                                }
-
                         </div>
                     </ion-col>
 
-                    @if(this.labCartPatientObj.MemberAddressList && this.labCartPatientObj.MemberAddressList.length > 0){
-                        @for (data of this.labCartPatientObj.MemberAddressList; track $index;let i = $index) {
+                    @if(this.sharedService.labCartPatientObj.MemberAddressList && this.sharedService.labCartPatientObj.MemberAddressList.length > 0){
+                        @for (data of this.sharedService.labCartPatientObj.MemberAddressList; track $index;let i = $index) {
                             <div class="card border-card p-3 w-100">
                                 <div class="d-flex justify-content-between align-items-center title-row">
                                     <div class="d-flex align-items-center">
@@ -490,6 +486,7 @@
                 </ion-col>
                 <ion-col size="12">
                     <ion-textarea label="Member Address" name="memberAddress" mode="md" labelPlacement="stacked" fill="outline"
+                    rows="3"
                             type="text" placeholder="Enter Address" [(ngModel)]="labCartMemberAddressObj.Address"> </ion-textarea>
                 </ion-col>
                 <ion-col size="12">
@@ -510,6 +507,21 @@
                         }
                     </ion-select>
                 </ion-col>
+                <ion-col size="5">
+                    <ion-input label="Latitude" name="latitute" placeholder="latitute" [disabled]="!IsPInfoEdit"
+                    labelPlacement="stacked" fill="outline" type="text" mode="md"
+                    [(ngModel)]="labCartMemberAddressObj.Latitude"> </ion-input>
+                </ion-col>
+                <ion-col size="5">
+                    <ion-input label="Longitude" name="longitude" placeholder="longitude" [disabled]="!IsPInfoEdit"
+                    labelPlacement="stacked" fill="outline" type="text" mode="md"
+                    [(ngModel)]="labCartMemberAddressObj.Longitude"> </ion-input>
+                </ion-col>
+                <ion-col size="2">
+                    <ion-button  fill="outline" [size]="'medium'"  color="medium" (click)="onMapIconClick()">
+                        <ion-icon  name="location" color="medium" ></ion-icon>
+                    </ion-button>
+                </ion-col>
                 <ion-col size="6">
                     <ion-button fill="outline" expand="block" [size]="'medium'" (click)="onAddressCancel()">
                         Cancel
@@ -521,7 +533,7 @@
                     </ion-button>
                 </ion-col>
             </ion-row>
-            
+            <app-map-modal [maptitle]="'Select Your Address'"  (MarkerSelectedEmit)="onMapSelectedEvent($event)"  #appModalPage></app-map-modal>
         </ng-template>
     </ion-modal>
 

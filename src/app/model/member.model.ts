@@ -200,4 +200,7 @@ export class PatientModel extends SufalamModifiedByModel {
 
     @Exclude()
     public IsPasswordAvailable  = false;
+
+    @Exclude()
+    public IsSelected  = false;
 }

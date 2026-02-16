@@ -39,7 +39,7 @@ export class AuthGuardLogin {
           let auth = res.value;
           var authenticationModel: AuthenticationModel = new AuthenticationModel(JSON.parse(auth));
           if (authenticationModel.loginUserId && authenticationModel.loginUserToken) {
-            this.sharedService.authService.setUserLogin(authenticationModel.loginUserId,  authenticationModel.loginUserToken,authenticationModel.PatientId, authenticationModel.PatientName,  authenticationModel.CityId,  authenticationModel.CityName,authenticationModel.IsPasswordAvailable,authenticationModel.Photograph)
+            this.sharedService.authService.setUserLogin(authenticationModel.loginUserId,  authenticationModel.loginUserToken,authenticationModel.PatientId, authenticationModel.PatientName,  authenticationModel.CityId,  authenticationModel.CityName,authenticationModel.IsPasswordAvailable,authenticationModel.Photograph,authenticationModel.MapAPIKey)
       
             return true;
           }else{

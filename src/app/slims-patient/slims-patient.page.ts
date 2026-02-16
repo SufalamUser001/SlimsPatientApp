@@ -1,16 +1,20 @@
 import { LocationStrategy } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, viewChild, ViewChild } from '@angular/core';
-import { IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs, IonModal, IonContent, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonList, IonItem, ActionSheetController, IonRouterOutlet, IonTab } from "@ionic/angular/standalone";
+import { IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs, IonModal, IonContent, IonButton, IonHeader, IonToolbar, IonButtons, IonTitle, IonList, IonItem, ActionSheetController, IonRouterOutlet, IonTab, IonBadge } from "@ionic/angular/standalone";
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SharedService } from '../service/shared-service/shared.service';
 import { filter, map } from 'rxjs';
+import { MapModalComponent } from '../map/map.page';
+import { SlimsPatientApplicationService } from '../service/laboratory-service/lims-patientapp.service';
+import { CartService } from '../service/shared-service/cart.service';
+
 
 @Component({
     selector: 'app-slims-patient',
     templateUrl: 'slims-patient.page.html',
     styleUrls: ['slims-patient.page.scss'],
     standalone : true,
-    imports: [IonTab, IonRouterOutlet, IonItem, IonList, IonTitle, IonButtons, IonToolbar, IonHeader, IonButton, IonContent, IonModal, IonTabButton, IonIcon, IonLabel, IonTabBar, IonTabs ],
+    imports: [IonRouterOutlet, IonItem, IonList, IonTitle, IonButtons, IonToolbar, IonHeader, IonButton, IonContent, IonModal, IonTabButton, IonIcon, IonLabel, IonTabBar, MapModalComponent, IonBadge],
     
 })
 
@@ -19,9 +23,13 @@ export class SlimsPatientComponent {
   public isDisplayBackButton = false;
   optionsModal = viewChild<IonModal>("optionsModal");
   public title = 'LIMS Patient';
-  constructor(public locationStrategy : LocationStrategy, private actionSheetCtrl: ActionSheetController, public router: Router, public sharedService: SharedService, private activatedRoute: ActivatedRoute) 
+
+   mapmodalPage = viewChild<MapModalComponent>("appModalPage");
+  constructor(public locationStrategy : LocationStrategy, private actionSheetCtrl: ActionSheetController, public router: Router, public cartservice : CartService,
+    public sharedService: SharedService, private activatedRoute: ActivatedRoute,public slimsPatientAppService : SlimsPatientApplicationService) 
   {
-   
+    
+    
   }
 
   async ngOnInit(){
@@ -104,6 +112,15 @@ export class SlimsPatientComponent {
     if(result && result.data && result.data.action){
       this.closeOptionsModal();
       this.sharedService.authService.userLogout();
+    }
+  }
+
+
+  onnearbyLabClick(){
+    var mm = this.mapmodalPage();
+    if(mm){
+      mm.openMapModal();
+      mm.openMapModalwithData();
     }
   }
 }

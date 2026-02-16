@@ -47,6 +47,23 @@
 @import "theme/custom-var";
 @import  "theme/variables";
 
+ion-header ion-toolbar:first-of-type {
+  padding-top: 0 !important;
+}
+
+ion-footer ion-toolbar:last-of-type{
+  padding-bottom: 0 !important;
+}
+
+ion-tab-bar{
+  padding-bottom: 5px !important;
+  padding-top:  5px !important;
+}
+
+ion-modal ion-content {
+  --padding-bottom: var(--ion-safe-area-bottom);
+  padding-bottom: var(--ion-safe-area-bottom);
+}
 
 h1, h2, h3, h4, h5, h6
 {
@@ -162,4 +179,19 @@ a {
 .icon-big{
     height: 50px;
     width: 50px;
+}
+
+.disabledDiv{
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.cart-added{
+  position: absolute;
+    z-index: 1;
+    right: 15px;
+    padding-inline-end: 4px;
+    padding-inline-start: 4px;
+    font-size: 0.6rem;
+    display: inline;
 }

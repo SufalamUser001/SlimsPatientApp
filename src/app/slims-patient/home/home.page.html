@@ -7,7 +7,7 @@
         <div class="slider-conatiner">
           <div class="slider-card" [style.background-image]="'url(\'data:image/jpeg;base64,' + item.image + '\')'">
             <div class="text-overlay">
-              <h1 class="font-800">{{item.heading}}</h1>
+              <h2 class="font-800">{{item.heading}}</h2>
               <p class="font-600 text-sm m-0">{{item.subheading}}</p>
             </div>
           </div>
@@ -23,26 +23,26 @@
 <app-disease [IsCompactView]="true"  (diseaseViewAllClick)="onDiseaseViewAllClick()" (diseaseClickemit)="onDiseaseViewAllClick($event)"></app-disease>
 
 <div class="d-flex flex-column  flex-md-row gap-2 mt-3">
-  <div class="bg-blue-50 px-3 py-2 rounded-3 ">
-    <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
+  <div class="bg-blue-50 p-2 rounded-3 ">
+    <h5 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
       <ion-icon name="earth-outline" class="text-blue-600"></ion-icon>
       Wide Networks
-    </h4>
-    <p class="font-500 text-gray-500"> Access to 500+ diagnostic centers across the country</p>
+    </h5>
+    <p class="font-500 text-gray-500 text-xs"> Access to 500+ diagnostic centers across the country</p>
   </div>
-  <div class="bg-green-50 p-3 rounded-3 ">
-    <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
+  <div class="bg-green-50 p-2 rounded-3 ">
+    <h5 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
       <ion-icon name="earth-outline" class="text-green-600"></ion-icon>
       Fast Results
-    </h4>
-    <p class="font-500 text-gray-500"> Get your reports within 24-48 hours digitally</p>
+    </h5>
+    <p class="font-500 text-gray-500 text-xs"> Get your reports within 24-48 hours digitally</p>
   </div>
-  <div class="bg-purple-50 p-3 rounded-3 ">
-    <h4 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
+  <div class="bg-purple-50 p-2 rounded-3 ">
+    <h5 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
       <ion-icon name="earth-outline" class="text-purple-600"></ion-icon>
       Best Prices
-    </h4>
-    <p class="font-500 text-gray-500"> Competitive pricing with no hidden charges</p>
+    </h5>
+    <p class="font-500 text-gray-500 text-xs"> Competitive pricing with no hidden charges</p>
   </div>
 </div>
 

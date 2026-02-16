@@ -4,16 +4,17 @@ import { SharedService } from '../../service/shared-service/shared.service';
 import { SlimsPatientApplicationService } from '../../service/laboratory-service/lims-patientapp.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Enumeration } from '../../service/shared-service/others/enumeration';
 
 @Component({
     selector: 'app-orders',
     templateUrl: 'orders.page.html',
     styleUrls: ['orders.page.scss'],
     standalone : true,
-    imports: [IonChip, IonLabel, IonItem, IonList, IonText, IonContent, IonToolbar, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon,
-    IonSelect, IonCol, IonSelectOption, IonDatetimeButton, IonDatetime,
+    imports: [IonChip, IonContent, IonToolbar, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon,
+    IonCol, IonDatetimeButton, IonDatetime,
     IonAccordionGroup, CommonModule, FormsModule,
-    IonAccordion, IonModal, IonGrid],
+    IonAccordion, IonModal],
 })
 export class OrdersPage {
 
@@ -105,7 +106,14 @@ export class OrdersPage {
       (response: any) => {
         this.sharedService.isBusy = false;
         if (response.IsSuccess) {
-
+          let PDFData = response.Success.Data;
+          if (PDFData != null && PDFData) {
+            let filename =  'Receipt_' + data.LabId + ".pdf";
+            if (filename) {
+              this.sharedService.saveFile(PDFData, filename,null,null);
+            }
+            this.sharedService.toastService.showSucess("Receipt generated successfully.");
+          }
         } else {
           this.sharedService.isBusy = false;
           this.sharedService.HandleAuthenticationError(response.Error);
@@ -119,7 +127,14 @@ export class OrdersPage {
       (response: any) => {
         this.sharedService.isBusy = false;
         if (response.IsSuccess) {
-
+          let PDFData = response.Success.Data;
+          if (PDFData != null && PDFData) {
+            let filename =   'Report_' + data.LabId + ".pdf";
+            if (filename) {
+              this.sharedService.saveFile(PDFData, filename,null,null);
+            }
+            this.sharedService.toastService.showSucess("Report generated successfully.");
+          }
         } else {
           this.sharedService.isBusy = false;
           this.sharedService.HandleAuthenticationError(response.Error);
@@ -128,7 +143,26 @@ export class OrdersPage {
   }
 
   GetPatientPayment(data){
-
+    if(data.LabId && data.PaymentGateWay){
+      let url = this.slimsPatientService.baseService.apiEndPoint;
+        let password = this.sharedService.generalService.cngpstr(data.B2CPassword, data.LabId, 1);
+        let labId = this.sharedService.generalService.encstr(data.LabId);
+        if (data.PaymentGateWay == Enumeration.PaymentGateway.Paytm) {
+            window.open(url.replace("api/", "") + "OnlinePayment/PaytmPayment?aWd1=" + labId + "&PnXl=" + encodeURIComponent(password));
+        } else if (data.PaymentGateWay == Enumeration.PaymentGateway.BillDesk) {
+            window.open(url.replace("api/", "") + "OnlinePayment/BillDeskPayment?aWd1=" + labId + "&PnXl=" + encodeURIComponent(password));
+        } else if (data.PaymentGateWay == Enumeration.PaymentGateway.Razorpay) {
+            window.open(url.replace("api/", "") + "OnlinePayment/RazorpayPayment?aWd1=" + labId + "&PnXl=" + encodeURIComponent(password));
+        } else if (data.PaymentGateWay == Enumeration.PaymentGateway.CCAvenue) {
+            window.open(url.replace("api/", "") + "OnlinePayment/CCAvenuePayment?aWd1=" + labId + "&PnXl=" + encodeURIComponent(password));
+        } else if (data.PaymentGateWay == Enumeration.PaymentGateway.PayUMoney) {
+            window.open(url.replace("api/", "") + "OnlinePayment/PayUMoneyPayment?aWd1=" + labId + "&PnXl=" + encodeURIComponent(password));
+        } else if (data.PaymentGateWay == Enumeration.PaymentGateway.PhonePe) {
+            window.open(url.replace("api/", "") + "OnlinePayment/PhonePePayment?aWd1=" + labId + "&PnXl=" + encodeURIComponent(password));
+        } else if (data.PaymentGateWay == Enumeration.PaymentGateway.JioOnePay) {
+            window.open(url.replace("api/", "") + "OnlinePayment/JioOnePayment?aWd1=" + labId + "&PnXl=" + encodeURIComponent(password));
+        } 
+    }
   }
 
 }

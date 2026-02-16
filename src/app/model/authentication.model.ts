@@ -13,6 +13,7 @@ export class AuthenticationModel {
             this.CityId = json.CityId;
             this.PatientId = json.PatientId;
             this.CityName = json.CityName;
+            this.MapAPIKey = json.MapAPIKey;
             this.Photograph = json.Photograph;
             this.notificationList = json.notificationList;
             this.IsPasswordAvailable = json.IsPasswordAvailable;
@@ -31,5 +32,7 @@ export class AuthenticationModel {
     public Photograph ;
     public IsPasswordAvailable = false;
     public notificationList: any = [];
+    public MapAPIKey = '';
+
     
 }

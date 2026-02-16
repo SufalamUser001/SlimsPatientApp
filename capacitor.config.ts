@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'ionic.app.base',
-  appName: 'ionic-app-base',
+  appId: 'com.app.sufalam.patient_app',
+  appName: 'Lab Connect',
   webDir: 'www/browser'
 };
 

@@ -1,0 +1,29 @@
+
+<ion-modal  [keepContentsMounted]="true" [canDismiss]="canDismiss" #mapModal (didPresent)="initializeMap()">
+    <ng-template>
+<ion-header>
+    <ion-toolbar>
+     
+      <ion-title>{{maptitle}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> 
+    <div style="height: 400px;">
+
+      <capacitor-google-map  #mapRef></capacitor-google-map>
+    </div>
+ </ion-content> 
+ <ion-footer>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            @if(AllowSelect){
+            <ion-button color="medium" (click)="onConfirmClick()">Confirm</ion-button>
+        }
+          </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="medium" (click)="closeMapModal()">Close </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+  </ng-template>
+  </ion-modal>

@@ -1,5 +1,88 @@
 
 
-<ion-content >
-Test
+<ion-content class="ion-padding">
+<div class="d-flex flex-column gap-2 mt-3 mb-2">
+  <div class="d-flex justify-content-between ">
+    <div class="d-flex flex-column">
+      <h3 class="font-700">
+        Checkout
+      </h3>
+    </div>
+  </div>
+</div>
+    <div class="d-flex flex-column gap-1">
+        <div class="d-flex card border-card p-3 ps-4 pe-4 w-100">
+            <div class="title-row">
+                <span class="text-base w-70 font-600">Select Family Member</span>
+                <ion-radio-group [allowEmptySelection]="false" (ionChange)="patientChange($event)" [(ngModel)]="SelectedMember">
+                        @if(sharedService.labCartPatientObj && sharedService.labCartPatientObj.MemberList && sharedService.labCartPatientObj.MemberList.length > 0){
+                            @for(memberData of sharedService.labCartPatientObj.MemberList;track memberData; let i = $index){
+                            <div class="d-flex card border-card p-3 mt-3 w-100">
+                                <ion-radio justify="start" labelPlacement="end" [value]="memberData"><span class="font-600">{{ memberData.PatientName }}</span>
+                                    <div class="text-sm text-gray-500 font-600">
+                                        {{memberData.Relation}} • {{memberData.AgeString}} • {{memberData.GenderName}}
+                                    </div>
+                                </ion-radio>
+                            </div>
+                            }
+                        }
+                    @else{
+                        <div class="text-center py-5  w-100">
+                            <p class="text-gray-500 text-sm mt-1 pt-1 font-500" >No family members added</p>
+                            <ion-button color="primary" class="font-600" (click)="openProfilePage()">Add Family Member</ion-button>
+                        </div>
+                    }
+                </ion-radio-group>
+            </div>
+        </div>
+        <div class="d-flex card border-card p-3 ps-4 pe-4 w-100">
+            <div class="title-row">
+                <span class="text-base w-70 font-600">Select Address</span>
+                @if(sharedService.labCartPatientObj && sharedService.labCartPatientObj.MemberAddressList && sharedService.labCartPatientObj.MemberAddressList.length > 0){
+                        @for(memberAddressData of sharedService.labCartPatientObj.MemberAddressList; track memberAddressData; let j = $index){
+                        <ion-radio-group [allowEmptySelection]="false" [(ngModel)]="SelectedMemberAddress">
+                            <div class="d-flex card border-card p-3 mt-3 w-100">
+                                <ion-radio justify="start" labelPlacement="end" [value]="memberAddressData"><span class="font-600">{{ memberAddressData.Address }}</span>
+                                    <div class="text-sm text-gray-500 font-600">
+                                        {{ memberAddressData.AreaName }}, {{ memberAddressData.CityName }}
+                                    </div>
+                                </ion-radio>
+                            </div>
+                        </ion-radio-group>
+                        }
+                }
+                @else {
+                <div class="text-center py-5 w-100">
+                    <p class="text-gray-500 text-sm mt-1 pt-1 font-500" >No addresses added</p>
+                    <ion-button color="primary" class="font-600" (click)="openProfilePage()">Add Addresses</ion-button>
+                </div>
+                }
+                
+                
+            </div>
+        </div>
+        <div class="d-flex card border-card p-3 ps-4 pe-4 w-100">
+        <div class="d-flex justify-content-between mb-3 align-items-center title-row">
+            <h6 class="font-600">Order Summary</h6>
+        </div>
+
+        @if(cartService.cartCount() > 0){
+               @for(package of (CartItemList$| async); track package.ServiceId;){
+            <div class="d-flex justify-content-between text-sm font-500 text-gray-600 pb-2">
+                <div>{{package.TestName}}</div>
+                <div>₹ {{package.Amount}}</div>
+            </div>
+            }
+        }
+        <div class="d-flex justify-content-between align-items-center border-top pt-2 pb-3">
+            <h6 class="font-600">Total</h6>
+            <h6 class="font-600">₹  {{cartService.totalAmount()}}</h6>
+        </div>
+        <ion-row>
+            <ion-col size="12" class="p-0">
+                <ion-button color="primary" class="font-600" expand="block" (click)="onPlaceOrderClick()">Place Order</ion-button>
+            </ion-col>
+        </ion-row>
+        </div>
+    </div>
 </ion-content>

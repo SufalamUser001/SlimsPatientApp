@@ -25,6 +25,7 @@ export class LoginModel extends BaseModel {
             this.PatientId = json.PatientId;
             this.IsOTPLogin = json.IsOTPLogin;
             this.IsPasswordAvailable = json.IsPasswordAvailable;
+            this.MapAPIKey = json.MapAPIKey;
         }
     }
 
@@ -57,4 +58,6 @@ export class LoginModel extends BaseModel {
 
     @Exclude()
     rememberMe = true;
+    @Exclude()
+    MapAPIKey = true;
 }

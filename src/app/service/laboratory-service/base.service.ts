@@ -14,7 +14,7 @@ export class BaseService {
     // public apiEndPoint = 'http://13.233.16.3/slims.api/api/'; //Sterling accuris
     public apiEndPoint = 'https://sufalamlims.com/slims.api/api/';
     public mobileNumber = '';
-    public version = '1.1.30';
+    public version = '1.0.1';
 
     constructor(private authService: AuthService,private sharedService: SharedService,private toastService: ToastService) {
             this.getandsetConfig();
@@ -60,7 +60,7 @@ export class BaseService {
             'Id': this.authService.isUserLoggedIn ? this.authService.authenticationModel.loginUserId : '',
             'Token': this.authService.isUserLoggedIn ? this.authService.authenticationModel.loginUserToken : '',
             'Mobile': this.mobileNumber,
-            'From': 'Phlebotomy',
+            'From': 'SlimsPatientApp',
             'Version': this.version,
             'Platform': this.sharedService.platform 
             }
@@ -80,7 +80,7 @@ export class BaseService {
             'Id': this.authService.isUserLoggedIn ? this.authService.authenticationModel.loginUserId : '',
             'Token': this.authService.isUserLoggedIn ? this.authService.authenticationModel.loginUserToken : '',
             'Mobile': this.mobileNumber,
-            'From': 'Phlebotomy',
+            'From': 'SlimsPatientApp',
             'Version': this.version,
             'Platform': this.sharedService.platform 
             }

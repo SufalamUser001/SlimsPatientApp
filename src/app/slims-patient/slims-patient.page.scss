@@ -1,8 +1,44 @@
 
 
 
-ion-modal:has(.menu-modal-block) {
 
-      --height: 30vh;
+
+ion-modal {
+      &:has(.menu-modal-block) {
+        --height: auto;
+        margin-bottom: var(--ion-safe-area-bottom);
+      }
+    }
+
+
  
+ion-button.cartbtn{
+      --padding-end:15px;
+      .cart-count{
+            position: absolute;
+            top: -4px;
+            z-index: 2;
+            left: 26px;
+            padding-inline-end: 4px;
+            padding-inline-start: 4px;
+            font-size: 0.6rem;
+      }
+}
+
+#main-content{
+      margin-top: var(--ion-custom-safe-area-top);
+      margin-bottom: var(--ion-custom-safe-area-bottom);
+}
+
+ion-button.cartbtn{
+      --padding-end:15px;
+      .cart-count{
+            position: absolute;
+            top: -4px;
+            z-index: 2;
+            left: 26px;
+            padding-inline-end: 4px;
+            padding-inline-start: 4px;
+            font-size: 0.6rem;
+      }
 }

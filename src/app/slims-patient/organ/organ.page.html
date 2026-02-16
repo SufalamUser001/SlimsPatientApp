@@ -7,22 +7,33 @@
         <div class="card border-card mt-3 p-3 w-100">
             <div class="d-flex justify-content-between align-items-center title-row">
                 <h6 class="font-600 text-gray-700">{{ organData.TestName }}</h6>
+                <div class="d-flex justify-content-start   font-500 ">
+                  @if(selectedOrganIndex && selectedOrganIndex >= 0){
+                    <ion-chip class="text-{{colorsList[selectedOrganIndex]}}-700 bg-{{colorsList[selectedOrganIndex]}}-100 text-xs">{{ organData.Organ }}</ion-chip>
+                  }
+                  @else {
+                    <ion-chip class="text-xs" color="tertiary">{{ organData.Organ }}</ion-chip>
+                  }
+                </div>
             </div>
-            <div class="d-flex justify-content-start text-sm text-gray-500 font-500 mt-2">
+            <div class="d-flex justify-content-start text-sm text-gray-500 font-500 ">
                {{ organData.TestDescription }}
             </div>
-            <div class="d-flex justify-content-start text-lg text-blue-600 font-800 mt-2">
-              ₹ {{ organData.Amount }}
+            <div class="d-flex justify-content-between align-items-center">
+             <span class="text-lg text-blue-600 font-800 ">₹ {{ organData.Amount }} </span> 
+              <div>
+                <ion-button fill="outline" color="primary" (click)="onAddtoCart(organData)">
+                  <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+              
+                </ion-button>
+                @if(organData.IsAddedInCart){
+                  <ion-badge class="cart-added" color="success">&#10003;
+                  </ion-badge>
+                }
+              </div>
             </div>
-            <div class="d-flex justify-content-start text-sm  font-500 mt-1">
-              @if(selectedOrganIndex && selectedOrganIndex >= 0){
-                <ion-chip class="text-{{colorsList[selectedOrganIndex]}}-700 bg-{{colorsList[selectedOrganIndex]}}-100">{{ organData.Organ }}</ion-chip>
-              }
-              @else {
-                <ion-chip color="tertiary">{{ organData.Organ }}</ion-chip>
-              }
-            </div>
-            <ion-row>
+        
+            <!-- <ion-row>
               <ion-col size="12">
                 @if(organData.IsAddedInCart){
                   <ion-button color="success" expand="block">
@@ -33,7 +44,7 @@
                 <ion-button color="primary" expand="block"><ion-icon name="cart-outline" slot="start"></ion-icon>Add To Cart</ion-button>
                 }
               </ion-col>
-            </ion-row>
+            </ion-row> -->
         </div>
     }
   }
@@ -45,16 +56,16 @@
 }
 
 <ng-template #organ>
-<div class="d-flex flex-column gap-2 mt-4">
+<div class="d-flex flex-column gap-2 " [ngClass]="{'mt-4': IsCompactView, 'mt-2': !IsCompactView}">
   <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column">
-      <h2 class="font-700">
+    <div class="d-flex flex-column w-60">
+      <h3 class="font-700">
         Tests by Organ
-      </h2>
-      <p class="text-sm text-gray-600 font-500 mb-2">Select organ to view related tests</p>
+      </h3>
+      <p class="text-xs text-gray-600 font-500 mb-2">Select organ to view related tests</p>
     </div>
     @if(IsCompactView){
-    <ion-button fill="clear" class="text-indigo-600" (click)="organViewAllClick.emit()">
+    <ion-button fill="clear" size="small" class="text-indigo-600" (click)="organViewAllClick.emit()">
       <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
         View more
     </ion-button>

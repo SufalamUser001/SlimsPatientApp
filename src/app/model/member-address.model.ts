@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { SufalamModifiedByModel } from "./base-model/SufalamModifiedBy.model";
 
 export class MemberAddressModel extends SufalamModifiedByModel {
@@ -28,4 +29,7 @@ export class MemberAddressModel extends SufalamModifiedByModel {
 
     public CityName = '';
     public AreaName = '';
+
+    @Exclude()
+    public IsSelected = false;
 }

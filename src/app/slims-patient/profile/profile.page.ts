@@ -9,14 +9,15 @@ import { IonContent, IonIcon, IonSegment, IonSegmentButton, IonLabel, IonSegment
 import { FormsModule } from '@angular/forms';
 import { ChangePasswordModel } from '../../model/change-password.model';
 import { MemberAddressModel } from '../../model/member-address.model';
+import { MapModalComponent } from "../../map/map.page";
 
 @Component({
     selector: 'app-profile',
     templateUrl: 'profile.page.html',
     styleUrls: ['profile.page.scss'],
     standalone:true,
-    imports: [IonTextarea, IonButton, IonDatetimeButton, IonModal, IonCol, IonRow, IonLabel, IonSegment, IonIcon, IonContent, FormsModule,IonInput,IonDatetime,
-      IonSegmentView, IonSegmentButton, IonSegmentContent, IonSelect, IonSelectOption],
+    imports: [IonTextarea, IonButton, IonDatetimeButton, IonModal, IonCol, IonRow, IonLabel, IonSegment, IonIcon, IonContent, FormsModule, IonInput, IonDatetime,
+    IonSegmentView, IonSegmentButton, IonSegmentContent, IonSelect, IonSelectOption, MapModalComponent],
 })
 
 export class ProfilePage {
@@ -25,7 +26,7 @@ export class ProfilePage {
   
   public isPasswordAvailable = false;
   public mobile = null;
-  public labCartPatientObj: PatientModel = new PatientModel();
+  //public labCartPatientObj: PatientModel = new PatientModel();
   public cityList: Array<KeyValueModel> = [];
   public areaList: Array<KeyValueModel> = [];
   public filterAreaList: Array<KeyValueModel> = [];
@@ -51,6 +52,8 @@ export class ProfilePage {
   };
   public searchMaxDate = new Date().toISOString().split('T')[0] ;
   familyMemberModal = viewChild<IonModal>("FamilyMemberModal");
+  mapmodalPage = viewChild<MapModalComponent>("appModalPage");
+  
   public labCartMemberObj: PatientModel = new PatientModel();
   public labCartMemberAddressObj: MemberAddressModel = new MemberAddressModel();
   familyAddressesModal = viewChild<IonModal>("FamilyAddressesModal");
@@ -89,24 +92,24 @@ export class ProfilePage {
 
 
   public GetPatientData(mobile = null): any {
-    if (mobile != null && mobile != '') {
+    if (mobile != null && mobile != '' ) {
       this.sharedService.isBusy = true;
       this.slimsPatientService.GetLabCartProfileByMobile(mobile).subscribe(
         (response: any) => {
           this.sharedService.isBusy = false;
           if (response.IsSuccess) {
-            this.labCartPatientObj = new PatientModel(response.Success.Data);
-            if (this.labCartPatientObj && !this.labCartPatientObj.Mobile) {
-              this.labCartPatientObj.Mobile = this.authService.authenticationModel.loginUserId;
+            this.sharedService.labCartPatientObj = new PatientModel(response.Success.Data);
+            if (this.sharedService.labCartPatientObj && !this.sharedService.labCartPatientObj.Mobile) {
+              this.sharedService.labCartPatientObj.Mobile = this.authService.authenticationModel.loginUserId;
             }
-            // if(this.labCartPatientObj.MemberList && this.labCartPatientObj.MemberList.length > 0){
-            //   let i = this.labCartPatientObj.MemberList.findIndex(x=> x.PatientId = this.labCartPatientObj.PatientId);
+            // if(this.sharedService.labCartPatientObj.MemberList && this.sharedService.labCartPatientObj.MemberList.length > 0){
+            //   let i = this.sharedService.labCartPatientObj.MemberList.findIndex(x=> x.PatientId = this.sharedService.labCartPatientObj.PatientId);
             //   if(i > -1){
-            //     this.labCartPatientObj.MemberList.splice(i,1);
-            //     this.labCartPatientObj.MemberList = Object.assign([], this.labCartPatientObj.MemberList);
+            //     this.sharedService.labCartPatientObj.MemberList.splice(i,1);
+            //     this.sharedService.labCartPatientObj.MemberList = Object.assign([], this.sharedService.labCartPatientObj.MemberList);
             //   }
             // }
-            //this.mainMemberEdit.setPatientObj(this.labCartPatientObj);
+            
           } else {
             this.sharedService.HandleAuthenticationError(response.Error);
           }
@@ -175,10 +178,10 @@ export class ProfilePage {
     this.NationalityNo = null;
   }
   public onTitleChange() {
-    if (this.labCartPatientObj.TitleId) {
-      const selectedTitle = this.titleList.find(s => s.Id == this.labCartPatientObj.TitleId);
+    if (this.sharedService.labCartPatientObj.TitleId) {
+      const selectedTitle = this.titleList.find(s => s.Id == this.sharedService.labCartPatientObj.TitleId);
       if (selectedTitle && selectedTitle.Value) {
-        this.labCartPatientObj.Gender = selectedTitle.Value;
+        this.sharedService.labCartPatientObj.Gender = selectedTitle.Value;
         this.isGenderReadOnly = true;
       } else {
         this.isGenderReadOnly = false;
@@ -189,15 +192,6 @@ export class ProfilePage {
   }
 
 
-  public cancel(): void {
-    this.filterAreaList = [];
-
-    this.selectedFileName = '';
-    this.FileNameDisplay = '';
-    this.labCartPatientObj = new PatientModel();
-
-    this.NationalityNo = null;
-  }
 
   onMemberCancel(){
     this.IsPInfoEdit = false;
@@ -205,29 +199,31 @@ export class ProfilePage {
 
   public onSaveClick(): void {
     var tempPatienObj = new PatientModel();
-    if (!this.labCartPatientObj.isBirthDate) {
+    if (!this.sharedService.labCartPatientObj.isBirthDate) {
 
 
-      if (!(Number(this.labCartPatientObj.AgeYYY) > 0 || Number(this.labCartPatientObj.AgeMM) > 0 || Number(this.labCartPatientObj.AgeDD) > 0)) {
+      if (!(Number(this.sharedService.labCartPatientObj.AgeYYY) > 0 || Number(this.sharedService.labCartPatientObj.AgeMM) > 0 || Number(this.sharedService.labCartPatientObj.AgeDD) > 0)) {
         this.sharedService.toastService.showError('Please enter Age.');
         return;
       } 
     } else {
-      if (isNaN(Date.parse(this.labCartPatientObj.BirthDate)) || new Date(this.labCartPatientObj.BirthDate) > new Date(tempPatienObj.GetCurrentDateOnly())) {
+      if (isNaN(Date.parse(this.sharedService.labCartPatientObj.BirthDate)) || new Date(this.sharedService.labCartPatientObj.BirthDate) > new Date(tempPatienObj.GetCurrentDateOnly())) {
         this.sharedService.toastService.showError('Birth Date is not valid');
         return;
       } 
     }
     this.sharedService.isBusy = true;
-    if (this.labCartPatientObj != null) {
-      this.slimsPatientService.SaveLabCartPatient(this.labCartPatientObj).subscribe(
+    if (this.sharedService.labCartPatientObj != null) {
+      this.sharedService.labCartPatientObj.IsGeneratedFromLabCart = true;
+      this.sharedService.labCartPatientObj.IsMembershipHolder = true;
+      this.slimsPatientService.SaveLabCartPatient(this.sharedService.labCartPatientObj).subscribe(
         (response: any) => {
           this.sharedService.isBusy = false;
           if (response.IsSuccess) {
             this.sharedService.toastService.showSucess(response.Success.Message);
-            var memberList = this.labCartPatientObj.MemberList;
-            this.labCartPatientObj = new PatientModel(response.Success.Data);
-            this.labCartPatientObj.MemberList = Object.assign([], memberList);
+            var memberList = this.sharedService.labCartPatientObj.MemberList;
+            this.sharedService.labCartPatientObj = new PatientModel(response.Success.Data);
+            this.sharedService.labCartPatientObj.MemberList = Object.assign([], memberList);
             this.IsPInfoEdit = false;
           } else {
             this.sharedService.HandleAuthenticationError(response.Error);
@@ -240,24 +236,24 @@ export class ProfilePage {
   }
 
   public onBirthdateChange(): void {
-    if (this.labCartPatientObj.BirthDate) {
-        this.labCartPatientObj.AgeYYY = null;
-        this.labCartPatientObj.AgeMM = null;
-        this.labCartPatientObj.AgeDD = null;
-        const age: any = this.sharedService.generalService.getAge(this.labCartPatientObj.BirthDate);
+    if (this.sharedService.labCartPatientObj.BirthDate) {
+        this.sharedService.labCartPatientObj.AgeYYY = null;
+        this.sharedService.labCartPatientObj.AgeMM = null;
+        this.sharedService.labCartPatientObj.AgeDD = null;
+        const age: any = this.sharedService.generalService.getAge(this.sharedService.labCartPatientObj.BirthDate);
         if (Number(age.years) > 0) {
-            this.labCartPatientObj.AgeYYY = age.years;
+            this.sharedService.labCartPatientObj.AgeYYY = age.years;
             if (Number(age.years) < 5 && Number(age.years) > 0) {
                 if (Number(age.months) > 0) {
-                    this.labCartPatientObj.AgeMM = age.months;
+                    this.sharedService.labCartPatientObj.AgeMM = age.months;
                 }
             }
         } else if (Number(age.months) > 0) {
-            this.labCartPatientObj.AgeMM = age.months;
+            this.sharedService.labCartPatientObj.AgeMM = age.months;
         } else if (Number(age.days) > 0) {
-            this.labCartPatientObj.AgeDD = age.days;
+            this.sharedService.labCartPatientObj.AgeDD = age.days;
         } else {
-            this.labCartPatientObj.AgeDD = 0;
+            this.sharedService.labCartPatientObj.AgeDD = 0;
         }
     } 
 }
@@ -302,12 +298,13 @@ public onMemberBirthdateChange(): void {
 
 onMemberSaveClick(){
   this.labCartMemberObj.IsActive = true;
-  if(this.labCartPatientObj.MembershipId > 0){
-    this.labCartMemberObj.MembershipId = this.labCartPatientObj.MembershipId;
+  if(this.sharedService.labCartPatientObj.MembershipId > 0){
+    this.labCartMemberObj.MembershipId = this.sharedService.labCartPatientObj.MembershipId;
   }
-  this.labCartMemberObj.IsMembershipHolder = false;
   this.sharedService.isBusy = true;
   if (this.labCartMemberObj != null) {
+    this.labCartMemberObj.IsMembershipHolder = false;
+    this.labCartMemberObj.IsGeneratedFromLabCart = true;
       this.slimsPatientService.SaveLabCartPatient(this.labCartMemberObj).subscribe(
       (response: any) => {
         this.sharedService.isBusy = false;
@@ -329,13 +326,13 @@ onMemberSaveClick(){
 
 onMemberSave(memberData: PatientModel){
   if (memberData != null) {
-    const index = this.labCartPatientObj.MemberList.findIndex(s => s.PatientId === memberData.PatientId);
+    const index = this.sharedService.labCartPatientObj.MemberList.findIndex(s => s.PatientId === memberData.PatientId);
     if (index >= 0) {
-      this.labCartPatientObj.MemberList[index] = JSON.parse(JSON.stringify(memberData));
+      this.sharedService.labCartPatientObj.MemberList[index] = JSON.parse(JSON.stringify(memberData));
     } else {
-      this.labCartPatientObj.MemberList.push(JSON.parse(JSON.stringify(memberData)));
+      this.sharedService.labCartPatientObj.MemberList.push(JSON.parse(JSON.stringify(memberData)));
     }
-    this.labCartPatientObj.MemberList = Object.assign([], this.labCartPatientObj.MemberList);
+    this.sharedService.labCartPatientObj.MemberList = Object.assign([], this.sharedService.labCartPatientObj.MemberList);
   }
 }
 
@@ -381,8 +378,8 @@ async onDeleteMemberClick(row) {
         this.sharedService.isBusy = false;
         if (response.IsSuccess === true) {
           this.sharedService.toastService.showSucess(response.Success.Message);
-          this.labCartPatientObj.MemberList.splice(this.labCartPatientObj.MemberList.findIndex(s => s.PatientId === row.PatientId), 1);
-          this.labCartPatientObj.MemberList = Object.assign([], this.labCartPatientObj.MemberList);
+          this.sharedService.labCartPatientObj.MemberList.splice(this.sharedService.labCartPatientObj.MemberList.findIndex(s => s.PatientId === row.PatientId), 1);
+          this.sharedService.labCartPatientObj.MemberList = Object.assign([], this.sharedService.labCartPatientObj.MemberList);
         } else {
           this.sharedService.HandleAuthenticationError(response.Error);
         }
@@ -405,7 +402,7 @@ onChangePasswordFormSubmit() {
   let methodName = "ChangeLabCartPassword"
  let  changePasswordObj = new ChangePasswordModel();
   changePasswordObj.UserId = this.authService.authenticationModel.loginUserId;
-  if (this.labCartPatientObj && this.labCartPatientObj.Mobile && !this.isPasswordAvailable) {
+  if (this.sharedService.labCartPatientObj && this.sharedService.labCartPatientObj.Mobile && !this.isPasswordAvailable) {
     methodName = "SetLabCartPassword";
   } else {
     if(!this.changePasswordObj.CurrentPassword){
@@ -485,7 +482,7 @@ onAddressCancel(){
 onAddressSaveClick(){
   if (this.labCartMemberAddressObj != null) {
     this.sharedService.isBusy = true;
-    this.labCartMemberAddressObj.MembershipId = this.labCartPatientObj.MembershipId;
+    this.labCartMemberAddressObj.MembershipId = this.sharedService.labCartPatientObj.MembershipId;
     this.slimsPatientService.SaveLabCartMemberAddress(this.labCartMemberAddressObj).subscribe(
     (response: any) => {
       this.sharedService.isBusy = false;
@@ -506,13 +503,13 @@ onAddressSaveClick(){
 
 public onMemberAddressSave(memberAddress: MemberAddressModel) {
   if (memberAddress != null) {
-    const index = this.labCartPatientObj.MemberAddressList.findIndex(s => s.MemberAddressId === memberAddress.MemberAddressId);
+    const index = this.sharedService.labCartPatientObj.MemberAddressList.findIndex(s => s.MemberAddressId === memberAddress.MemberAddressId);
     if (index >= 0) {
-      this.labCartPatientObj.MemberAddressList[index] = JSON.parse(JSON.stringify(memberAddress));
+      this.sharedService.labCartPatientObj.MemberAddressList[index] = JSON.parse(JSON.stringify(memberAddress));
     } else {
-      this.labCartPatientObj.MemberAddressList.push(JSON.parse(JSON.stringify(memberAddress)));
+      this.sharedService.labCartPatientObj.MemberAddressList.push(JSON.parse(JSON.stringify(memberAddress)));
     }
-    this.labCartPatientObj.MemberAddressList = Object.assign([], this.labCartPatientObj.MemberAddressList);
+    this.sharedService.labCartPatientObj.MemberAddressList = Object.assign([], this.sharedService.labCartPatientObj.MemberAddressList);
   }
 }
 
@@ -558,8 +555,8 @@ async onDeleteAddress(row){
       this.sharedService.isBusy = false;
       if (response.IsSuccess === true) {
         this.sharedService.toastService.showSucess(response.Success.Message);
-        this.labCartPatientObj.MemberAddressList.splice(this.labCartPatientObj.MemberAddressList.findIndex(s => s.MemberAddressId === row.MemberAddressId), 1);
-        this.labCartPatientObj.MemberAddressList = Object.assign([], this.labCartPatientObj.MemberAddressList);
+        this.sharedService.labCartPatientObj.MemberAddressList.splice(this.sharedService.labCartPatientObj.MemberAddressList.findIndex(s => s.MemberAddressId === row.MemberAddressId), 1);
+        this.sharedService.labCartPatientObj.MemberAddressList = Object.assign([], this.sharedService.labCartPatientObj.MemberAddressList);
       } else {
         this.sharedService.HandleAuthenticationError(response.Error);
       }
@@ -568,6 +565,23 @@ async onDeleteAddress(row){
     });
   }
     
+}
+
+
+onMapIconClick(){
+  var mm = this.mapmodalPage();
+  if(mm){
+    mm.openMapModal();
+    mm.openMapModalwithData({latitude : this.labCartMemberAddressObj.Latitude, longitude : this.labCartMemberAddressObj.Longitude });
+  }
+}
+
+onMapSelectedEvent(data){
+if(data && data.coordinate && data.coordinate.lat, data.coordinate.lng){
+  this.labCartMemberAddressObj.Latitude = data.coordinate.lat;
+  this.labCartMemberAddressObj.Longitude = data.coordinate.lng;
+
+}
 }
 
 //#endregion address 

@@ -12,14 +12,14 @@
 <ng-template #packages>
 <div class="d-flex flex-column gap-2 mt-4">
   <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column">
-      <h2 class="font-700">
+    <div class="d-flex flex-column w-60">
+      <h3 class="font-700">
         Popular Test Packages
-      </h2>
-      <p class="text-sm text-gray-600 font-500 mb-2">Most frequently booked diagnostic tests and health checkup packages</p>
+      </h3>
+      <p class="text-xs text-gray-600 font-500 mb-2">Most frequently booked diagnostic tests and health checkup packages</p>
     </div>
     @if(isShowViewMore){
-    <ion-button fill="clear" class="text-blue-600" (click)="packageViewAllClick.emit()">
+    <ion-button fill="clear" size="small" class="text-blue-600" (click)="packageViewAllClick.emit()">
       <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
       View more</ion-button>
     }
@@ -36,22 +36,35 @@
             </div>
          
             
-              <ion-card-header>
-                <ion-card-title>{{package.ServiceName}}</ion-card-title>
+              <ion-card-header class="py-2">
+                <h3 class="font-600 text-gray-800">{{package.TestName}}</h3>
               </ion-card-header>
               <ion-card-content>
-                <p class="text-xs text-gray-600 font-500">{{package.subtext}}</p>
-                <span class="text-primary font-700 mt-2 mb-3 text-3xl"> &#8377;{{package.Amount}}</span>
-                @if(package.IsAddedInCart){
-                  <ion-button color="success" expand="block">
-                    <ion-icon name="checkmark-outline" slot="start"></ion-icon>
-                  Added To Cart</ion-button>
-                }
-                @else{
-                  <ion-button color="primary" expand="block">
-                    <ion-icon name="cart-outline" slot="start"></ion-icon>
-                  Add To Cart</ion-button>
-                }
+                <p class="text-xs text-gray-600 font-500">{{package.TestDescription}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+
+                  <span class="text-primary font-700 text-2xl"> &#8377;{{package.Amount}}</span>
+                  
+                  <!-- @if(package.IsAddedInCart){
+                    
+                    <ion-button color="danger" size="small"  (click)="cartService.removeFromCart(package)">
+                      
+                      Remove From Cart</ion-button>
+                    }
+                    @else{ -->
+                    <div>
+                      <ion-button fill="outline" color="primary" (click)="onAddtoCart(package)">
+                        <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+                     
+                      </ion-button>
+                      @if(package.IsAddedInCart){
+                        <ion-badge class="cart-added" color="success">&#10003;
+                        </ion-badge>
+                      }
+                    </div>
+                  
+                      <!-- } -->
+                    </div>
                 
               </ion-card-content>
           </ion-card>

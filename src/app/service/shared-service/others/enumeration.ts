@@ -2319,6 +2319,11 @@ export module Enumeration {
         Paytm = 'Paytm',
         BillDesk = 'BillDesk',
         Razorpay = 'Razorpay',
+        CCAvenue = 'CCAvenue',
+        PayUMoney = 'PayUMoney',
+        PhonePe = 'PhonePe',
+        JioOnePay = 'JioOnePay'
+
     }
 
     export enum RegistrationCreditLimitAction {

@@ -96,11 +96,11 @@ export class LoginPage {
       (response: any) => {
         this.sharedService.isBusy = false;
         if (Boolean(response.IsSuccess) === true) {
-          this.setUserId();
+         // this.setUserId();
           const userDetail: LoginModel = new LoginModel(response.Success.Data);
           if (userDetail.Mobile && userDetail.Token) {
        
-            this.sharedService.authService.setUserLogin(userDetail.Mobile, userDetail.Token, userDetail.PatientId, userDetail.PatientName, userDetail.CityId, userDetail.CityName,userDetail.IsPasswordAvailable, null);
+            this.sharedService.authService.setUserLogin(userDetail.Mobile, userDetail.Token, userDetail.PatientId, userDetail.PatientName, userDetail.CityId, userDetail.CityName,userDetail.IsPasswordAvailable, null,userDetail.MapAPIKey);
             if (this.sharedService.authService.redirectUrl && this.router.url !== this.sharedService.authService.redirectUrl) {
               this.router.navigate([this.sharedService.authService.redirectUrl], { relativeTo: this.route.root });
             } else {
@@ -151,10 +151,9 @@ export class LoginPage {
         this.sharedService.isBusy = false;
         if (Boolean(response.IsSuccess) === true) {
           const userDetail: LoginModel = new LoginModel(response.Success.Data);
-          this.setUserId();
+          //this.setUserId();
           if (userDetail.Mobile && userDetail.Token) {
-            localStorage.removeItem('IsRefreshedForNewVersion');
-            this.sharedService.authService.setUserLogin(userDetail.Mobile, userDetail.Token, userDetail.PatientId, userDetail.PatientName, userDetail.CityId, userDetail.CityName, userDetail.IsPasswordAvailable,null);
+            this.sharedService.authService.setUserLogin(userDetail.Mobile, userDetail.Token, userDetail.PatientId, userDetail.PatientName, userDetail.CityId, userDetail.CityName, userDetail.IsPasswordAvailable,null,userDetail.MapAPIKey);
             if (this.sharedService.authService.redirectUrl && this.router.url !== this.sharedService.authService.redirectUrl) {
               this.router.navigate([this.sharedService.authService.redirectUrl], { relativeTo: this.route.root });
             } else {

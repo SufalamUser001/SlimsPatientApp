@@ -4,6 +4,7 @@
 
   <ion-modal [initialBreakpoint]="1" [breakpoints]="[0, 1]" [keepContentsMounted]="true" #optionsModal>
     <ng-template>
+    
       <ion-header>
         <ion-toolbar>
           <ion-title>More Options</ion-title>
@@ -14,12 +15,10 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content scrollY="false">
         <div class="menu-modal-block">
           <ion-list [inset]="true" lines="none">
             <ion-item>
-  
-              <ion-button fill="clear"> <ion-icon slot="start" name="location-outline"
+              <ion-button fill="clear" (click)="onnearbyLabClick()"> <ion-icon slot="start" name="location-outline" 
                   color="success"></ion-icon><span class="text-gray-600"> Nearby Labs</span></ion-button>
             </ion-item>
             <ion-item>
@@ -38,11 +37,14 @@
                   color="danger"></ion-icon><span class="text-gray-600">Log Out</span></ion-button>
             </ion-item>
           </ion-list>
+          <div class="d-flex justify-content-center pb-2">
+           <span class="text-gray-600 text-sm">App Version : {{ slimsPatientAppService.baseService.version }}</span> 
+          </div>
         </div>
-      </ion-content>
+        <app-map-modal [AllowSelect]="false" [maptitle]="'Nearby Labs'"   #appModalPage></app-map-modal>
     </ng-template>
   </ion-modal>
-<div class="ion-page">
+<div class="ion-page" id="main-content">
 
 
   <ion-header mode="ios">
@@ -56,7 +58,11 @@
     }
     <ion-title>{{title}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="oncartClick()" > <ion-icon aria-hidden="true" color="primary" name="cart-outline" slot="end" ></ion-icon> </ion-button>
+      <ion-button fill="clear" class="cartbtn" (click)="oncartClick()" > <ion-icon aria-hidden="true" color="primary" name="cart-outline" slot="end" ></ion-icon> 
+        @if(cartservice.cartCount() > 0){
+          <ion-badge class="cart-count" color="danger">{{cartservice.cartCount()}}</ion-badge>
+        }
+      </ion-button>
     </ion-buttons> 
   </ion-toolbar>
 </ion-header>
@@ -82,5 +88,6 @@
       <ion-label>More</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
+
 </div>
 

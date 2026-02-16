@@ -27,7 +27,7 @@ export class AuthService {
         this.OTPVerifiedUserId = null;
     }
 
-    public setUserLogin(loginUserId: string,loginUserToken: string,PatientId,ptName,CityId,cityName : string = null,IsPasswordAvailable,Photograph : string = null): void {
+    public setUserLogin(loginUserId: string,loginUserToken: string,PatientId,ptName,CityId,cityName : string = null,IsPasswordAvailable,Photograph : string = null,MapAPIKey): void {
 
         this.isUserLoggedIn = true;
         this.authenticationModel.loginUserId = loginUserId;
@@ -38,18 +38,23 @@ export class AuthService {
         this.authenticationModel.CityName = cityName;
         this.authenticationModel.Photograph = Photograph;
         this.authenticationModel.IsPasswordAvailable = IsPasswordAvailable;
+        this.authenticationModel.MapAPIKey = MapAPIKey;
         if (this.authenticationModel.loginUserId && this.authenticationModel.loginUserToken) {
             this.isUserLoggedIn = true;
         }
         Preferences.set({
             key: 'auth',
             value: JSON.stringify(this.authenticationModel),
-        })
+        });
+        
         Preferences.set({
             key: 'IsLoginOnce',
             value: JSON.stringify(true),
-        })
-       
+        });
+        Preferences.set({
+            key: 'MapAPIKey',
+            value: JSON.stringify(MapAPIKey),
+        });
     }
 
     public checkUserLogin() {
@@ -59,7 +64,7 @@ export class AuthService {
                 if (auth) {
                     var authenticationModel: AuthenticationModel = new AuthenticationModel(JSON.parse(auth));
                     if (authenticationModel.loginUserId && authenticationModel.loginUserToken) {
-                        this.setUserLogin(authenticationModel.loginUserId,  authenticationModel.loginUserToken,authenticationModel.PatientId, authenticationModel.PatientName,  authenticationModel.CityId,  authenticationModel.CityName,authenticationModel.IsPasswordAvailable,authenticationModel.Photograph);
+                        this.setUserLogin(authenticationModel.loginUserId,  authenticationModel.loginUserToken,authenticationModel.PatientId, authenticationModel.PatientName,  authenticationModel.CityId,  authenticationModel.CityName,authenticationModel.IsPasswordAvailable,authenticationModel.Photograph,authenticationModel.MapAPIKey);
                         this.router.navigate(['home']);
                     } else {
                         this.navigateToLogin();
@@ -95,6 +100,8 @@ export class AuthService {
         this.redirectUrl = isSessionTimeOut ? this.router.url : '';
         this.authenticationModel = new AuthenticationModel();
         Preferences.remove({ 'key': 'auth' });
+        Preferences.remove({ 'key': 'MapAPIKey' });
+        Preferences.remove({ 'key': 'cart_items' });
         this.navigateToLogin();
     }
 

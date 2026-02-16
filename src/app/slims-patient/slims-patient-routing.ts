@@ -17,12 +17,14 @@ export const PatientAppRouting: Routes = [
       {
         path: 'orders',
         canActivate : [AuthGuardLogin],
-        loadComponent: () => import('../slims-patient/orders/orders.page').then(m => m.OrdersPage)
+        loadComponent: () => import('../slims-patient/orders/orders.page').then(m => m.OrdersPage),
+        data :{ title: 'My Orders'}
       },
       {
         path: 'profile',
         canActivate : [AuthGuardLogin],
-        loadComponent: () => import('../slims-patient/profile/profile.page').then(m => m.ProfilePage)
+        loadComponent: () => import('../slims-patient/profile/profile.page').then(m => m.ProfilePage),
+        data :{ title: 'My Profile'}
       },
       {
         path: 'packages',
@@ -46,14 +48,14 @@ export const PatientAppRouting: Routes = [
         path: 'cart',
         canActivate : [AuthGuardLogin],
         loadComponent: () => import('./cart/cart.page').then(m => m.CartPage),
-        data: { isShowBackButton: true },
+        data: {  title: 'My Cart' ,isShowBackButton: true },
        
       },
         {
         path: 'cart/checkout',
         canActivate : [AuthGuardLogin],
         loadComponent: () => import('./cart/checkout/checkout.page').then(m => m.CheckoutPage),
-        data: { isShowBackButton: true },
+        data: {title: 'CheckOut', isShowBackButton: true },
       }
 
 

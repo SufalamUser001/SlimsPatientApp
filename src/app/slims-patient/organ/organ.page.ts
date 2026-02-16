@@ -1,27 +1,41 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonIcon, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonRow, IonCol,IonChip  } from "@ionic/angular/standalone";
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonIcon, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonRow, IonCol, IonChip, IonBadge } from "@ionic/angular/standalone";
 import { SlimsPatientApplicationService } from 'src/app/service/laboratory-service/lims-patientapp.service';
 import { SharedService } from 'src/app/service/shared-service/shared.service';
 import { organtest, tests_organ } from '../../global.settings';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { CartService } from '../../service/shared-service/cart.service';
 
 @Component({
     selector: 'app-organ',
     templateUrl: 'organ.page.html',
     styleUrls: ['organ.page.scss'],
     standalone : true,
-    imports: [IonContent, IonButton, IonIcon, CommonModule, IonRow, IonCol, IonChip],
+    imports: [IonContent, IonButton, IonIcon, CommonModule, IonChip, IonBadge],
 })
 
 export class OrganPage implements OnInit {
-    constructor(public sharedService : SharedService,public slimsPatientService : SlimsPatientApplicationService,public router : Router ) {
+    constructor(public sharedService : SharedService,public slimsPatientService : SlimsPatientApplicationService,public router : Router,public cartService : CartService  ) {
          this.selectedOrganIndex = null
         const navi = this.router.getCurrentNavigation();
         if(navi.extras.state){
           this.selectedOrgan = navi.extras.state['organ'];
         }
+        this.cartService.cartItem$.subscribe((item)=>{
+            if(item){
+              var index = this.tests_organ.findIndex(x=> x.ServiceId == item.ServiceId);
+              if(index > -1){
+                this.tests_organ[index].IsAddedInCart = item.IsAddedInCart;
+              }
+              var findex = this.filterOragnList.findIndex(x=> x.ServiceId == item.ServiceId);
+              if(findex > -1){
+                this.filterOragnList[findex].IsAddedInCart = item.IsAddedInCart;
+              }
+            }
+          });
+
     }
 
     @Input() public IsCompactView = false;
@@ -70,6 +84,14 @@ export class OrganPage implements OnInit {
             this.filterOragnList = this.tests_organ.filter(x => x.OrganId == this.selectedOrgan.OrganId);
         }
     }
+
+    onAddtoCart(item){
+        if(item.IsAddedInCart){
+          this.router.navigate(['/lims-patient/cart']);
+        }else{
+          this.cartService.addToCart(item);
+        }
+      }
 
 
 
