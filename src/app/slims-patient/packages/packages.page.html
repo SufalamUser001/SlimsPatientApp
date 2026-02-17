@@ -10,13 +10,13 @@
 }
 
 <ng-template #packages>
-<div class="d-flex flex-column gap-2 mt-4">
+<div class="d-flex flex-column gap-2 " [ngClass]="{'mt-4': isShowViewMore, 'mt-2': !isShowViewMore}">
   <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column w-60">
+    <div class="d-flex flex-column " [ngClass]="{'w-60': isShowViewMore, 'w-100': !isShowViewMore}">
       <h3 class="font-700">
         Popular Test Packages
       </h3>
-      <p class="text-xs text-gray-600 font-500 mb-2">Most frequently booked diagnostic tests and health checkup packages</p>
+      <p class="text-xs text-gray-600 font-500 mb-2">Most  booked  health checkup packages</p>
     </div>
     @if(isShowViewMore){
     <ion-button fill="clear" size="small" class="text-blue-600" (click)="packageViewAllClick.emit()">

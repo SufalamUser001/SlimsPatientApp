@@ -4,7 +4,7 @@
   </ng-template>
   @if(tests_organ && filterOragnList.length > 0){
     @for(organData of filterOragnList; track organData; let i = $index){
-        <div class="card border-card mt-3 p-3 w-100">
+        <div class="card border-card mt-2 p-3 w-100">
             <div class="d-flex justify-content-between align-items-center title-row">
                 <h6 class="font-600 text-gray-700">{{ organData.TestName }}</h6>
                 <div class="d-flex justify-content-start   font-500 ">
@@ -56,9 +56,9 @@
 }
 
 <ng-template #organ>
-<div class="d-flex flex-column gap-2 " [ngClass]="{'mt-4': IsCompactView, 'mt-2': !IsCompactView}">
+<div class="d-flex flex-column gap-1 " [ngClass]="{'mt-4': IsCompactView, 'mt-2': !IsCompactView}">
   <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column w-60">
+    <div class="d-flex flex-column " [ngClass]="{'w-60': IsCompactView, 'w-100': !IsCompactView}">
       <h3 class="font-700">
         Tests by Organ
       </h3>
