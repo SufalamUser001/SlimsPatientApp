@@ -5,10 +5,10 @@
     @for (item of courselList; track $index) {
       <swiper-slide >
         <div class="slider-conatiner">
-          <div class="slider-card" [style.background-image]="'url(\'data:image/jpeg;base64,' + item.image + '\')'">
+          <div class="slider-card" [style.background-image]="'url(\'' + item.DashboardImageURL + '\')'">
             <div class="text-overlay">
-              <h3 class="font-800">{{item.heading}}</h3>
-              <p class="font-600 text-xs m-0 mt-1">{{item.subheading}}</p>
+              <h3 class="font-800">{{item.Heading}}</h3>
+              <p class="font-600 text-xs m-0 mt-1">{{item.SubHeading}}</p>
             </div>
           </div>
         </div>

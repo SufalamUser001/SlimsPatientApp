@@ -35,7 +35,7 @@ export class SharedService {
     public isDisplayBackButton = new BehaviorSubject(false);
     public LastGeoLocation: any = null;
     public platform = 'web';
-
+    public PatientAppConfig : any;
     constructor(public toastService: ToastService,private platform$ : Platform,public authService: AuthService) {
         this.generalService = new GeneralService();
         this.CalcDevideDimension();

@@ -53,6 +53,7 @@ export class SlimsPatientComponent {
         this.isDisplayBackButton = false;
       }
     });
+    this.GetPatientAppConfiguration();
   }
 
   openOptionsModal(){
@@ -123,4 +124,24 @@ export class SlimsPatientComponent {
       mm.openMapModalwithData();
     }
   }
+
+  GetPatientAppConfiguration(){
+    //this.sharedService.isBusy = true;
+    this.slimsPatientAppService.GetPatientAppConfiguration().subscribe(
+      (response: any) => {
+   // this.sharedService.isBusy = false;
+        if (response.IsSuccess) {
+          if(response.Success.Data){
+
+            this.sharedService.PatientAppConfig = Object.assign({}, response.Success.Data);
+          }
+        } 
+        else 
+        {
+          this.sharedService.HandleAuthenticationError(response.Error);
+        }
+      }, (error: any) => {
+        this.sharedService.isBusy = false;
+      });
+}
 }

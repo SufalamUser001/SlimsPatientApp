@@ -11,16 +11,13 @@
   .title-row {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     column-gap: 12px;
     row-gap: 5px;
     flex-wrap: wrap;
     h3 {
       margin: 0;
       font-size: 18px;
-      font-weight: 600;
-    }
-  
-    h2 {
       font-weight: 600;
     }
   }
@@ -54,24 +51,90 @@
 
 
 .badgeCustom {
-    background: #e3dfdf;
-    color: #696969;
-    font-size: 14px;
+    color: #4B5563;
+    font-size: 12px;
     padding: 2px 10px;
     border-radius: 20px;
-    font-weight: 600;
+    font-weight: 500;
     align-self: center;
+    align-items: center;
+    display: flex;
   }
 
-  .tested {
-    @extend .badgeCustom;
-    background: #f9edba;
-    color: #b86302;
-  }
-  
 
-  .approved {
-    @extend .badgeCustom;
-    background: #bbe4bb;
-    color: #008000;
+  .paid{
+    background: #dcfce7;
+    color: #008236;
   }
+
+  .Due{
+    background: #ffe2e2;
+    color: #c10007;
+  }
+  .p-paid{
+    background: #ffedd4;
+    color: #ca3500;
+  }
+  .genderIcon{
+    font-size: 12px;
+  }
+
+.custom-small{
+  --padding-top : 10px;
+  --padding-bottom : 10px;
+}
+
+
+.new {
+  @extend .badgeCustom;
+  background: #e3dfdf;
+  color: #696969;
+}
+
+.partial-tested {
+  @extend .badgeCustom;
+  background:
+    linear-gradient(#d0cbc9, #fad1b5) padding-box,
+    linear-gradient(to right, #b7b6b6 30%, #fb9d4d 99%) border-box;
+  border: 2px solid transparent;
+  color: #e8670b;
+}
+//#fef9c2
+//#a65f00
+
+.tested {
+  @extend .badgeCustom;
+  background: #ffd8be;
+  color: #bf5001;
+}
+
+.partial-tested-approved {
+  @extend .badgeCustom;
+  color: #08b408;
+  background:
+    linear-gradient(#bbe4bb, #aaf3aa) padding-box,
+    linear-gradient(to right, #b7b6b6 7%, #fb9d4d 46%, #05cf05 99%) border-box;
+  border: 2px solid transparent;
+  //text-shadow: 1px 1px 0px rgb(106, 106, 106);
+}
+
+.partial-approved {
+  @extend .badgeCustom;
+  background:
+    linear-gradient(#daffda, #aaf3aa) padding-box,
+    linear-gradient(to right, #b7b6b6 38%, #05cf05 99%) border-box;
+  border: 2px solid transparent;
+  color: #008000;
+}
+
+.will-not-receive {
+  @extend .badgeCustom;
+  background: #0b410b;
+  color: white;
+}
+
+.approved {
+  @extend .badgeCustom;
+  background: #bbe4bb;
+  color: #054905;
+}

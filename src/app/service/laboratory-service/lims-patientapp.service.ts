@@ -84,8 +84,8 @@ export class SlimsPatientApplicationService {
         return this.baseService.post(this.labcartApiEndPoint + 'ChangeLabCartPatientStatus', { PatientId: PatientId, ReasonForChange: reasonForChange });
       }
     
-      GetLabCartPatientReportList(mobile,month,year){
-        return this.baseService.post(this.labcartApiEndPoint + 'GetLabCartPatientReportList', { Mobile: mobile, RegistrationMonth: month, RegistrationYear: year });
+      GetLabCartPatientReportList(mobile,fromdate,todate){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetLabCartPatientReportList', { Mobile: mobile, VaccineFirstDoseDate : fromdate, VaccineSecondDoseDate : todate });
       }
     
       DownloadReportForLabCartPatient(labid,password){
@@ -147,4 +147,39 @@ export class SlimsPatientApplicationService {
       GetLabCartPackageDetailsByServiceId(serviceId) {
         return this.baseService.post(this.labcartApiEndPoint + 'GetLabCartPackageDetailsByServiceId', { ServiceId : serviceId});
       }
+
+
+      //#region  apprelated api
+
+         
+      GetNearByBranchLocations(lat,long){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetNearByBranchLocations', { Latitude : lat, Longitude : long });
+      }
+
+      GetPatientAppDashboardImageDetailsList(){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetPatientAppDashboardImageDetailsList', {});
+      }
+
+      GetPatientAppConfiguration(){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetPatientAppConfiguration', { ServiceId : 0});
+      }
+
+      GetOrgansForLabCart(){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetOrgansForLabCart', null);
+      }
+
+      GetDiseasesForLabCart(){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetDiseasesForLabCart', null);
+      }
+
+      GetLabCartOrganServiceDetails(){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetLabCartOrganServiceDetails', null);
+      }
+
+      GetLabCartDiseaseServiceDetails(){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetLabCartDiseaseServiceDetails', null);
+      }
+
+      //#endregion
+
 }

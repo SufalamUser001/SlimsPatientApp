@@ -4,16 +4,18 @@ import { addIcons } from 'ionicons';
 import * as allicons from "ionicons/icons";
 import { Capacitor } from '@capacitor/core';
 import { SafeArea } from 'capacitor-plugin-safe-area';
+import { LoaderComponent } from "./loader/loader.component";
+import { SharedService } from './service/shared-service/shared.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
     standalone: true,
-    imports: [IonApp,IonRouterOutlet],
+    imports: [IonApp, IonRouterOutlet, LoaderComponent],
 })
 export class AppComponent {
-  constructor() {
+  constructor(public sharedService : SharedService) {
     addIcons(allicons);
     if (
       Capacitor.getPlatform() === 'android' ||

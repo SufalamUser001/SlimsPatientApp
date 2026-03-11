@@ -18,7 +18,9 @@ import { CartService } from '../../service/shared-service/cart.service';
 
 export class OrganPage implements OnInit {
     constructor(public sharedService : SharedService,public slimsPatientService : SlimsPatientApplicationService,public router : Router,public cartService : CartService  ) {
-         this.selectedOrganIndex = null
+      this.GetOrganForLabCart();
+      this.GetLabCartOrganServiceDetails();
+      this.selectedOrganIndex = null
         const navi = this.router.getCurrentNavigation();
         if(navi.extras.state){
           this.selectedOrgan = navi.extras.state['organ'];
@@ -41,8 +43,8 @@ export class OrganPage implements OnInit {
     @Input() public IsCompactView = false;
     @Output() public organViewAllClick: EventEmitter<any> = new EventEmitter();
     @Output() public organClickemit: EventEmitter<any> = new EventEmitter();
-    public organtest = organtest;
-    public tests_organ = tests_organ;
+    public organtest = [];;
+    public tests_organ = [];
     public filterOragnList = [];
     public selectedOrgan;
     public selectedOrganIndex = null;
@@ -59,7 +61,7 @@ export class OrganPage implements OnInit {
 
 
     ngOnInit(): void {
-        this.filterOragnList = this.tests_organ;
+      
         if(!this.IsCompactView && this.selectedOrgan){
              this.finalFilter();
         }
@@ -81,7 +83,7 @@ export class OrganPage implements OnInit {
 
     finalFilter(){
         if (this.tests_organ && this.tests_organ.length > 0 && this.selectedOrgan && this.selectedOrgan.OrganId){
-            this.filterOragnList = this.tests_organ.filter(x => x.OrganId == this.selectedOrgan.OrganId);
+            this.filterOragnList = this.tests_organ.filter(x => x.OrganIdList.indexOf(this.selectedOrgan.OrganId) > -1);
         }
     }
 
@@ -93,6 +95,49 @@ export class OrganPage implements OnInit {
         }
       }
 
+      GetOrganForLabCart() {
+        //this.sharedService.isBusy = true;
+        this.slimsPatientService.GetOrgansForLabCart().subscribe(
+          (response: any) => {
+       // this.sharedService.isBusy = false;
+            if (response.IsSuccess) {
+              if(response.Success.Data){
+    
+                this.organtest = Object.assign([], response.Success.Data);
+           
+              }
+            } 
+            else 
+            {
+              this.sharedService.HandleAuthenticationError(response.Error);
+            }
+          }, (error: any) => {
+            this.sharedService.isBusy = false;
+          });
+      }
+
+
+      GetLabCartOrganServiceDetails() {
+        //this.sharedService.isBusy = true;
+        this.slimsPatientService.GetLabCartOrganServiceDetails().subscribe(
+          (response: any) => {
+       // this.sharedService.isBusy = false;
+            if (response.IsSuccess) {
+              if(response.Success.Data){
+    
+                this.tests_organ = Object.assign([], response.Success.Data);
+                this.filterOragnList = Object.assign([],this.tests_organ);
+                this.finalFilter();
+              }
+            } 
+            else 
+            {
+              this.sharedService.HandleAuthenticationError(response.Error);
+            }
+          }, (error: any) => {
+            this.sharedService.isBusy = false;
+          });
+      }
 
 
 }

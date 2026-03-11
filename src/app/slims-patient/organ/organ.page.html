@@ -2,25 +2,29 @@
 <ion-content class="ion-padding">
   <ng-template [ngTemplateOutlet]="organ">
   </ng-template>
-  @if(tests_organ && filterOragnList.length > 0){
+  @if(filterOragnList && filterOragnList.length > 0){
     @for(organData of filterOragnList; track organData; let i = $index){
         <div class="card border-card mt-2 p-3 w-100">
             <div class="d-flex justify-content-between align-items-center title-row">
-                <h6 class="font-600 text-gray-700">{{ organData.TestName }}</h6>
+                <h6 class="font-600 text-gray-700">{{ organData.ServiceName }}</h6>
                 <div class="d-flex justify-content-start   font-500 ">
                   @if(selectedOrganIndex && selectedOrganIndex >= 0){
-                    <ion-chip class="text-{{colorsList[selectedOrganIndex]}}-700 bg-{{colorsList[selectedOrganIndex]}}-100 text-xs">{{ organData.Organ }}</ion-chip>
+                    <ion-chip class="text-{{colorsList[selectedOrganIndex]}}-700 bg-{{colorsList[selectedOrganIndex]}}-100 text-xs">{{ selectedOrgan.OrganName }}</ion-chip>
                   }
                   @else {
-                    <ion-chip class="text-xs" color="tertiary">{{ organData.Organ }}</ion-chip>
+                    <!-- <ion-chip class="text-xs" color="tertiary">{{ organData.Organ }}</ion-chip> -->
                   }
                 </div>
             </div>
             <div class="d-flex justify-content-start text-sm text-gray-500 font-500 ">
-               {{ organData.TestDescription }}
+               {{ organData.ServiceDescription }}
             </div>
             <div class="d-flex justify-content-between align-items-center">
-             <span class="text-lg text-blue-600 font-800 ">₹ {{ organData.Amount }} </span> 
+              
+
+              @if(sharedService.PatientAppConfig?.IsEnableCart){
+             <span class="text-lg text-blue-600 font-800 "> @if(organData.Amount){₹ {{ organData.Amount }} }</span> 
+   
               <div>
                 <ion-button fill="outline" color="primary" (click)="onAddtoCart(organData)">
                   <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
@@ -31,6 +35,7 @@
                   </ion-badge>
                 }
               </div>
+            }
             </div>
         
             <!-- <ion-row>
@@ -56,6 +61,7 @@
 }
 
 <ng-template #organ>
+  @if(organtest && organtest.length > 0){
 <div class="d-flex flex-column gap-1 " [ngClass]="{'mt-4': IsCompactView, 'mt-2': !IsCompactView}">
   <div class="d-flex justify-content-between ">
     <div class="d-flex flex-column " [ngClass]="{'w-60': IsCompactView, 'w-100': !IsCompactView}">
@@ -77,15 +83,23 @@
     @for (org of organtest; track $index;let i = $index) {
       @if(IsCompactView){
       <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterOrgan(org)">
-          <i class="fa {{ org.icon }} text-3xl" aria-hidden="true"></i>
-          <p class="mb-0 mt-1 text-sm font-600"> {{org.name}} </p>
+        @if(org.OrganImage){
+          <img alt="" [src]="'data:image/jpeg;base64,' + org.OrganImage" style="width:80%; height:80%">
+        }
+        @else{
+          <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" style="opacity: 0.5;"/>
+        }
+
+          <!-- <i class="fa {{ org.icon }} text-3xl" aria-hidden="true"></i> -->
+          <p class="mb-0 mt-1 text-sm font-600"> {{org.OrganName}} </p>
           <div class="overlay"></div>
       </button>
       }
       @else{
-        <ion-button [color]="selectedOrgan?.OrganId == org.OrganId ?'tertiary' : 'light'" (click)="filterOrgan(org, i)">{{org.name}} </ion-button>
+        <ion-button [color]="selectedOrgan?.OrganId == org.OrganId ?'tertiary' : 'light'" (click)="filterOrgan(org, i)">{{org.OrganName}} </ion-button>
       }
     }
   </div>
 </div>
+}
 </ng-template>

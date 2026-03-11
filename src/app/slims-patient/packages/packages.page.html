@@ -10,65 +10,83 @@
 }
 
 <ng-template #packages>
-<div class="d-flex flex-column gap-2 " [ngClass]="{'mt-4': isShowViewMore, 'mt-2': !isShowViewMore}">
-  <div class="d-flex justify-content-between ">
-    <div class="d-flex flex-column " [ngClass]="{'w-60': isShowViewMore, 'w-100': !isShowViewMore}">
-      <h3 class="font-700">
-        Popular Test Packages
-      </h3>
-      <p class="text-xs text-gray-600 font-500 mb-2">Most  booked  health checkup packages</p>
+  @if(PackageList && PackageList.length > 0){
+    <div class="d-flex flex-column gap-2 " [ngClass]="{'mt-4': isShowViewMore, 'mt-2': !isShowViewMore}">
+      <div class="d-flex justify-content-between ">
+        <div class="d-flex flex-column " [ngClass]="{'w-60': isShowViewMore, 'w-100': !isShowViewMore}">
+          <h3 class="font-700">
+            Popular Test Packages
+          </h3>
+          <p class="text-xs text-gray-600 font-500 mb-2">Most  booked  health checkup packages</p>
+        </div>
+        @if(isShowViewMore){
+        <ion-button fill="clear" size="small" class="text-blue-600" (click)="packageViewAllClick.emit()">
+          <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
+          View more</ion-button>
+        }
+      </div>
+      <div class="d-flex flex-column flex-md-row gap-2">
+        @if(!isShowViewMore){
+            @for (package of PackageList; track $index; let i = $index) {
+                <ng-container  *ngTemplateOutlet="itemTemplate; context: { $implicit: package, index: i }"></ng-container>
+              }
+        }@else {
+          @for (package of PackageList.slice(0,3); track $index; let i = $index) {
+            <ng-container  *ngTemplateOutlet="itemTemplate; context: { $implicit: package, index: i }"></ng-container>
+          }
+        }
+
+      </div>
     </div>
-    @if(isShowViewMore){
-    <ion-button fill="clear" size="small" class="text-blue-600" (click)="packageViewAllClick.emit()">
-      <ion-icon name="chevron-forward-outline"  slot="end"></ion-icon>
-      View more</ion-button>
-    }
-  </div>
-  <div class="d-flex flex-column flex-md-row gap-2">
-    @for (package of popular_packages; track $index; let i = $index) {
-          <ion-card class="m-0 package-card">
-            <div class="package-card-img">
-              @if(package.image && package.image.length > 0){
-                <img alt="" [src]="'data:image/jpeg;base64,' + package.image" style="width:100%; height:100%">
-              }@else{
-                <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+}
+</ng-template>
+
+<ng-template #itemTemplate let-package let-i="index">
+  <ion-card class="m-0 package-card">
+    <div class="package-card-img">
+      @if(package.image && package.image.length > 0){
+        <img alt="" [src]="'data:image/jpeg;base64,' + package.image" style="width:100%; height:100%">
+      }@else{
+        <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+      }
+    </div>
+ 
+    
+      <ion-card-header class="py-2">
+        <h3 class="font-600 text-gray-800">{{package.ServiceName}}</h3>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="text-xs text-gray-600 font-500">{{package.ServiceDescription}}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          @if(sharedService.PatientAppConfig?.IsEnableCart){
+         
+          <span class="text-primary font-700 text-2xl">    @if(package.Amount){ &#8377;{{package.Amount}} }</span>
+           
+          <!-- @if(package.IsAddedInCart){
+            
+            <ion-button color="danger" size="small"  (click)="cartService.removeFromCart(package)">
+              
+              Remove From Cart</ion-button>
+            }
+            @else{ -->
+           
+
+     
+            <div>
+              <ion-button fill="outline" color="primary" (click)="onAddtoCart(package)">
+                <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+             
+              </ion-button>
+              @if(package.IsAddedInCart){
+                <ion-badge class="cart-added" color="success">&#10003;
+                </ion-badge>
               }
             </div>
-         
-            
-              <ion-card-header class="py-2">
-                <h3 class="font-600 text-gray-800">{{package.TestName}}</h3>
-              </ion-card-header>
-              <ion-card-content>
-                <p class="text-xs text-gray-600 font-500">{{package.TestDescription}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-
-                  <span class="text-primary font-700 text-2xl"> &#8377;{{package.Amount}}</span>
-                  
-                  <!-- @if(package.IsAddedInCart){
-                    
-                    <ion-button color="danger" size="small"  (click)="cartService.removeFromCart(package)">
-                      
-                      Remove From Cart</ion-button>
-                    }
-                    @else{ -->
-                    <div>
-                      <ion-button fill="outline" color="primary" (click)="onAddtoCart(package)">
-                        <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
-                     
-                      </ion-button>
-                      @if(package.IsAddedInCart){
-                        <ion-badge class="cart-added" color="success">&#10003;
-                        </ion-badge>
-                      }
-                    </div>
-                  
-                      <!-- } -->
-                    </div>
-                
-              </ion-card-content>
-          </ion-card>
-      }
-  </div>
-</div>
+          }
+              <!-- } -->
+            </div>
+        
+      </ion-card-content>
+  </ion-card>
 </ng-template>
+

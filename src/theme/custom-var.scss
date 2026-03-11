@@ -304,9 +304,14 @@ $colors-names : (
 
 
 $theme-colors: (
-  "myorange": #f54900,
+  "myorange": #d94201,
   "mygreen": #008236,
-  
+);
+
+$theme-colors-white: (
+  "myorangewhite": #e17100,
+  "mygreenwhite": #25a259,
+  "mybluewhite":#5883e1
 );
 
 @function get-contrast-color($color) {
@@ -329,6 +334,30 @@ $theme-colors: (
 @each $th-name, $th-value in $theme-colors {
   // Determine contrast color manually (black or white) based on brightness
   $contrast: get-contrast-color($th-value);
+
+  :root {
+    --ion-color-#{$th-name}: #{$th-value};
+    --ion-color-#{$th-name}-rgb: #{color.channel($th-value, "red")}, #{color.channel($th-value, "green")}, #{color.channel($th-value, "blue")};
+    --ion-color-#{$th-name}-contrast: #{$contrast};
+    --ion-color-#{$th-name}-contrast-rgb: #{color.channel($contrast, "red")}, #{color.channel($contrast, "green")}, #{color.channel($contrast, "blue")};
+    --ion-color-#{$th-name}-shade: #{color.adjust($th-value, $lightness: -12%)};
+    --ion-color-#{$th-name}-tint: #{color.adjust($th-value, $lightness: 10%)};
+  }
+
+  .ion-color-#{$th-name} {
+    --ion-color-base: var(--ion-color-#{$th-name});
+    --ion-color-base-rgb: var(--ion-color-#{$th-name}-rgb);
+    --ion-color-contrast: var(--ion-color-#{$th-name}-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-#{$th-name}-contrast-rgb);
+    --ion-color-shade: var(--ion-color-#{$th-name}-shade);
+    --ion-color-tint: var(--ion-color-#{$th-name}-tint);
+  }
+}
+
+
+@each $th-name, $th-value in $theme-colors-white {
+  // Determine contrast color manually (black or white) based on brightness
+  $contrast: #ffffff;
 
   :root {
     --ion-color-#{$th-name}: #{$th-value};

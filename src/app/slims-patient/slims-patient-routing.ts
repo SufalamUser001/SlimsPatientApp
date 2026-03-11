@@ -28,19 +28,19 @@ export const PatientAppRouting: Routes = [
       },
       {
         path: 'packages',
-        canActivate : [AuthGuardLogin],
+        // canActivate : [AuthGuardLogin],
         loadComponent: () => import('./packages/packages.page').then(m => m.PackagesPage),
         data: { isShowBackButton: true }
       },
       {
         path: 'organ',
-        canActivate : [AuthGuardLogin],
+        // canActivate : [AuthGuardLogin],
         loadComponent: () => import('./organ/organ.page').then(m => m.OrganPage),
         data: { isShowBackButton: true }
       },
       {
         path: 'disease',
-        canActivate : [AuthGuardLogin],
+        // canActivate : [AuthGuardLogin],
         loadComponent: () => import('./disease/disease.page').then(m => m.DiseasePage),
         data: { isShowBackButton: true }
       },

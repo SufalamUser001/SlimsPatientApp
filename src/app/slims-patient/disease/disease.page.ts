@@ -18,7 +18,9 @@ import { CartService } from '../../service/shared-service/cart.service';
 
 export class DiseasePage implements OnInit {
     constructor(public sharedService : SharedService,public slimsPatientService : SlimsPatientApplicationService,public router : Router,public cartService : CartService ) {
-         this.selectedDiseaseIndex = null
+      this.GetDiseasesForLabCart();
+      this.GetLabCartDiseaseServiceDetails();   
+      this.selectedDiseaseIndex = null
         const navi = this.router.getCurrentNavigation();
         if(navi.extras.state){
           this.selectedDisease= navi.extras.state['disease'];
@@ -41,8 +43,8 @@ export class DiseasePage implements OnInit {
     @Input() public IsCompactView = false;
     @Output() public diseaseViewAllClick: EventEmitter<any> = new EventEmitter();
     @Output() public diseaseClickemit: EventEmitter<any> = new EventEmitter();
-    public diseasetest = Diseasetest;
-    public tests_disease = test_disease;
+    public diseasetest = [];
+    public tests_disease = [];
     public filterDiseaseList = [];
     public selectedDisease;
     public selectedDiseaseIndex = null;
@@ -83,7 +85,7 @@ export class DiseasePage implements OnInit {
 
     finalFilter(){
         if (this.tests_disease && this.tests_disease.length > 0 && this.selectedDisease && this.selectedDisease.DiseaseId){
-            this.filterDiseaseList = this.tests_disease.filter(x => x.DiseaseId == this.selectedDisease.DiseaseId);
+            this.filterDiseaseList = this.tests_disease.filter(x => x.DiseaseIdList.indexOf(this.selectedDisease.DiseaseId) > -1);
         }
     }
 
@@ -93,6 +95,51 @@ export class DiseasePage implements OnInit {
         }else{
           this.cartService.addToCart(item);
         }
+      }
+
+
+      GetDiseasesForLabCart() {
+        //this.sharedService.isBusy = true;
+        this.slimsPatientService.GetDiseasesForLabCart().subscribe(
+          (response: any) => {
+       // this.sharedService.isBusy = false;
+            if (response.IsSuccess) {
+              if(response.Success.Data){
+    
+                this.diseasetest = Object.assign([], response.Success.Data);
+           
+              }
+            } 
+            else 
+            {
+              this.sharedService.HandleAuthenticationError(response.Error);
+            }
+          }, (error: any) => {
+            this.sharedService.isBusy = false;
+          });
+      }
+
+
+      GetLabCartDiseaseServiceDetails() {
+        //this.sharedService.isBusy = true;
+        this.slimsPatientService.GetLabCartDiseaseServiceDetails().subscribe(
+          (response: any) => {
+       // this.sharedService.isBusy = false;
+            if (response.IsSuccess) {
+              if(response.Success.Data){
+    
+                this.tests_disease = Object.assign([], response.Success.Data);
+                this.filterDiseaseList = Object.assign([],this.tests_disease);
+                this.finalFilter();
+              }
+            } 
+            else 
+            {
+              this.sharedService.HandleAuthenticationError(response.Error);
+            }
+          }, (error: any) => {
+            this.sharedService.isBusy = false;
+          });
       }
 
 

@@ -57,6 +57,7 @@
       </ion-buttons> 
     }
     <ion-title>{{title}}</ion-title>
+    @if(sharedService.PatientAppConfig?.IsEnableCart){
     <ion-buttons slot="end">
       <ion-button fill="clear" class="cartbtn" (click)="oncartClick()" > <ion-icon aria-hidden="true" color="primary" name="cart-outline" slot="end" ></ion-icon> 
         @if(cartservice.cartCount() > 0){
@@ -64,6 +65,7 @@
         }
       </ion-button>
     </ion-buttons> 
+  }
   </ion-toolbar>
 </ion-header>
 
