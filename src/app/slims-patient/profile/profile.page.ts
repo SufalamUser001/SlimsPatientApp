@@ -59,6 +59,7 @@ export class ProfilePage {
   familyAddressesModal = viewChild<IonModal>("FamilyAddressesModal");
 
   ngOnInit() {
+    console.log('profile init');
     this.mobile = this.authService.authenticationModel.loginUserId;
     this.isPasswordAvailable = this.authService.authenticationModel.IsPasswordAvailable;
     this.getAllDD(this.mobile);
@@ -70,20 +71,19 @@ export class ProfilePage {
 
   segmentChanged(event){
     if(event && event.detail && event.detail.value){
-      if(event.detail.value === 'default'){
-        this.IsPInfoEdit = false;
-    }
-    else if(event.detail.value === 'members'){
-      this.labCartMemberObj = new PatientModel();
-    }
-    else if(event.detail.value === 'address'){
-    
-    }
-    else if(event.detail.value === 'security'){
-      this.changePasswordObj =  new ChangePasswordModel();
-    }
-    
-    }
+        if(event.detail.value === 'default'){
+          this.IsPInfoEdit = false;
+        }
+        else if(event.detail.value === 'members'){
+          this.labCartMemberObj = new PatientModel();
+        }
+        else if(event.detail.value === 'address'){
+        
+        }
+        else if(event.detail.value === 'security'){
+          this.changePasswordObj =  new ChangePasswordModel();
+        }
+      }
   }
 
   onPEEdit(){
@@ -410,7 +410,7 @@ onChangePasswordFormSubmit() {
       return;
     }
     let CurrentPassword = this.changePasswordObj.CurrentPassword;
-    changePasswordObj.CurrentPassword = this.sharedService.generalService.cngpstr(CurrentPassword, this.changePasswordObj.UserId);
+    changePasswordObj.CurrentPassword = this.sharedService.generalService.cngpstr(CurrentPassword, changePasswordObj.UserId);
   }
 
   if(!this.changePasswordObj.NewPassword){
@@ -434,14 +434,14 @@ onChangePasswordFormSubmit() {
   this.sharedService.isBusy = true;
   let NewPassword = this.changePasswordObj.NewPassword;
   let ConfirmPassword = this.changePasswordObj.ConfirmPassword;
-  this.changePasswordObj.NewPassword = this.sharedService.generalService.cngpstr(NewPassword, this.changePasswordObj.UserId);
-  this.changePasswordObj.ConfirmPassword = this.sharedService.generalService.cngpstr(ConfirmPassword, this.changePasswordObj.UserId);
+  changePasswordObj.NewPassword = this.sharedService.generalService.cngpstr(NewPassword, changePasswordObj.UserId);
+  changePasswordObj.ConfirmPassword = this.sharedService.generalService.cngpstr(ConfirmPassword, changePasswordObj.UserId);
 
-  this.slimsPatientService[methodName](this.changePasswordObj).subscribe(
+  this.slimsPatientService[methodName](changePasswordObj).subscribe(
     (response: any) => {
       this.sharedService.isBusy = false;
       if (response.IsSuccess) {
-        this.sharedService.toastService.showSucess(response.Success.Message);
+        this.sharedService.toastService.showSucess("New Password set Successfully");
         this.authService.userLogout();
       } else {
         this.sharedService.HandleAuthenticationError(response.Error);

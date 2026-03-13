@@ -8,12 +8,13 @@ import { OrganPage } from "../organ/organ.page";
 import { DiseasePage } from "../disease/disease.page";
 import { SlimsPatientApplicationService } from '../../service/laboratory-service/lims-patientapp.service';
 import { SharedService } from '../../service/shared-service/shared.service';
+import { OrdersPage } from "../orders/orders.page";
 
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
-    imports: [IonContent, PackagesPage, OrganPage, DiseasePage],
+    imports: [IonContent, PackagesPage, OrganPage, DiseasePage, OrdersPage],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
@@ -51,6 +52,10 @@ export class homePage {
     this.router.navigate(['/lims-patient/disease'], { state : { disease : disease }});
   }
 
+  onOrderViewAllClick(){
+    this.router.navigate(['/lims-patient/orders']);
+  }
+
   GetPatientAppDashboardImageDetailsList() {
     //this.sharedService.isBusy = true;
     this.slimsPatientService.GetPatientAppDashboardImageDetailsList().subscribe(
@@ -58,7 +63,6 @@ export class homePage {
    // this.sharedService.isBusy = false;
         if (response.IsSuccess) {
           if(response.Success.Data){
-
             this.courselList = Object.assign([], response.Success.Data);
           }
         } 

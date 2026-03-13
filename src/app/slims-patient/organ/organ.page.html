@@ -22,7 +22,7 @@
             <div class="d-flex justify-content-between align-items-center">
               
 
-              @if(sharedService.PatientAppConfig?.IsEnableCart){
+              @if(sharedService.PatientAppConfig().IsEnableCart){
              <span class="text-lg text-blue-600 font-800 "> @if(organData.Amount){₹ {{ organData.Amount }} }</span> 
    
               <div>

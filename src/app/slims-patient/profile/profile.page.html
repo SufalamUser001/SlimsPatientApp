@@ -218,7 +218,7 @@
                             
                                 <div class="d-flex mb-1 align-items-center">
                                     <ion-icon name="card-outline" class="text-blue-900"></ion-icon>
-                                    <p class="text-sm ms-1 text-blue-900 m-0">{{ data.MembershipId }}</p>
+                                    <p class="text-sm ms-1 text-blue-900 m-0">{{ data.PatientId }}</p>
                                 </div>
                                 <div class="d-flex justify-content-start text-sm text-gray-500 font-500">
                                       <p class="mb-0">Relation : </p>
@@ -306,11 +306,12 @@
                                 }
                             </div>
                         }
-                    }@else{
+                    }
+                    @else
+                    {
                         <div class="text-center py-20 text-gray-500 w-100 ">
                             <div class="mx-auto mb-4">
                                 <ion-icon name="location-outline" class="font-500 icon-big"></ion-icon>
-
                             </div>
                             <p class="text-base font-600 ">No addresses saved yet</p>
                             <p class="text-sm mt-2 font-500">Add an address for order delivery</p>
@@ -328,14 +329,11 @@
                             @if(isPasswordAvailable){
                             <h2 class="text-xl font-700 text-gray-900">
                                 Change Password
-                                
                             </h2>
                         }@else {
                             <h2 class="text-xl font-700 text-gray-900">
                                 Set Password
-                                
                             </h2>
-                           
                         }
                         </div>
                     </ion-col>

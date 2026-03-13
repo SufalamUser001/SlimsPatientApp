@@ -27,9 +27,6 @@ export class AuthGuardLogin {
   public checkUserLogin(url) {
     if (this.sharedService.authService.isUserLoggedIn) 
     {
-      if (url == '/home/dashboard') {
-       return true;
-      }
       return true;
     } 
     else  
@@ -74,12 +71,13 @@ export class AuthGuardLogin {
 }
 
 @Injectable()
-export class MainPageAuthGuardLogin {
+export class APIAuthGuardLogin {
 
 
   public redirectUrl: string = '';
-
+  
   constructor(public sharedService: SharedService, public router: Router, public toastService: ToastService) {
+
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
@@ -89,25 +87,15 @@ export class MainPageAuthGuardLogin {
       UrlTree> {
       const url = state.url;
       const { value } = await Preferences.get({ key: 'APIURL' });
-        if(url == "/register"){
+    
           if (!value) {
-            return true;
-          }else{
-            this.router.navigate(['login']);
-            this.sharedService.isDisplayBackButton.next(false);
-            return false;
-          }
-        }else{
-          if (!value) {
-            this.router.navigate(['register']);
-            this.sharedService.isDisplayBackButton.next(false);
+            this.router.navigate(['welcome']);
             return false;
           }else{
             return true;
           }
-        }
+        
   }
-
 
 }
 

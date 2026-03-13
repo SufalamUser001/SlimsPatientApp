@@ -1,4 +1,4 @@
-import { Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, signal, ViewChild } from '@angular/core';
 import { IonContent, IonHeader, IonToolbar, IonTitle, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon, IonSelect, IonCol, IonSelectOption, IonDatetimeButton, IonAccordionGroup, IonAccordion, IonModal, IonText, IonList, IonItem, IonLabel, IonDatetime, IonChip, IonGrid } from "@ionic/angular/standalone";
 import { SharedService } from '../../service/shared-service/shared.service';
 import { SlimsPatientApplicationService } from '../../service/laboratory-service/lims-patientapp.service';
@@ -14,7 +14,7 @@ import { Enumeration } from '../../service/shared-service/others/enumeration';
     imports: [IonChip, IonContent, IonToolbar, IonSearchbar, IonRow, IonButton, IonButtons, IonIcon,
     IonCol, IonDatetimeButton, IonDatetime,
     IonAccordionGroup, CommonModule, FormsModule,
-    IonAccordion, IonModal, IonItem, IonLabel],
+    IonAccordion, IonModal],
 })
 export class OrdersPage {
 
@@ -24,6 +24,7 @@ export class OrdersPage {
    today = new Date();
    priorDate = new Date(this.today);
  
+
   public getLocalDate = (date) => date.toLocaleDateString('sv-SE');
   public searchMaxDate = this.getLocalDate(this.today) ;
   public searchType = '30';
@@ -39,7 +40,8 @@ export class OrdersPage {
   public afterInit = signal(false);
   
   @ViewChild('fromdatebtn') fromdatebtn :any;
-
+ @Input() public IsCompactView = false;
+ @Output() public orderViewAllClick: EventEmitter<any> = new EventEmitter();
   customFormatOptions = {
     date: {
       year : '2-digit',
@@ -53,6 +55,7 @@ export class OrdersPage {
   }
 
   ngOnInit(){
+    console.log('order init');
     this.onSearchClick();
   }
   

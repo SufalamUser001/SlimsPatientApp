@@ -109,7 +109,7 @@ export class OrganPage implements OnInit {
             } 
             else 
             {
-              this.sharedService.HandleAuthenticationError(response.Error);
+              //this.sharedService.HandleAuthenticationError(response.Error);
             }
           }, (error: any) => {
             this.sharedService.isBusy = false;
@@ -132,7 +132,7 @@ export class OrganPage implements OnInit {
             } 
             else 
             {
-              this.sharedService.HandleAuthenticationError(response.Error);
+             // this.sharedService.HandleAuthenticationError(response.Error);
             }
           }, (error: any) => {
             this.sharedService.isBusy = false;

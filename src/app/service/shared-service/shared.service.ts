@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { ScreenOrientation, ScreenOrientationResult } from '@capacitor/screen-orientation';
 import { ToastService } from './toast.service';
@@ -14,6 +14,7 @@ import { FilePicker } from '@capawesome/capacitor-file-picker';
 import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
 import { base64StringToBlob } from 'blob-util';
 import { Share } from '@capacitor/share';
+import { PatientAppConfigurationModel } from '../../model/keyValue.model';
 
 @Injectable({
     providedIn: 'root',
@@ -35,7 +36,9 @@ export class SharedService {
     public isDisplayBackButton = new BehaviorSubject(false);
     public LastGeoLocation: any = null;
     public platform = 'web';
-    public PatientAppConfig : any;
+    public backButtonCount = 0;
+
+    public PatientAppConfig = signal<PatientAppConfigurationModel>(new PatientAppConfigurationModel());
     constructor(public toastService: ToastService,private platform$ : Platform,public authService: AuthService) {
         this.generalService = new GeneralService();
         this.CalcDevideDimension();
@@ -49,6 +52,10 @@ export class SharedService {
                 this.CalcDevideDimension();
             }, 100);
         });
+    }
+
+    SetPatientConfig(PatientAppConfig){
+        this.PatientAppConfig.set(PatientAppConfig);
     }
 
 

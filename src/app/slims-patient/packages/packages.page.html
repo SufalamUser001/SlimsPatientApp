@@ -15,7 +15,7 @@
       <div class="d-flex justify-content-between ">
         <div class="d-flex flex-column " [ngClass]="{'w-60': isShowViewMore, 'w-100': !isShowViewMore}">
           <h3 class="font-700">
-            Popular Test Packages
+            Popular Packages
           </h3>
           <p class="text-xs text-gray-600 font-500 mb-2">Most  booked  health checkup packages</p>
         </div>
@@ -58,7 +58,7 @@
       <ion-card-content>
         <p class="text-xs text-gray-600 font-500">{{package.ServiceDescription}}</p>
         <div class="d-flex justify-content-between align-items-center">
-          @if(sharedService.PatientAppConfig?.IsEnableCart){
+          @if(sharedService.PatientAppConfig().IsEnableCart){
          
           <span class="text-primary font-700 text-2xl">    @if(package.Amount){ &#8377;{{package.Amount}} }</span>
            

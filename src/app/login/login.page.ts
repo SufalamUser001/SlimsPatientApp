@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonInput, IonButton, IonButtons, IonCol, IonRow, IonIcon, IonText, IonInputPasswordToggle, IonInputOtp } from "@ionic/angular/standalone";
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonInput, IonButton, IonButtons, IonCol, IonRow, IonIcon, IonText, IonInputPasswordToggle, IonInputOtp, NavController } from "@ionic/angular/standalone";
 import { LoginModel } from '../model/login.model';
 import { ForgotPasswordModel } from '../model/forgot-password.model';
 import { PatientModel } from '../model/member.model';
@@ -9,6 +9,7 @@ import { LocationStrategy } from '@angular/common';
 import { SharedService } from '../service/shared-service/shared.service';
 import { SlimsPatientApplicationService } from '../service/laboratory-service/lims-patientapp.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
     selector: 'app-login',
@@ -29,7 +30,11 @@ export class LoginPage {
   public isOTPSentOnce = false;
   public isDisableResendbtn = true;
 
-  constructor(private router: Router,private route: ActivatedRoute,public locationStrategy : LocationStrategy,public sharedService : SharedService,public slimsPatientService: SlimsPatientApplicationService) {}
+
+
+  constructor(private router: Router,private navCtrl: NavController,private route: ActivatedRoute,public locationStrategy : LocationStrategy,public sharedService : SharedService,public slimsPatientService: SlimsPatientApplicationService) {}
+
+
 
   onbackClick(){
     this.locationStrategy.back();
@@ -99,13 +104,14 @@ export class LoginPage {
          // this.setUserId();
           const userDetail: LoginModel = new LoginModel(response.Success.Data);
           if (userDetail.Mobile && userDetail.Token) {
-       
+            debugger
             this.sharedService.authService.setUserLogin(userDetail.Mobile, userDetail.Token, userDetail.PatientId, userDetail.PatientName, userDetail.CityId, userDetail.CityName,userDetail.IsPasswordAvailable, null,userDetail.MapAPIKey);
-            if (this.sharedService.authService.redirectUrl && this.router.url !== this.sharedService.authService.redirectUrl) {
-              this.router.navigate([this.sharedService.authService.redirectUrl], { relativeTo: this.route.root });
-            } else {
-              this.router.navigate(['lims-patient/home'], { relativeTo: this.route.root });
-            }
+            if (this.sharedService.authService.redirectUrl && this.router.url !== this.sharedService.authService.redirectUrl && this.sharedService.authService.redirectUrl != 'lims-patient/home') {
+              this.navCtrl.navigateRoot([this.sharedService.authService.redirectUrl], { relativeTo: this.route.root });
+              return;
+              } 
+              this.navCtrl.navigateRoot('lims-patient/home');
+          
           }
           this.LastloginObj = new LoginModel();
        
@@ -187,4 +193,7 @@ export class LoginPage {
   onSingUpbtnClick(){
     this.sharedService.authService.navigateToRegister();
   }
+
+
+
 }

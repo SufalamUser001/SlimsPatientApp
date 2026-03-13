@@ -6,9 +6,14 @@
 ion-modal {
       &:has(.menu-modal-block) {
         --height: auto;
+        --max-height : 99dvh;
         margin-bottom: var(--ion-safe-area-bottom);
       }
-    }
+      &:has(.near-branch){
+            margin-top: var(--ion-safe-area-top);
+            margin-bottom: var(--ion-safe-area-bottom);
+      }
+}
 
 
  

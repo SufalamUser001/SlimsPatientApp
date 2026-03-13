@@ -9,7 +9,7 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { approutes } from './app/app-routing';
-import { AuthGuardLogin } from './app/service/shared-service/login-auth-guard.service';
+import { APIAuthGuardLogin, AuthGuardLogin } from './app/service/shared-service/login-auth-guard.service';
 
 const appconfig: ApplicationConfig = {
     providers: [
@@ -22,7 +22,8 @@ const appconfig: ApplicationConfig = {
       provideHttpClient(),
       DatePipe,
       HttpClient,
-      AuthGuardLogin
+      AuthGuardLogin,
+      APIAuthGuardLogin
     ],
   };
   

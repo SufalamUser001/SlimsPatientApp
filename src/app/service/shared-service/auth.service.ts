@@ -14,7 +14,7 @@ export class AuthService {
     public authenticationModel: AuthenticationModel = new AuthenticationModel();
 
     constructor(public router: Router) {
-        
+        this.checkUserLogin();
     }
 
     public setOTPLogin(loginUserId: string): void {
@@ -29,7 +29,6 @@ export class AuthService {
 
     public setUserLogin(loginUserId: string,loginUserToken: string,PatientId,ptName,CityId,cityName : string = null,IsPasswordAvailable,Photograph : string = null,MapAPIKey): void {
 
-        this.isUserLoggedIn = true;
         this.authenticationModel.loginUserId = loginUserId;
         this.authenticationModel.loginUserToken = loginUserToken;
         this.authenticationModel.PatientName = ptName;
@@ -53,11 +52,12 @@ export class AuthService {
         });
         Preferences.set({
             key: 'MapAPIKey',
-            value: JSON.stringify(MapAPIKey),
+            value: MapAPIKey,
         });
+        
     }
 
-    public checkUserLogin() {
+    public async checkUserLogin()  {
         Preferences.get({ key: 'auth' }).then((res)=>{
             if (res.value) {
                 let auth = res.value;
@@ -65,13 +65,8 @@ export class AuthService {
                     var authenticationModel: AuthenticationModel = new AuthenticationModel(JSON.parse(auth));
                     if (authenticationModel.loginUserId && authenticationModel.loginUserToken) {
                         this.setUserLogin(authenticationModel.loginUserId,  authenticationModel.loginUserToken,authenticationModel.PatientId, authenticationModel.PatientName,  authenticationModel.CityId,  authenticationModel.CityName,authenticationModel.IsPasswordAvailable,authenticationModel.Photograph,authenticationModel.MapAPIKey);
-                        this.router.navigate(['home']);
-                    } else {
-                        this.navigateToLogin();
-                    }
-                } else {
-                    this.navigateToLogin();
-                }
+                    } 
+                } 
             }
            });
     }

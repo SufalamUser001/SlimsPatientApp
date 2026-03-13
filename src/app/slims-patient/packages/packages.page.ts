@@ -30,6 +30,7 @@ export class PackagesPage implements OnInit {
       }
     });
   }
+
   public popular_packages = popular_packages
   @Input() public isShowViewMore = false;
   @Output() public packageViewAllClick: EventEmitter<any> = new EventEmitter();
@@ -51,7 +52,7 @@ export class PackagesPage implements OnInit {
         if (response.IsSuccess) {
           this.PackageList = response.Success.Data;
         } else {
-          this.sharedService.HandleAuthenticationError(response.Error);
+        //  this.sharedService.HandleAuthenticationError(response.Error);
         }
       }, (error: any) => {
         this.sharedService.isBusy = false;

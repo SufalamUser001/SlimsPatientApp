@@ -4,7 +4,7 @@
   speed="500" loop="true">
     @for (item of courselList; track $index) {
       <swiper-slide >
-        <div class="slider-conatiner">
+        <div class="slider-container">
           <div class="slider-card" [style.background-image]="'url(\'' + item.DashboardImageURL + '\')'">
             <div class="text-overlay">
               <h3 class="font-800">{{item.Heading}}</h3>
@@ -21,8 +21,13 @@
 <app-organ [IsCompactView]="true"  (organViewAllClick)="onOrganViewAllClick()" (organClickemit)="onOrganViewAllClick($event)"></app-organ>
 
 <app-disease [IsCompactView]="true"  (diseaseViewAllClick)="onDiseaseViewAllClick()" (diseaseClickemit)="onDiseaseViewAllClick($event)"></app-disease>
+<!-- 1. {{sharedService.PatientAppConfig().IsPatientReportDisplayonDashboard}}
+2. {{sharedService.authService.isUserLoggedIn}} -->
+@if(sharedService.PatientAppConfig().IsPatientReportDisplayonDashboard && sharedService.authService.isUserLoggedIn){
+    <app-orders [IsCompactView]="true" (orderViewAllClick)="onOrderViewAllClick()" > </app-orders>
+}
 
-<div class="d-flex flex-column  flex-md-row gap-2 mt-3">
+<!-- <div class="d-flex flex-column  flex-md-row gap-2 mt-3">
   <div class="bg-blue-50 p-2 rounded-3 ">
     <h5 class="font-700 text-gray-700 d-flex align-items-center gap-2 mb-2 mt-3">
       <ion-icon name="earth-outline" class="text-blue-600"></ion-icon>
@@ -44,6 +49,6 @@
     </h5>
     <p class="font-500 text-gray-500 text-xs"> Competitive pricing with no hidden charges</p>
   </div>
-</div>
+</div> -->
 
 </ion-content>

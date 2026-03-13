@@ -22,6 +22,10 @@ export class SlimsPatientApplicationService {
       GetAPIVersion() {
         return this.baseService.post(this.labcartApiEndPoint + 'GetAPIVersion', null);
       }
+
+      authenticateUserOnSufalamServerWithLabCode(labCode: string) {
+        return this.baseService.postOnSufalamServer('server/ValidateLabCode', { 'LabCode': labCode });
+    }
     
       LabCartUserLogin(data: LoginModel) {
         return this.baseService.post(this.labcartApiEndPoint + 'LabCartUserLogin', {Mobile : data.UserId,Password:data.Password,OTP : data.OTP ,IsOTPLogin : data.IsOTPLogin});
@@ -178,6 +182,10 @@ export class SlimsPatientApplicationService {
 
       GetLabCartDiseaseServiceDetails(){
         return this.baseService.post(this.labcartApiEndPoint + 'GetLabCartDiseaseServiceDetails', null);
+      }
+
+      GetAllNearByBranchLocations(){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetAllNearByBranchLocations', null);
       }
 
       //#endregion

@@ -12,7 +12,7 @@ export class BaseService {
     // public apiEndPoint = 'http://10.1.1.100/slims.api/api/';
     //public apiEndPoint = 'http://35.154.29.252/slims.api/api/';
     // public apiEndPoint = 'http://13.233.16.3/slims.api/api/'; //Sterling accuris
-    public apiEndPoint = 'https://sufalamlims.com/slims.api/api/';
+    public apiEndPoint = '';
     public mobileNumber = '';
     public version = '1.0.1';
 
@@ -46,6 +46,7 @@ export class BaseService {
         if (!this.apiEndPoint) {
             this.sharedService.toastService.showError('Invalid Lab Code Provided');
             this.authService.userLogout();
+            return null;
         }
         var tempData = serialize(data);
        // this.apiEndPoint = this.apiEndPoint.replace("SLIMS.api","phleboapi");

@@ -28,13 +28,27 @@
        
         <ion-col size="12" style="margin-top: 15dvh">
 
-            <div class="text-base font-500 mb-3 ms-1">Existing customer/Get Started</div>
+            @if(!slimsPatientService.baseService.apiEndPoint){
+                <ion-col size="12">
+                    <ion-input label="Lab Code" labelPlacement="stacked" fill="outline" inputmode="text" id="input0" name="LabCode"
+                        mode="md"  [(ngModel)]="LabCode" placeholder="Lab Code" required="true" type="text" 
+                        maxlength="15" minlength="3">
+                    </ion-input>
+                </ion-col>
+                <ion-col size="12">
+                    <ion-button expand="block" (click)="onLabCodeContinueClick()">Next</ion-button>
+                </ion-col>
+                }
+                @else
+                {
+                    <div class="text-base font-500 mb-3 ms-1">Existing customer/Get Started</div>
 
-            <ion-button expand="block" (click)="onLoginClick()">Sign In</ion-button>
-            <a class="font-500" (click)="onRegisterClick()">
-                <div class="text-base font-500 mt-3 ms-1">New customer?<span class="font-500 text-primary ms-1">Create New Account</span>  </div>
-            </a>
-            
+                    <ion-button expand="block" (click)="onLoginClick()">Sign In</ion-button>
+                    <a class="font-500" (click)="onRegisterClick()">
+                        <div class="text-base font-500 mt-3 ms-1">New customer?<span class="font-500 text-primary ms-1">Create New Account</span>  </div>
+                    </a>
+                    
+                }
         </ion-col>
 
 </ion-row>
