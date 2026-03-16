@@ -61,6 +61,12 @@ export class LoginPage {
       this.sharedService.toastService.showError("Mobile No is Required" );
       return;
     }
+    else {
+      if (this.loginObj.UserId.length < 10){
+        this.sharedService.toastService.showError("Mobile No is Invalid" );
+        return;
+      }
+    }
     this.slimsPatientService.SendLabCartPatientOtp(this.loginObj).subscribe(
       (response: any) => {
         if (Boolean(response.IsSuccess) === true) {
@@ -88,6 +94,12 @@ export class LoginPage {
     if (!this.loginObj.UserId) {
       this.sharedService.toastService.showError("Mobile No is Required" );
       return;
+    }
+    else {
+      if (this.loginObj.UserId.length < 10){
+        this.sharedService.toastService.showError("Mobile No is Invalid" );
+        return;
+      }
     }
     if (!this.loginObj.Password) {
       this.sharedService.toastService.showError("Passowrd is Required" );
@@ -145,6 +157,12 @@ export class LoginPage {
       this.sharedService.toastService.showError("Mobile No is Required" );
       return;
     }
+    else {
+      if (this.loginObj.UserId.length < 10){
+        this.sharedService.toastService.showError("Mobile No is Invalid" );
+        return;
+      }
+    }
     if (!this.loginObj.OTP) {
       this.sharedService.toastService.showError("OTP is Required" );
       return;
@@ -194,6 +212,9 @@ export class LoginPage {
     this.sharedService.authService.navigateToRegister();
   }
 
+  onFogotPasswordClick(){
+    this.navCtrl.navigateRoot('forgot-password');
+  }
 
 
 }
