@@ -201,22 +201,27 @@
               @for(registrationServiceData of patient.RegistrationServiceDetails; track registrationServiceData;
               let i = $index){
               <a class="d-flex justify-content-between align-items-center p-0 pb-1 px-0" type="button" fill="clear"role="button"
-              data-bs-toggle="collapse" [href]="'#collapsetest'+registrationServiceData.LabId" [attr.aria-expanded]="false"
-              [attr.aria-controls]="'collapsetest'+registrationServiceData.LabId" (click)="isExpandedInfo = !isExpandedInfo">
+              data-bs-toggle="collapse" [href]="'#collapsetest'+i+registrationServiceData.LabId" [attr.aria-expanded]="false"
+              [attr.aria-controls]="'collapsetest'+i+registrationServiceData.LabId" (click)="registrationServiceData.IsExpand = !registrationServiceData.IsExpand">
                 <div class="d-flex align-items-center">
-                  @if(registrationServiceData.IsPackage){
-                    <ion-icon style="font-size: large;" class="px-0" [name]="isExpandedInfo ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
-                  }
-                  @else{
-                    <ion-icon class="px-0"></ion-icon>
-                  }
                   <div [ngClass]="{'badgeCustom px-0': true }" style="overflow: visible;">
+                    @if(registrationServiceData.IsPackage){
+                      <ion-icon style="font-size: medium;" [name]="registrationServiceData.IsExpand ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+                    }
+                    @else{
+                      <ion-icon style="font-size: medium;"></ion-icon>
+                    }
                     @if(registrationServiceData.ServiceStatus == 'A'){
                     <ion-icon name="checkmark-circle-outline" style="font-size: large;" class="me-1 font-500"
                       color="success"></ion-icon> 
                     }
                     @else {
-                    <ion-icon name="time-outline" style="font-size: large;" class="me-1" color="warning"></ion-icon>
+                      @if (registrationServiceData.ServiceType == 'I'){
+                        <ion-icon name="time-outline" style="font-size: large;" class="me-1" color="warning"></ion-icon>
+                      }
+                      @else {
+                        <ion-icon style="font-size: large;" class="me-1"></ion-icon>
+                      }
                     }
                   </div>
                   <div class="text-gray-600 font-500 text-sm">{{registrationServiceData.ServiceName}}
@@ -244,7 +249,7 @@
                 }
               </a>
               @if (registrationServiceData.PackageServiceList){
-                <div class="collapse ps-4" [class.show]="isExpandedInfo" [id]="'collapsetest'+registrationServiceData.LabId">
+                <div class="collapse ps-4" [class.show]="registrationServiceData.IsExpand" [id]="'collapsetest'+i+registrationServiceData.LabId">
                 @for(packageServiceData of registrationServiceData.PackageServiceList; track packageServiceData;
                 let j = $index){
                   <div class="d-flex">

@@ -38,7 +38,6 @@ export class OrdersPage {
   public yearList = this.sharedService.generalService.getYearList();
   public monthList = this.sharedService.variables.months;
   public afterInit = signal(false);
-  public isExpandedInfo = false;
 
   @ViewChild('fromdatebtn') fromdatebtn :any;
  @Input() public IsCompactView = false;
@@ -89,6 +88,14 @@ export class OrdersPage {
               }
             } else {
               element.isPaymentReceiptButtonApplicable = true;
+            }
+
+            if (element.RegistrationServiceDetails){
+              element.RegistrationServiceDetails.forEach(registrationSerivceData => {
+                if (registrationSerivceData.IsPackage){
+                  registrationSerivceData.IsExpand = false;
+                }
+              });
             }
           }
           this.registrationDetails = Object.assign([], registrationDetails);
