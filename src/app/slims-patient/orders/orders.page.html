@@ -205,7 +205,10 @@
               [attr.aria-controls]="'collapsetest'+registrationServiceData.LabId" (click)="isExpandedInfo = !isExpandedInfo">
                 <div class="d-flex align-items-center">
                   @if(registrationServiceData.IsPackage){
-                    <ion-icon class="px-0" [name]="isExpandedInfo ? 'chevron-forward-outline' : 'chevron-down-outline'"></ion-icon>
+                    <ion-icon style="font-size: large;" class="px-0" [name]="isExpandedInfo ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+                  }
+                  @else{
+                    <ion-icon class="px-0"></ion-icon>
                   }
                   <div [ngClass]="{'badgeCustom px-0': true }" style="overflow: visible;">
                     @if(registrationServiceData.ServiceStatus == 'A'){
@@ -241,7 +244,7 @@
                 }
               </a>
               @if (registrationServiceData.PackageServiceList){
-                <div class="collapse ps-4" [class.show]="false" [id]="'collapsetest'+registrationServiceData.LabId">
+                <div class="collapse ps-4" [class.show]="isExpandedInfo" [id]="'collapsetest'+registrationServiceData.LabId">
                 @for(packageServiceData of registrationServiceData.PackageServiceList; track packageServiceData;
                 let j = $index){
                   <div class="d-flex">
