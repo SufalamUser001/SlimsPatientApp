@@ -38,7 +38,8 @@ export class OrdersPage {
   public yearList = this.sharedService.generalService.getYearList();
   public monthList = this.sharedService.variables.months;
   public afterInit = signal(false);
-  
+  public isExpandedInfo = false;
+
   @ViewChild('fromdatebtn') fromdatebtn :any;
  @Input() public IsCompactView = false;
  @Output() public orderViewAllClick: EventEmitter<any> = new EventEmitter();

@@ -168,7 +168,7 @@
                     color="success"></ion-icon> Completed
                   }
                   @else {
-                  <ion-icon name="time-outline" style="font-size: large;" class="me-1" color="primary"></ion-icon>
+                  <ion-icon name="time-outline" style="font-size: large;" class="me-1" color="warning"></ion-icon>
                   Processing
                   }
 
@@ -200,18 +200,34 @@
             <div class="py-2 card-border-bottom">
               @for(registrationServiceData of patient.RegistrationServiceDetails; track registrationServiceData;
               let i = $index){
-              <a class="d-flex justify-content-between align-items-center p-0 pb-1 px-0" type="button" fill="clear">
-                <div class="text-gray-600 font-500 text-sm">{{registrationServiceData.ServiceName}}
-                  <!-- <div class="d-flex justify-content-start align-items-center" style="min-width: 150px;">
-                                        <span [ngClass]="{ 'will-not-receive': registrationServiceData.IsSpecimenMarkAsWillNotReceive ,
-                                                            'partial-tested':registrationServiceData.ServiceStatus == 'PT' ,
-                                                            'tested':registrationServiceData.ServiceStatus == 'T' ,
-                                                            'partial-tested-approved':registrationServiceData.ServiceStatus == 'TA' ,
-                                                            'partial-approved':registrationServiceData.ServiceStatus == 'PA' ,
-                                                            'approved':registrationServiceData.ServiceStatus == 'A','badgeCustom float-end': true }" style="overflow: visible;">
-                                          <span class="fw-bold"> {{ registrationServiceData.ServiceStatusName }} </span>
-                                        </span>
-                                      </div> -->
+              <a class="d-flex justify-content-between align-items-center p-0 pb-1 px-0" type="button" fill="clear"role="button"
+              data-bs-toggle="collapse" [href]="'#collapsetest'+registrationServiceData.LabId" [attr.aria-expanded]="false"
+              [attr.aria-controls]="'collapsetest'+registrationServiceData.LabId" (click)="isExpandedInfo = !isExpandedInfo">
+                <div class="d-flex align-items-center">
+                  @if(registrationServiceData.IsPackage){
+                    <ion-icon class="px-0" [name]="isExpandedInfo ? 'chevron-forward-outline' : 'chevron-down-outline'"></ion-icon>
+                  }
+                  <div [ngClass]="{'badgeCustom px-0': true }" style="overflow: visible;">
+                    @if(registrationServiceData.ServiceStatus == 'A'){
+                    <ion-icon name="checkmark-circle-outline" style="font-size: large;" class="me-1 font-500"
+                      color="success"></ion-icon> 
+                    }
+                    @else {
+                    <ion-icon name="time-outline" style="font-size: large;" class="me-1" color="warning"></ion-icon>
+                    }
+                  </div>
+                  <div class="text-gray-600 font-500 text-sm">{{registrationServiceData.ServiceName}}
+                    <!-- <div class="d-flex justify-content-start align-items-center" style="min-width: 150px;">
+                                          <span [ngClass]="{ 'will-not-receive': registrationServiceData.IsSpecimenMarkAsWillNotReceive ,
+                                                              'partial-tested':registrationServiceData.ServiceStatus == 'PT' ,
+                                                              'tested':registrationServiceData.ServiceStatus == 'T' ,
+                                                              'partial-tested-approved':registrationServiceData.ServiceStatus == 'TA' ,
+                                                              'partial-approved':registrationServiceData.ServiceStatus == 'PA' ,
+                                                              'approved':registrationServiceData.ServiceStatus == 'A','badgeCustom float-end': true }" style="overflow: visible;">
+                                            <span class="fw-bold"> {{ registrationServiceData.ServiceStatusName }} </span>
+                                          </span>
+                                        </div> -->
+                  </div>
                 </div>
                 @if(sharedService.PatientAppConfig().IsServicePriceDisplay){
                 <div>
@@ -224,7 +240,24 @@
                 </div>
                 }
               </a>
-
+              @if (registrationServiceData.PackageServiceList){
+                <div class="collapse ps-4" [class.show]="false" [id]="'collapsetest'+registrationServiceData.LabId">
+                @for(packageServiceData of registrationServiceData.PackageServiceList; track packageServiceData;
+                let j = $index){
+                  <div class="d-flex">
+                    <div [ngClass]="{'badgeCustom px-0': true }" style="overflow: visible;">
+                    @if(packageServiceData.ServiceStatus == 'A'){
+                      <ion-icon name="checkmark-circle-outline" style="font-size: large;" class="me-1 font-500" color="success"></ion-icon> 
+                    }
+                    @else {
+                      <ion-icon name="time-outline" style="font-size: large;" class="me-1" color="warning"></ion-icon>
+                    }
+                    </div>
+                    <div class="text-gray-600 font-500 text-sm p-0 pb-1 px-0">{{packageServiceData.ServiceName}}</div>
+                  </div>
+                }
+                </div>
+              }
               }
             </div>
             }
