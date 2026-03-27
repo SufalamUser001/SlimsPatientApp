@@ -57,15 +57,15 @@ export class AuthGuardLogin {
   }
 
   public async navigateToLogin() {
-    var IsLoginOnce = await Preferences.get({ key: 'IsLoginOnce' }).then((res) => {
-      return res.value;
+    // var IsLoginOnce = await Preferences.get({ key: 'IsLoginOnce' }).then((res) => {
+    //   return res.value;
 
-    });
-    if (IsLoginOnce) {
+    // });
+    // if (IsLoginOnce) {
       this.router.navigateByUrl('login');
-    } else {
-      this.router.navigateByUrl('welcome');
-    }
+    // } else {
+    //   this.router.navigateByUrl('welcome');
+    // }
   }
 
 }

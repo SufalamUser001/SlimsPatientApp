@@ -74,15 +74,15 @@ export class AuthService {
     
 
     public async navigateToLogin() {
-      var IsLoginOnce = await  Preferences.get({ key: 'IsLoginOnce' }).then((res) => {
-            return res.value;
+    //   var IsLoginOnce = await  Preferences.get({ key: 'IsLoginOnce' }).then((res) => {
+    //         return res.value;
        
-    });
-    if(IsLoginOnce){
+    // });
+    // if(IsLoginOnce){
         this.router.navigate(['login']);
-    }else{
-        this.router.navigate(['welcome']);
-    }
+    // }else{
+    //     this.router.navigate(['welcome']);
+    // }
        
     }
 
