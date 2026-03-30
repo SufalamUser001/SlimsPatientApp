@@ -44,7 +44,7 @@
             "browser": "src/main.ts"
           },
           "configurations": {
-            "production": {
+            "slims": {
               "budgets": [
                 {
                   "type": "initial",
@@ -60,34 +60,61 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment-slims.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "assets": [
+                {
+                  "glob": "favicon.png",
+                  "input": "src/assets/icon/slims/",
+                  "output": "/"
+                }
+              ]
             },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
-            },
-            "ci": {
-              "progress": false
+            "lifecare": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment-lifecare.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "assets": [
+                {
+                  "glob": "favicon.png",
+                  "input": "src/assets/icon/lifecare/",
+                  "output": "/"
+                }
+              ]
             }
+            
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "slims"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "app:build:production"
+            "slims": {
+              "buildTarget": "app:build:slims"
+            },
+            "lifecare": {
+              "buildTarget": "app:build:lifecare"
             },
             "development": {
               "buildTarget": "app:build:development"
-            },
-            "ci": {
-              "progress": false
             }
           },
           "defaultConfiguration": "development"

@@ -10,7 +10,10 @@
     "generate": "ng generate",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+      "build:lifecare": "ng build --configuration=lifecare && NODE_ENV=lifecare npx cap sync",
+      "build:slims": "ng build --configuration=slims && NODE_ENV=slims npx cap sync"
+    
   },
   "private": true,
   "dependencies": {
@@ -32,6 +35,7 @@
     "@capacitor/google-maps": "^8.0.1",
     "@capacitor/haptics": "8.0.0",
     "@capacitor/inappbrowser": "^3.0.2",
+    "@capacitor/ios": "8.1.0",
     "@capacitor/keyboard": "8.0.0",
     "@capacitor/preferences": "^8.0.0",
     "@capacitor/screen-orientation": "8.0.1",

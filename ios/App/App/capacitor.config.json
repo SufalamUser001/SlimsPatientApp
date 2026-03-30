@@ -1,0 +1,29 @@
+{
+	"appId": "com.app.sufalam.patient_app_lifecare",
+	"appName": "Lifecare Connect",
+	"webDir": "www/browser",
+	"ios": {
+		"scheme": "App lifecare"
+	},
+	"android": {
+		"flavor": "lifecare"
+	},
+	"packageClassList": [
+		"FileOpenerPlugin",
+		"AppPlugin",
+		"AppLauncherPlugin",
+		"FilesystemPlugin",
+		"GeolocationPlugin",
+		"CapacitorGoogleMapsPlugin",
+		"HapticsPlugin",
+		"InAppBrowserPlugin",
+		"KeyboardPlugin",
+		"PreferencesPlugin",
+		"ScreenOrientationPlugin",
+		"SharePlugin",
+		"StatusBarPlugin",
+		"FilePickerPlugin",
+		"CallNumber",
+		"SafeAreaPlugin"
+	]
+}

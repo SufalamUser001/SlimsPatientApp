@@ -1,0 +1,1 @@
+var s=class{constructor(i=null){this.UserId="",this.Mobile="",this.OTP="",this.Email="",this.Password="",this.ConfirmPassword="",i!=null&&(this.UserId=i.UserId,this.Mobile=i.Mobile,this.Email=i.Email,this.OTP=i.OTP,this.Password=i.Password,this.ConfirmPassword=i.ConfirmPassword)}};export{s as a};

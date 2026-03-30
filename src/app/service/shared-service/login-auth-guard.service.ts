@@ -86,6 +86,7 @@ export class APIAuthGuardLogin {
       boolean |
       UrlTree> {
       const url = state.url;
+      debugger
       const { value } = await Preferences.get({ key: 'APIURL' });
     
           if (!value) {

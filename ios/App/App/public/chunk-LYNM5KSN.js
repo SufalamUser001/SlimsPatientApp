@@ -1,0 +1,1 @@
+import{b as e}from"./chunk-NJJ2PKVC.js";import"./chunk-S5EYVFES.js";var o=class extends e{constructor(){super({name:"CallNumber",platforms:["web"]})}showFilePicker(t){return Promise.reject("Method not implemented")}};export{o as CallNumber};
