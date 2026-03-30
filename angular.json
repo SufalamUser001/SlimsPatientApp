@@ -20,18 +20,6 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
-              },
-              {
-                "glob": "**/*.svg",
-                "input": "node_modules/ionicons/dist/ionicons/svg",
-                "output": "./svg"
-              }
-            ],
             "styles": [
               "src/assets/font-awesome-4.7.0/css/font-awesome.min.css",
               "src/theme/feather/style.css",
@@ -63,12 +51,22 @@
                   "with": "src/environments/environment-slims.prod.ts"
                 }
               ],
-              "outputHashing": "all",
+              "outputHashing": "none",
               "assets": [
                 {
                   "glob": "favicon.png",
                   "input": "src/assets/icon/slims/",
                   "output": "/"
+                },
+                {
+                  "glob": "**/*",
+                  "input": "src/assets",
+                  "output": "assets"
+                },
+                {
+                  "glob": "**/*.svg",
+                  "input": "node_modules/ionicons/dist/ionicons/svg",
+                  "output": "./svg"
                 }
               ]
             },
@@ -91,12 +89,22 @@
                   "with": "src/environments/environment-lifecare.prod.ts"
                 }
               ],
-              "outputHashing": "all",
+              "outputHashing": "none",
               "assets": [
                 {
                   "glob": "favicon.png",
                   "input": "src/assets/icon/lifecare/",
                   "output": "/"
+                },
+                {
+                  "glob": "**/*",
+                  "input": "src/assets",
+                  "output": "assets"
+                },
+                {
+                  "glob": "**/*.svg",
+                  "input": "node_modules/ionicons/dist/ionicons/svg",
+                  "output": "./svg"
                 }
               ]
             }
@@ -112,12 +120,9 @@
             },
             "lifecare": {
               "buildTarget": "app:build:lifecare"
-            },
-            "development": {
-              "buildTarget": "app:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "slims"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
