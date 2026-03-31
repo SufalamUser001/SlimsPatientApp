@@ -11,9 +11,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-      "build:lifecare": "ng build --configuration=lifecare && NODE_ENV=lifecare npx cap sync",
-      "build:slims": "ng build --configuration=slims && NODE_ENV=slims npx cap sync"
-    
+    "build:lifecare": "ng build --configuration=lifecare && NODE_ENV=lifecare npx cap sync",
+    "build:slims": "ng build --configuration=slims && NODE_ENV=slims npx cap sync"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +28,7 @@
     "@capacitor/android": "8.1.0",
     "@capacitor/app": "8.0.1",
     "@capacitor/app-launcher": "^8.0.1",
+    "@capacitor/camera": "^8.0.2",
     "@capacitor/core": "8.1.0",
     "@capacitor/filesystem": "^8.1.2",
     "@capacitor/geolocation": "^8.1.0",

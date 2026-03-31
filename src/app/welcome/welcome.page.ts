@@ -10,6 +10,7 @@ import { SharedService } from '../service/shared-service/shared.service';
 import { SlimsPatientApplicationService } from '../service/laboratory-service/lims-patientapp.service';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-welcome',
@@ -27,7 +28,15 @@ export class WelcomePage {
   public LabCode ='';
 
 
-  constructor(public locationStrategy : LocationStrategy,public sharedService : SharedService,public router : Router,public slimsPatientService : SlimsPatientApplicationService) {}
+  constructor(public locationStrategy : LocationStrategy,public sharedService : SharedService,public router : Router,public slimsPatientService : SlimsPatientApplicationService) {
+    if(environment.labcode && environment.labcode.trim().length > 0){
+      Preferences.set({
+          key: 'LabCode',
+          value: environment.labcode.trim(),
+        });
+        this.onLabCodeContinueClick();
+      }
+  }
 
   onbackClick(){
     this.locationStrategy.back();

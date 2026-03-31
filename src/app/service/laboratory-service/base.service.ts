@@ -5,8 +5,6 @@ import { App } from '@capacitor/app';
 import { Capacitor, CapacitorHttp,HttpOptions,HttpResponse } from '@capacitor/core';
 import { AuthService } from '../shared-service/auth.service';
 import { serialize } from 'class-transformer';
-import { environment } from '../../../environments/environment';
-import { Preferences } from '@capacitor/preferences';
 
 export class BaseService {
 
@@ -24,13 +22,7 @@ export class BaseService {
 
          async getandsetConfig(){
             debugger
-            if(environment.apiUrl && environment.apiUrl.trim().length > 0){
-                Preferences.set({
-                    key: 'APIURL',
-                    value: environment.apiUrl.trim(),
-                  });
-                this.apiEndPoint = environment.apiUrl.trim();
-                }
+           
                 if (Capacitor.getPlatform() === 'android' || Capacitor.getPlatform() === 'ios') {
             var appInfo = await App.getInfo();
             if(appInfo != null && appInfo.version != null && appInfo.version.length > 0){
