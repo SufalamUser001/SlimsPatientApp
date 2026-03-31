@@ -20,17 +20,12 @@ export class BaseService {
             this.getandsetConfig();
          }
 
-         async getandsetConfig(){
-            debugger
-           
-                if (Capacitor.getPlatform() === 'android' || Capacitor.getPlatform() === 'ios') {
+    async getandsetConfig() {
+        if (Capacitor.getPlatform() === 'android' || Capacitor.getPlatform() === 'ios') {
             var appInfo = await App.getInfo();
-            if(appInfo != null && appInfo.version != null && appInfo.version.length > 0){
+            if (appInfo != null && appInfo.version != null && appInfo.version.length > 0) {
                 this.version = appInfo.version;
             }
-
-          
-
         }
             // const info = await Device.getInfo();
             // if(info && info.platform  && this.version.length == 6){
