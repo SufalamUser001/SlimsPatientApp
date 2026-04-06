@@ -5,6 +5,8 @@ PODS:
     - Capacitor
   - CapacitorAppLauncher (8.0.1):
     - Capacitor
+  - CapacitorCamera (8.0.2):
+    - Capacitor
   - CapacitorCommunityFileOpener (8.0.0):
     - Capacitor
   - CapacitorCordova (8.1.0)
@@ -52,6 +54,7 @@ DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorAppLauncher (from `../../node_modules/@capacitor/app-launcher`)"
+  - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorCommunityFileOpener (from `../../node_modules/@capacitor-community/file-opener`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
@@ -83,6 +86,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/app"
   CapacitorAppLauncher:
     :path: "../../node_modules/@capacitor/app-launcher"
+  CapacitorCamera:
+    :path: "../../node_modules/@capacitor/camera"
   CapacitorCommunityFileOpener:
     :path: "../../node_modules/@capacitor-community/file-opener"
   CapacitorCordova:
@@ -118,6 +123,7 @@ SPEC CHECKSUMS:
   Capacitor: 47b825120c6b8b6d6f9f053e9350a8960d436710
   CapacitorApp: 942306cd1acf7774a00e89a3986af3a67c8cad7a
   CapacitorAppLauncher: 43949ccc5aaa5139a1ebe27a98c0a4d76c883fa7
+  CapacitorCamera: 66bb9c4ea1703a5acf2a328bac0e613d278c399c
   CapacitorCommunityFileOpener: 66cdeac0ff2670dbeb08bc293aba76eb6da80f7a
   CapacitorCordova: e8b76fd95fc1e157775abc484c59cc0de464095d
   CapacitorFilesystem: 2db285a1ac6e475cc27cae2e1bea999000f9e2be
@@ -139,6 +145,6 @@ SPEC CHECKSUMS:
   IONGeolocationLib: a5e40b54edc2ee9902036eda5aaa41ddf07bb68d
   OSInAppBrowserLib: bf7cdcc072394ae827f8cfe3f5f9c807691834c0
 
-PODFILE CHECKSUM: 240dc4dde93c2c7500f251f0b516bf6c0ad7ccff
+PODFILE CHECKSUM: c6a94d33252469993f9b9ef4efefd8d17fa2221d
 
 COCOAPODS: 1.16.2

@@ -1,17 +1,18 @@
 {
-	"appId": "com.app.sufalam.patient_app_lifecare",
-	"appName": "Lifecare Connect",
+	"appId": "com.app.sufalam.patient_app_slims",
+	"appName": "Slims Connect",
 	"webDir": "www/browser",
 	"ios": {
-		"scheme": "App lifecare"
+		"scheme": "App slims"
 	},
 	"android": {
-		"flavor": "lifecare"
+		"flavor": "slims"
 	},
 	"packageClassList": [
 		"FileOpenerPlugin",
 		"AppPlugin",
 		"AppLauncherPlugin",
+		"CAPCameraPlugin",
 		"FilesystemPlugin",
 		"GeolocationPlugin",
 		"CapacitorGoogleMapsPlugin",
