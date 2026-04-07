@@ -195,3 +195,15 @@ a {
     font-size: 0.6rem;
     display: inline;
 }
+
+ion-modal{
+    &:has(.pt-safe){
+      margin-top: var(--ion-custom-safe-area-top) !important;
+    }
+    &:has(.pb-safe){
+      margin-bottom: var(--ion-custom-safe-area-bottom) !important;
+    }
+    &:has(ion-select-modal){
+      margin-top: var(--ion-custom-safe-area-top) !important;
+    }
+}

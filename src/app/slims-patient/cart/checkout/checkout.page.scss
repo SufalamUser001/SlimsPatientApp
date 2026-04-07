@@ -17,3 +17,8 @@ ion-radio {
   .radio-checked.ios::part(container) {
     border-color: #0054e9;
   }
+
+  .remove-icon{
+    top: -12px !important;
+    right: -16px !important;
+  }

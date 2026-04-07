@@ -40,7 +40,7 @@
                 <span class="text-base w-70 font-600">Select Address</span>
                 @if(sharedService.labCartPatientObj && sharedService.labCartPatientObj.MemberAddressList && sharedService.labCartPatientObj.MemberAddressList.length > 0){
                         @for(memberAddressData of sharedService.labCartPatientObj.MemberAddressList; track memberAddressData; let j = $index){
-                        <ion-radio-group [allowEmptySelection]="false" [(ngModel)]="SelectedMemberAddress">
+                        <ion-radio-group [allowEmptySelection]="false" [(ngModel)]="SelectedMemberAddress" (ionChange)="addressChange($event.detail.value)">
                             <div class="d-flex card border-card p-3 mt-3 w-100">
                                 <ion-radio justify="start" labelPlacement="end" [value]="memberAddressData"><span class="font-600">{{ memberAddressData.Address }}</span>
                                     <div class="text-sm text-gray-500 font-600">
@@ -57,10 +57,83 @@
                     <ion-button color="primary" class="font-600" (click)="openProfilePage()">Add Addresses</ion-button>
                 </div>
                 }
-                
-                
             </div>
         </div>
+        <ion-row>
+            <ion-col size="12">
+                <ion-textarea label="Remarks" name="Remarks" mode="md" labelPlacement="stacked" fill="outline"
+                    rows="3" type="text" placeholder="Remarks">
+                </ion-textarea>
+            </ion-col>
+            <ion-col size="12">
+                <ion-select name="city" required="true" [(ngModel)]="visitObj.CityId"
+                    interface="modal" mode="md" labelPlacement="stacked"
+                    fill="outline" placeholder="Select City" (ionChange)="onCitySelectionChange($event.detail.value)">
+                    @for (item of cityList; track item) {
+                        <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-col>
+            <ion-col size="12">
+                <ion-select name="area" required="true" [(ngModel)]="visitObj.AreaId"
+                    interface="modal" mode="md" labelPlacement="stacked"
+                    fill="outline" placeholder="Select Area" (ionChange)="onAreaSelectionChange($event.detail.value)">
+                    @for (item of filterAreaList; track item) {
+                        <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-col>
+            <ion-col size="12">
+                <ion-select name="branch" required="true"  [(ngModel)]="visitObj.BranchId"
+                    interface="modal" mode="md" labelPlacement="stacked"
+                    fill="outline" placeholder="Select Branch" (ionChange)="onBranchSelectionChange($event.detail.value)">
+                    @for (item of filterBranchList; track item) {
+                        <ion-select-option [value]="item.Id">{{item.Name}}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-col>
+            <ion-col size="12">
+                Visit Date
+            </ion-col>
+            <ion-col size="12">
+                <ion-buttons expand="block">
+                    <ion-datetime-button datetime="collectiondate"></ion-datetime-button>
+                    <ion-datetime-button datetime="collectiontime"></ion-datetime-button>
+                </ion-buttons>
+            </ion-col>
+            <ion-col size="12">
+                Add Prescription
+            </ion-col>
+            <ion-col size="12" class="p-0">
+                <ion-button (click)="openFileSelectionOptions()" color="primary" fill="outline" class="font-600" expand="block" style="--border-style: dashed;--border-width: 2px;">
+                     + Add Image 
+                </ion-button>
+                @if(imageBase64String){
+                     <div class="d-flex m-2 my-4">
+                        <div class="d-grid grid-column-1">
+                          <div class="position-relative">
+                            <img [src]="'data:image/jpeg;base64,' + imageBase64String" />
+                            <button (click)="removeImage()" class="position-absolute remove-icon bg-gray-200 w-8 h-8 rounded-circle border border-2 border-white">
+                              <ion-icon name="remove-outline" class="text-gray-500" style="padding-top: 0.1rem !important;"></ion-icon>
+                            </button>
+                          </div>
+                          
+                        </div>
+                     </div>
+                     
+                    <!-- <div class="image-box ">
+                         <div [style.background-image]="'url(' + 'data:image/jpeg;base64,' + imageBase64String + ')'"  >
+                       
+                        </div>
+                         <button class="test top-0 end-0 bg-gray-100 rounded-circle shadow-md border border-2 border-white">
+                            <ion-icon name="remove-outline" class="text-gray-500" ></ion-icon>
+                        </button>
+                    </div> -->
+                   
+
+                }
+            </ion-col>
+        </ion-row>
         <div class="d-flex card border-card p-3 ps-4 pe-4 w-100">
         <div class="d-flex justify-content-between mb-3 align-items-center title-row">
             <h6 class="font-600">Order Summary</h6>
@@ -80,9 +153,23 @@
         </div>
         <ion-row>
             <ion-col size="12" class="p-0">
-                <ion-button color="primary" class="font-600" expand="block" (click)="onPlaceOrderClick()">Place Order</ion-button>
+                <ion-button color="primary" class="font-600" expand="block" (click)="SavePatientVisit()">Place Order</ion-button>
             </ion-col>
         </ion-row>
         </div>
     </div>
+    <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="collectiondate" presentation="date" [showDefaultButtons]="true"
+        [formatOptions]="customFormatOptions"
+        name="collectionDatetime" [preferWheel]="true" [(ngModel)]="collectionDate">
+      </ion-datetime>
+    </ng-template>
+    </ion-modal>
+    <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+        <ion-datetime  mode="ios" id="collectiontime" [formatOptions]="customTimeFormatOptions" presentation="time" [showDefaultButtons]="true" name="collectionDatetime" [preferWheel]="true" [(ngModel)]="collectionTime">
+        </ion-datetime>
+    </ng-template>
+    </ion-modal>
 </ion-content>

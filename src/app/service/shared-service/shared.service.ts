@@ -15,6 +15,7 @@ import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener'
 import { base64StringToBlob } from 'blob-util';
 import { Share } from '@capacitor/share';
 import { PatientAppConfigurationModel } from '../../model/keyValue.model';
+import { Camera, CameraDirection, CameraResultType, Photo } from '@capacitor/camera';
 
 @Injectable({
     providedIn: 'root',
@@ -313,6 +314,32 @@ showError(e: { status: number; }) {
         }
       }
 
-   
+   async selectImage(CameraSource): Promise<Photo | undefined>  {
+    return await Camera.getPhoto({
+          quality: 20,
+          allowEditing: false,
+          source: CameraSource,
+          direction: CameraDirection.Rear,
+          resultType: CameraResultType.Base64
+        }).then((imageData) => {
+          if (imageData.base64String) {
+            return imageData.base64String;
+          }
+          return undefined;
+        }, (err) => {
+          this.toastService.showError('Error: ' + err);
+          return undefined;
+        });
+    }
+
+    public Base64ToByteArray(base64String : string){
+        var binary_string = window.atob(base64String);
+        var len = binary_string.length;
+        var byte = new Array(len);
+        for (let index = 0; index < len; index++) {
+            byte[index] = binary_string.charCodeAt(index);
+        }
+        return byte;
+    }
 
 }
