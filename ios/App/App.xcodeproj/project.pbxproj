@@ -594,7 +594,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-slims";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = M5NKFW9GPR;
 				INFOPLIST_FILE = "App/slims-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Slims Connect";
@@ -622,7 +622,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-slims";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = M5NKFW9GPR;
 				INFOPLIST_FILE = "App/slims-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Slims Connect";
@@ -648,7 +648,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lifecare";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = M5NKFW9GPR;
 				INFOPLIST_FILE = "lifecare-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Lifecare Connect";
@@ -675,7 +675,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lifecare";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = M5NKFW9GPR;
 				INFOPLIST_FILE = "lifecare-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Lifecare Connect";

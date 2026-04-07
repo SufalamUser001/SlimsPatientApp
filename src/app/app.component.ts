@@ -9,6 +9,7 @@ import { SharedService } from './service/shared-service/shared.service';
 import { Preferences } from '@capacitor/preferences';
 import { SlimsPatientApplicationService } from './service/laboratory-service/lims-patientapp.service';
 import { Location } from '@angular/common';
+import { environment } from '../environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -39,10 +40,18 @@ export class AppComponent {
         root.style.setProperty('--ion-safe-area-bottom',`${insets.bottom}px`);
       });
     }
+          
     Preferences.get({ key: 'APIURL' }).then((res)=>{
       if (res.value) {
          this.slimspatientService.baseService.apiEndPoint = res.value;
-      }
+      }else if(environment.labcode && environment.labcode.trim().length > 0){
+        Preferences.set({
+            key: 'LabCode',
+            value: environment.labcode.trim(),
+          });
+          let LabCode = environment.labcode.trim()
+          this.authenticateUserOnSufalamServerWithLabCode(LabCode);
+        }
       });
       this.initializeApp();
   }
@@ -54,7 +63,6 @@ export class AppComponent {
       // this.route.url;
       // this.router;
       if (!this.isPaused) {
-        debugger
         if (this.location.isCurrentPathEqualTo('/lims-patient/home')) {
           if (this.sharedService.backButtonCount >= 1) {
             navigator['app'].exitApp();
@@ -83,4 +91,27 @@ export class AppComponent {
     });
 
   }
+
+  authenticateUserOnSufalamServerWithLabCode(LabCode){
+    this.slimspatientService.authenticateUserOnSufalamServerWithLabCode(LabCode.trim()).subscribe(
+      (response: any) => {
+        this.sharedService.isBusy = false;
+        if (response.IsSuccess) {
+          if (response.Success.Data) {
+            let data = response.Success.Data;
+          
+            this.slimspatientService.baseService.apiEndPoint = data.Name.trim();
+            Preferences.set({
+              key: 'LabCode',
+              value: LabCode.trim(),
+            });
+            Preferences.set({
+              key: 'APIURL',
+              value: data.Name.trim(),
+            });
+          }
+        } 
+      });
+  }
+
 }

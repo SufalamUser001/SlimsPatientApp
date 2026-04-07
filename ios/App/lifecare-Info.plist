@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>CAPACITOR_DEBUG</key>
 	<string>$(CAPACITOR_DEBUG)</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -47,5 +49,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Share Your Location to Personlize our Services and to find our nearby Lab Locations</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Share Your Location to Personlize our Services and to find our nearby Lab Locations</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Share Your Location to Personlize our Services and to find our nearby Lab Locations</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow Access to Photo to upload photos from Your Library </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow Access to Photo to upload photos from Your Library</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>Allow Notifications to Get Updates About Your Reports</string>
 </dict>
 </plist>

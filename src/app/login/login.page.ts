@@ -116,7 +116,6 @@ export class LoginPage {
          // this.setUserId();
           const userDetail: LoginModel = new LoginModel(response.Success.Data);
           if (userDetail.Mobile && userDetail.Token) {
-            debugger
             this.sharedService.authService.setUserLogin(userDetail.Mobile, userDetail.Token, userDetail.PatientId, userDetail.PatientName, userDetail.CityId, userDetail.CityName,userDetail.IsPasswordAvailable, null,userDetail.MapAPIKey);
             if (this.sharedService.authService.redirectUrl && this.router.url !== this.sharedService.authService.redirectUrl && this.sharedService.authService.redirectUrl != 'lims-patient/home') {
               this.navCtrl.navigateRoot([this.sharedService.authService.redirectUrl], { relativeTo: this.route.root });
@@ -214,6 +213,10 @@ export class LoginPage {
 
   onFogotPasswordClick(){
     this.navCtrl.navigateRoot('forgot-password');
+  }
+
+  onSkipClick(){
+    this.navCtrl.navigateRoot('lims-patient/home');
   }
 
 

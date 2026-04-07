@@ -34,6 +34,7 @@ export class WelcomePage {
           key: 'LabCode',
           value: environment.labcode.trim(),
         });
+        this.LabCode = environment.labcode.trim()
         this.onLabCodeContinueClick();
       }
   }
