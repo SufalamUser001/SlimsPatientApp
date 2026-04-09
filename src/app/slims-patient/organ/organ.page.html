@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between align-items-center title-row">
                 <h6 class="font-600 text-gray-700">{{ organData.ServiceName }}</h6>
                 <div class="d-flex justify-content-start   font-500 ">
-                  @if(selectedOrganIndex && selectedOrganIndex >= 0){
+                  @if(selectedOrgan && selectedOrganIndex >= 0){
                     <ion-chip class="text-{{colorsList[selectedOrganIndex]}}-700 bg-{{colorsList[selectedOrganIndex]}}-100 text-xs">{{ selectedOrgan.OrganName }}</ion-chip>
                   }
                   @else {

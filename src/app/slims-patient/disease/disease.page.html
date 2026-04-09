@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between align-items-center title-row">
                 <h6 class="font-600 text-gray-700">{{ diseaseData.ServiceName }}</h6>
                 <div class="d-flex justify-content-start  text-xs  font-500 ">
-                  @if(selectedDiseaseIndex && selectedDiseaseIndex >= 0){
+                  @if(selectedDisease && selectedDiseaseIndex >= 0){
                     <ion-chip class="text-xs  text-{{colorsList[selectedDiseaseIndex]}}-700 bg-{{colorsList[selectedDiseaseIndex]}}-100">{{ selectedDisease.DiseaseName }}</ion-chip>
                   }
                   @else {
@@ -85,6 +85,10 @@
       @if(IsCompactView){
       <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterOrgan(disease)">
           <!-- <i class="fa {{ disease.icon }} text-3xl" aria-hidden="true"></i> -->
+        @if(disease.Attachment){
+          <img alt="" [src]="'data:image/jpeg;base64,' + disease.Attachment" style="width:80%; height:80%">
+        }
+
           <p class="mb-0 mt-1 text-sm font-600"> {{disease.DiseaseName}} </p>
           <div class="overlay"></div>
       </button>

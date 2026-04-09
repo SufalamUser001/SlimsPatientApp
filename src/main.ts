@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { approutes } from './app/app-routing';
 import { APIAuthGuardLogin, AuthGuardLogin } from './app/service/shared-service/login-auth-guard.service';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 const appconfig: ApplicationConfig = {
     providers: [
@@ -23,7 +24,8 @@ const appconfig: ApplicationConfig = {
       DatePipe,
       HttpClient,
       AuthGuardLogin,
-      APIAuthGuardLogin
+      APIAuthGuardLogin,
+      provideCharts(withDefaultRegisterables()),
     ],
   };
   

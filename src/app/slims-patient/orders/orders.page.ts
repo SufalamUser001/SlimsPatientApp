@@ -5,6 +5,7 @@ import { SlimsPatientApplicationService } from '../../service/laboratory-service
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Enumeration } from '../../service/shared-service/others/enumeration';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-orders',
@@ -18,7 +19,7 @@ import { Enumeration } from '../../service/shared-service/others/enumeration';
 })
 export class OrdersPage {
 
-  constructor(public sharedService : SharedService,public slimsPatientService: SlimsPatientApplicationService) {}
+  constructor(public sharedService : SharedService,public slimsPatientService: SlimsPatientApplicationService, public router: Router) {}
 
   public registrationDetails = [];
    today = new Date();
@@ -299,4 +300,7 @@ export class OrdersPage {
     }
   }
 
+  ResultClick(data){
+    this.router.navigate(['/lims-patient/orders/test-result-info', data.LabId]);
+  }
 }

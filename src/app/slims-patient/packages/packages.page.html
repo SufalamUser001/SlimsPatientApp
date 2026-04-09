@@ -44,8 +44,8 @@
 <ng-template #itemTemplate let-package let-i="index">
   <ion-card class="m-0 package-card">
     <div class="package-card-img">
-      @if(package.image && package.image.length > 0){
-        <img alt="" [src]="'data:image/jpeg;base64,' + package.image" style="width:100%; height:100%">
+      @if(package.ServiceImage && package.ServiceImage.length > 0){
+        <img alt="" [src]="'data:image/jpeg;base64,' + package.ServiceImage" style="width:100%; height:100%">
       }@else{
         <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" />
       }

@@ -1,0 +1,141 @@
+<ion-content class="ion-padding" mode="ios">
+  @if(PatientInfo && PatientInfo.LabId){
+  <div class="card border-card mb-0 p-3 py-2">
+    <div class="d-flex justify-content-between mb-1">
+      <h5 class="fw-bold">{{ PatientInfo.LabId }}</h5>
+      <div class="text-sm ms-auto">
+        <!-- <ion-icon name="calendar-outline" class="text-gray-400"></ion-icon> -->
+        <span class="text-gray-600 "> {{ PatientInfo.RegistrationDateTime | date:
+          sharedService.variables.dateTimeFormat }}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 d-flex gap-2 justify-content-start">
+        <ion-icon name="person-circle-outline" class="text-gray-400 fs-5 pt-1"></ion-icon>
+        <div class="d-flex flex-column">
+          <p class="text-xs mb-0 text-gray-500"> Patient </p>
+          <p class="text-sm fw-bold text-gray-900 mb-0" [class.flasf]="PatientInfo.IsVIP">{{ PatientInfo.PatientName
+            }}
+          </p>
+          <p class="text-xs text-gray-600 mb-0">PId- {{ PatientInfo.PatientId }}
+            @if(PatientInfo.IsVIP){ - {{ PatientInfo.VIPDescription }}}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-6 d-flex gap-2 justify-content-start">
+        @if(PatientInfo.Gender == 'M'){
+        <ion-icon name="man-outline" class="text-gray-400 fs-5 pt-1"></ion-icon>
+        }@else{
+        <ion-icon name="woman-outline" class="text-gray-400 fs-5 pt-1"></ion-icon>
+        }
+        <div class="d-flex flex-column">
+          <p class="text-xs mb-0 text-gray-500"> {{ PatientInfo.GenderName }} </p>
+          <p class="text-sm fw-bold text-gray-900 mb-0">{{ PatientInfo.AgeString }}</p>
+        </div>
+      </div>
+
+      <div class="col-6 d-flex gap-2 justify-content-start">
+        <ion-icon name="location-outline" class="text-gray-400 fs-5 pt-1"></ion-icon>
+        <div class="d-flex flex-column">
+          <p class="text-xs mb-0 text-gray-500"> Branch </p>
+          <p class="text-sm fw-bold text-gray-900 mb-0">{{ PatientInfo.BranchName }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+  @if(AllserviceLabIDDetails && AllserviceLabIDDetails.length > 0){
+  <ion-badge class="my-2 d-flex justify-content-center align-item-center" color="mybluewhite"><ion-icon name="information-circle-outline" class="me-1" style="font-size: larger;"></ion-icon>click test on to view chart</ion-badge>
+  @for(service of AllserviceLabIDDetails; track service; let i = $index)
+  {
+  <div class="card border-card">
+    <div class=" card-border-bottom pe-0 ">
+      <div class="bg-blue-500" style="border-radius: .625rem 0.625rem 0 0;">
+        <h4 class="d-flex align-item-center p-3  text-white fw-bold m-0">
+          {{ service.ServiceName }}
+        </h4>
+      </div>
+    </div>
+    <ion-list lines="full">
+      @for(test of service.RegistrationResultDetails; track test; let j = $index){
+      <ion-item>
+        <div class="d-grid grid-column-1 w-100">
+          <a class="pt-0" type="button" fill="clear" role="button" data-bs-toggle="collapse" [href]="'#collapsetest'+i+j" [attr.aria-expanded]="false"
+            [attr.aria-controls]="'collapsetest'+i+j"
+            (click)="test.IsExpandTrendChart = !test.IsExpandTrendChart;getTrendData(test)">
+            <div class="d-flex justify-content-between align-items-center mt-1">
+              <div class="font-700 text-sm text-gray-700 fw-bold">
+                {{test.TestName}}
+              </div>
+              <div
+                [ngClass]="{'new': test.ResultFlag == 'N',  'high' : test.ResultFlag == 'H',  'low' : test.ResultFlag == 'L' }"
+                style="overflow: visible;">
+                @if (test.ResultFlag == 'L') {
+                Low
+                }
+                @else if (test.ResultFlag == 'H') {
+                High
+                }
+                @else {
+                Normal
+                }
+              </div>
+              <!-- <div class="d-flex align-items-center gap-3 font-700 fw-bold">
+                <span>
+                  {{test.ResultValue}} <span class="text-sm text-gray-700">{{test.UnitName}}</span>
+                </span>
+                @if(test.DataType == 'N' && PatientInfo?.PatientHistoryCount > 0){
+                <a class="bg-blue-300 text-white border rounded rounded-lg p-1 px-2 pb-0" type="button"
+                  fill="clear" role="button" data-bs-toggle="collapse" [href]="'#collapsetest'+i+j"
+                  [attr.aria-expanded]="false" [attr.aria-controls]="'collapsetest'+i+j"
+                  (click)="test.IsExpandTrendChart = !test.IsExpandTrendChart;getTrendData(test)">
+                  <ion-icon name="analytics-outline"></ion-icon>
+                </a>
+                }
+              </div> -->
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              @if(test.ResultValue){
+                <div >
+                <span class="text-result font-700">{{test.ResultValue}} </span>    <span class="text-sm text-gray-900 font-500">{{test.UnitName}}</span>
+              </div>
+              }
+           
+              @if(test.DataType == 'N' && PatientInfo?.PatientHistoryCount > 0){
+              <!-- <a class="badgeCustom bg-blue-200 text-blue-400 border rounded rounded-lg " type="button" fill="clear"
+                role="button" data-bs-toggle="collapse" [href]="'#collapsetest'+i+j" [attr.aria-expanded]="false"
+                [attr.aria-controls]="'collapsetest'+i+j"
+                (click)="test.IsExpandTrendChart = !test.IsExpandTrendChart;getTrendData(test)">
+                <ion-icon name="analytics-outline" color="mybluewhite"></ion-icon> 
+                <span class="text-xxs ms-1 text-blue-500"> Trend </span>
+              </a> -->
+              }
+            </div>
+            @if(test.BRInterval){
+            <div class="d-flex">
+              <div class="text-xs font-400 text-gray-900">
+                Reference Range : {{test.BRInterval}}
+              </div>
+            </div>
+            }
+          </a>
+          <div class="collapse" [class.show]="false" [id]="'collapsetest'+i+j">
+          @if(test.DataType == 'N' && PatientInfo?.PatientHistoryCount > 0 ){
+              <div class="card border-card p-1" style="width: auto; height: 300px;background: #dbeafe !important;">
+              <canvas baseChart [options]="lineChartOptions" [datasets]="lineChartData" [labels]="lineChartLabels"
+                [legend]="true" type="line"></canvas>
+            </div>
+          }
+          @else {
+            <ion-note>No Trend</ion-note>
+          }
+        </div>
+        </div>
+      </ion-item>
+      }
+    </ion-list>
+  </div>
+  }
+  }
+</ion-content>

@@ -56,6 +56,12 @@ export const PatientAppRouting: Routes = [
         canActivate : [AuthGuardLogin],
         loadComponent: () => import('./cart/checkout/checkout.page').then(m => m.CheckoutPage),
         data: {title: 'CheckOut', isShowBackButton: true },
+      },
+      {
+        path: 'orders/test-result-info/:id',
+        canActivate : [AuthGuardLogin],
+        loadComponent: () => import('../slims-patient/test-result-info/test-result-info.page').then(m => m.TestResultInfoPage),
+        data : { title: 'Test Result', isShowBackButton: true }
       }
 
 

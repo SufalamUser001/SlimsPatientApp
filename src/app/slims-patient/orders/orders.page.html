@@ -334,13 +334,15 @@
   <ion-row>
     @if(sharedService.PatientAppConfig().IsAllowToGenerateReceipt)
     {
-    <ion-col size="6">
+          
+      <ion-col [size]="patient.DueAmount > 0 ? '6' : '4'">
 
       <ion-button expand="block" size="small" fill="solid" color="mybluewhite" class="custom-small"
         (click)="GetPaymentReceipt(patient)">
         <ion-icon name="receipt-outline" class="me-1"></ion-icon>
         Receipt</ion-button>
-    </ion-col>
+      </ion-col>
+    
     }
     @if(patient.DueAmount > 0){
     @if(sharedService.PatientAppConfig().IsPayDueBtnDisplay)
@@ -355,11 +357,18 @@
     }
     @else{
 
-    <ion-col size="6">
+    <ion-col size="4">
       <ion-button expand="block" size="small" fill="solid" color="mygreenwhite" class="custom-small"
         (click)="GenerateLabReport(patient)">
         <ion-icon name="arrow-down-outline" class="me-1"></ion-icon>
         Report</ion-button>
+    </ion-col>
+
+    <ion-col size="4">
+      <ion-button expand="block" size="small" fill="solid" color="purple-500" class="custom-small"
+        (click)="ResultClick(patient)">
+        <ion-icon name="eye-outline" class="me-1"></ion-icon>
+        Result</ion-button>
     </ion-col>
 
     }

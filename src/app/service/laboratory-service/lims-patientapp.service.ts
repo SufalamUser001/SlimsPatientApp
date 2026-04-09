@@ -200,6 +200,14 @@ export class SlimsPatientApplicationService {
         return this.baseService.post(this.labcartApiEndPoint + 'GetAllNearByBranchLocations', null);
       }
 
+      GetLabCartPatientServiceTestDetails(labId){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetLabCartPatientServiceTestDetails', {LabId : labId});
+      }
+
+      GetTrendData(patientId, testId, serviceId = 0){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetTrendData', {PatientId : patientId, TestId : testId, ServiceId : serviceId });
+      }
+
       //#endregion
 
 }
