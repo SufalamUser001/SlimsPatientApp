@@ -46,7 +46,8 @@
   </div>
   }
   @if(AllserviceLabIDDetails && AllserviceLabIDDetails.length > 0){
-  <ion-badge class="my-2 d-flex justify-content-center align-item-center" color="mybluewhite"><ion-icon name="information-circle-outline" class="me-1" style="font-size: larger;"></ion-icon>click test on to view chart</ion-badge>
+  <ion-badge class="bg-blue-200 text-blue-700 text-sm d-flex justify-content-center align-items-center px-3 my-1 m-0 ios font-500">
+    <ion-icon name="information-circle-outline" class="me-1" style="font-size: larger;"></ion-icon>Click on test to view trend chart</ion-badge>
   @for(service of AllserviceLabIDDetails; track service; let i = $index)
   {
   <div class="card border-card">
@@ -61,15 +62,15 @@
       @for(test of service.RegistrationResultDetails; track test; let j = $index){
       <ion-item>
         <div class="d-grid grid-column-1 w-100">
-          <a class="pt-0" type="button" fill="clear" role="button" data-bs-toggle="collapse" [href]="'#collapsetest'+i+j" [attr.aria-expanded]="false"
+          <a class="pt-0" type="button" fill="clear" role="button" data-bs-toggle="collapse" [attr.aria-expanded]="false"
             [attr.aria-controls]="'collapsetest'+i+j"
-            (click)="test.IsExpandTrendChart = !test.IsExpandTrendChart;getTrendData(test)">
+            (click)="getTrendData(test)">
             <div class="d-flex justify-content-between align-items-center mt-1">
               <div class="font-700 text-sm text-gray-700 fw-bold">
                 {{test.TestName}}
               </div>
-              <div
-                [ngClass]="{'new': test.ResultFlag == 'N',  'high' : test.ResultFlag == 'H',  'low' : test.ResultFlag == 'L' }"
+              <div class="badgeCustom"
+                [ngClass]="{'btn2-box-stone': test.ResultFlag == 'N',  'btn2-box-red' : test.ResultFlag == 'H',  'btn2-box-blue' : test.ResultFlag == 'L' }"
                 style="overflow: visible;">
                 @if (test.ResultFlag == 'L') {
                 Low
@@ -120,15 +121,17 @@
             </div>
             }
           </a>
-          <div class="collapse" [class.show]="false" [id]="'collapsetest'+i+j">
-          @if(test.DataType == 'N' && PatientInfo?.PatientHistoryCount > 0 ){
+          <div class="collapse" [class.show]="test.IsTrendDataAvailable" [id]="'collapsetest'+i+j">
+          @if(test.DataType == 'N' && PatientInfo?.PatientHistoryCount > 0 && test.lineChartData && test.lineChartLabels){
               <div class="card border-card p-1" style="width: auto; height: 300px;background: #dbeafe !important;">
-              <canvas baseChart [options]="lineChartOptions" [datasets]="lineChartData" [labels]="lineChartLabels"
+              <canvas baseChart [options]="lineChartOptions" [datasets]="test.lineChartData" [labels]="test.lineChartLabels"
                 [legend]="true" type="line"></canvas>
             </div>
           }
           @else {
-            <ion-note>No Trend</ion-note>
+             <div class="card border-blue-200 d-flex justify-content-center align-items-center p-1 bg-blue-100 text-blue-600 my-1" style="width: auto; height: 100px;">
+               <span class="">No Trend Data</span>
+             </div>
           }
         </div>
         </div>

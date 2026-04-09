@@ -24,6 +24,7 @@ export class OrganPage implements OnInit {
         const navi = this.router.getCurrentNavigation();
         if(navi.extras.state){
           this.selectedOrgan = navi.extras.state['organ'];
+          this.selectedOrganIndex = navi.extras.state['organindex'];
         }
         this.cartService.cartItem$.subscribe((item)=>{
             if(item){
@@ -71,12 +72,12 @@ export class OrganPage implements OnInit {
         }
     }
 
-    filterOrgan(organ, i = null){
+    filterOrgan(organ, index = null){
         this.selectedOrgan = organ;
         if(this.IsCompactView){
-            this.organClickemit.emit(organ);
+            this.organClickemit.emit({organ,index});
         }else{
-            this.selectedOrganIndex = i;
+            this.selectedOrganIndex = index;
            this.finalFilter();
         }
     }

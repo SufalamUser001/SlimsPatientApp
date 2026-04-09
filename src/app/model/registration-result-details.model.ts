@@ -283,7 +283,6 @@ export class RegistrationResultDetailsModel extends SufalamModifiedByModel {
             this.SynonymsTestId = json.SynonymsTestId;
             this.LinearityLowValue = json.LinearityLowValue;
             this.LinearityHighValue = json.LinearityHighValue;
-
             
         }
     }
@@ -670,7 +669,4 @@ export class RegistrationResultDetailsModel extends SufalamModifiedByModel {
     
     @Exclude()
     public IsSelected = false;
-    
-    @Exclude()
-    public IsExpandTrendChart = false
 }

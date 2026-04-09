@@ -24,8 +24,8 @@ export class DiseasePage implements OnInit {
         const navi = this.router.getCurrentNavigation();
         if(navi.extras.state){
           this.selectedDisease= navi.extras.state['disease'];
+          this.selectedDiseaseIndex= navi.extras.state['diseaseindex'];
         }
-
         this.cartService.cartItem$.subscribe((item)=>{
             if(item){
               var index = this.tests_disease.findIndex(x=> x.ServiceId == item.ServiceId);
@@ -72,12 +72,12 @@ export class DiseasePage implements OnInit {
         }
     }
 
-    filterOrgan(organ, i = null){
-        this.selectedDisease = organ;
+    filterDisease(disease, index = null){
+        this.selectedDisease = disease;
         if(this.IsCompactView){
-            this.diseaseClickemit.emit(organ);
+            this.diseaseClickemit.emit({disease,index});
         }else{
-            this.selectedDiseaseIndex = i;
+            this.selectedDiseaseIndex = index;
            this.finalFilter();
         }
     }

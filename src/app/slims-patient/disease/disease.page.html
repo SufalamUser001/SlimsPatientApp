@@ -83,18 +83,20 @@
   <div class="d-flex gap-2 container-h-scoll" >
     @for (disease of diseasetest; track $index;let i = $index) {
       @if(IsCompactView){
-      <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterOrgan(disease)">
+      <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterDisease(disease,i)">
           <!-- <i class="fa {{ disease.icon }} text-3xl" aria-hidden="true"></i> -->
         @if(disease.Attachment){
           <img alt="" [src]="'data:image/jpeg;base64,' + disease.Attachment" style="width:80%; height:80%">
         }
-
-          <p class="mb-0 mt-1 text-sm font-600"> {{disease.DiseaseName}} </p>
+        @else{
+          <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" style="opacity: 0.5;width:80%; height:80%"/>
+        }
+          <p class="mb-0 mt-1 text-sm font-600 text-wrap" style="line-height: 1;"> {{disease.DiseaseName}} </p>
           <div class="overlay"></div>
       </button>
       }
       @else{
-        <ion-button [color]="selectedDisease?.DiseaseId == disease.DiseaseId ?'tertiary' : 'light'" (click)="filterOrgan(disease, i)">{{disease.DiseaseName}} </ion-button>
+        <ion-button [color]="selectedDisease?.DiseaseId == disease.DiseaseId ?'tertiary' : 'light'" (click)="filterDisease(disease, i)">{{disease.DiseaseName}} </ion-button>
       }
     }
   </div>

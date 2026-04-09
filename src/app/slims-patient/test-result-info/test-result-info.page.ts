@@ -31,9 +31,6 @@ export class TestResultInfoPage {
     public PatientInfo: any = null;
     average = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
     public trendData = [];
-    public lineChartLabels: Array<any> = [];
-    public lineChartData: Array<any> = [];
-    public labels = ['Jan', 'Feb', 'Mar', 'Apr']
     public lineChartOptions: any = {
         responsive: true,
         maintainAspectRatio: false,
@@ -83,14 +80,13 @@ export class TestResultInfoPage {
 
     getTrendData(test){
         this.trendData = [];
-        this.lineChartData = [];
-        this.lineChartLabels = [];
-        if(test.DataType == 'N' && this.PatientInfo?.PatientHistoryCount > 0){
+        if(test.DataType == 'N' && this.PatientInfo?.PatientHistoryCount > 0 && !test.lineChartData && !test.lineChartLabels){
             this.sharedService.isBusy = true;
             this.slimsPatientService.GetTrendData(this.PatientInfo.PatientId, test.TestId).subscribe(
             (response: any) => {
                 this.sharedService.isBusy = false;
                 if (response.IsSuccess) {
+                    debugger;
                     if (response.Success.Data != null && response.Success.Data.length > 0) {
 
                         const result = Number(this.average(response.Success.Data.map(m => parseFloat(m.ResultValue))).toFixed(2)); // 5
@@ -136,20 +132,27 @@ export class TestResultInfoPage {
                         };
                         
                         this.trendData = Object.assign([], this.trendData);
-                        this.lineChartLabels = this.sharedService.generalService.getDataForChart(this.trendData, 'LabId_RegistrationDate');
+                        test.lineChartLabels = this.sharedService.generalService.getDataForChart(this.trendData, 'LabId_RegistrationDate');
 
-                        this.lineChartData = [];
-                        this.lineChartData.push({ data: this.sharedService.generalService.getDataForChart(this.trendData, 'ResultValue'), lineTension: 0, label: 'Result' });
-                        this.lineChartData.push({ data: this.sharedService.generalService.getDataForChart(this.trendData, 'BRIHighValue'), lineTension: 0, label: 'High' });
-                        this.lineChartData.push({ data: this.sharedService.generalService.getDataForChart(this.trendData, 'BRILowValue'), lineTension: 0, label: 'Low' });
+                        test.lineChartData = [];
+                        test.lineChartData.push({ data: this.sharedService.generalService.getDataForChart(this.trendData, 'ResultValue'), lineTension: 0, label: 'Result' });
+                        test.lineChartData.push({ data: this.sharedService.generalService.getDataForChart(this.trendData, 'BRIHighValue'), lineTension: 0, label: 'High' });
+                        test.lineChartData.push({ data: this.sharedService.generalService.getDataForChart(this.trendData, 'BRILowValue'), lineTension: 0, label: 'Low' });
+                        // setTimeout(() => {
+                        test.IsTrendDataAvailable = !test.IsTrendDataAvailable
+                        // }, 100);
                     } else {
                         this.trendData = [];
+                        test.IsTrendDataAvailable = !test.IsTrendDataAvailable;
                     }
                 } else {
                     this.sharedService.isBusy = false;
                     this.sharedService.HandleAuthenticationError(response.Error);
                 }
             });
+        }
+        else{
+            test.IsTrendDataAvailable = !test.IsTrendDataAvailable
         }
     }
 }

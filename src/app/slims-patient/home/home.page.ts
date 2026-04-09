@@ -44,12 +44,12 @@ export class homePage {
     this.router.navigate(['/lims-patient/packages']);
   }
 
-  onOrganViewAllClick(organ = null){
-    this.router.navigate(['/lims-patient/organ'], { state : { organ : organ }});
+  onOrganViewAllClick(data = null){
+    this.router.navigate(['/lims-patient/organ'], { state : { organ : data.organ , organindex : data.index }});
   }
 
-  onDiseaseViewAllClick(disease = null){
-    this.router.navigate(['/lims-patient/disease'], { state : { disease : disease }});
+  onDiseaseViewAllClick(data = null){
+    this.router.navigate(['/lims-patient/disease'], { state : { disease : data.disease, diseaseindex : data.index }});
   }
 
   onOrderViewAllClick(){

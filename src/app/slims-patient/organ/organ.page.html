@@ -82,16 +82,16 @@
   <div class="d-flex gap-2 container-h-scoll" >
     @for (org of organtest; track $index;let i = $index) {
       @if(IsCompactView){
-      <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterOrgan(org)">
+      <button class=" btn-box-{{colorsList[i]}} dash-btn p-4 rounded-3" (click)="filterOrgan(org,i)">
         @if(org.OrganImage){
           <img alt="" [src]="'data:image/jpeg;base64,' + org.OrganImage" style="width:80%; height:80%">
         }
         @else{
-          <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" style="opacity: 0.5;"/>
+          <img alt="" src="https://ionicframework.com/docs/img/demos/card-media.png" style="opacity: 0.5;width:80%; height:80%"/>
         }
 
           <!-- <i class="fa {{ org.icon }} text-3xl" aria-hidden="true"></i> -->
-          <p class="mb-0 mt-1 text-sm font-600"> {{org.OrganName}} </p>
+          <p class="mb-0 mt-1 text-sm text-wrap font-600" style="line-height: 1;"> {{org.OrganName}} </p>
           <div class="overlay"></div>
       </button>
       }

@@ -1,33 +1,6 @@
 
 
-.badgeCustom {
-    color: #4B5563;
-    font-size: 12px;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-weight: 500;
-    align-self: center;
-    align-items: center;
-    display: flex;
-  }
 
-.new {
-  @extend .badgeCustom;
-  background: #e3dfdf;
-  color: #696969;
-}
-
-.high {
-  @extend .badgeCustom;
-  color: #08b408;
-  background: #aaf3aa;
-}
-
-.low {
-  @extend .badgeCustom;
-  background: #ffd8be;
-  color: #bf5001;
-}
 .text-result{
   font-size: 1rem;
   line-height: 1;
