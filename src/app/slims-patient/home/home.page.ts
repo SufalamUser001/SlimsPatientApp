@@ -45,11 +45,11 @@ export class homePage {
   }
 
   onOrganViewAllClick(data = null){
-    this.router.navigate(['/lims-patient/organ'], { state : { organ : data.organ , organindex : data.index }});
+    this.router.navigate(['/lims-patient/organ'], { state : { organ : data?.organ , organindex : data?.index }});
   }
 
   onDiseaseViewAllClick(data = null){
-    this.router.navigate(['/lims-patient/disease'], { state : { disease : data.disease, diseaseindex : data.index }});
+    this.router.navigate(['/lims-patient/disease'], { state : { disease : data?.disease, diseaseindex : data?.index }});
   }
 
   onOrderViewAllClick(){
