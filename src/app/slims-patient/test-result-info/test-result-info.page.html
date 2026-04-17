@@ -46,14 +46,18 @@
   </div>
   }
   @if(AllserviceLabIDDetails && AllserviceLabIDDetails.length > 0){
-  <ion-badge class="bg-blue-200 text-blue-700 text-sm d-flex justify-content-center align-items-center px-3 my-1 m-0 ios font-500">
+    <ion-button expand="block" fill="solid" color="mybluewhite"
+        (click)="GetCumulativeReport(PatientInfo)">
+        <ion-icon name="arrow-down-outline" class="me-1"></ion-icon>
+        Cumulative Report</ion-button>
+  <ion-badge class="bg-blue-200 text-blue-700 text-sm d-flex justify-content-center align-items-center px-3 my-3 m-0 ios font-500">
     <ion-icon name="information-circle-outline" class="me-1" style="font-size: larger;"></ion-icon>Click on test to view trend chart</ion-badge>
   @for(service of AllserviceLabIDDetails; track service; let i = $index)
   {
   <div class="card border-card">
     <div class=" card-border-bottom pe-0 ">
       <div class="bg-blue-500" style="border-radius: .625rem 0.625rem 0 0;">
-        <h4 class="d-flex align-item-center p-3  text-white fw-bold m-0">
+        <h4 class="d-flex align-item-center p-3 py-2 text-white fw-bold m-0">
           {{ service.ServiceName }}
         </h4>
       </div>
@@ -103,15 +107,15 @@
               </div>
               }
            
-              @if(test.DataType == 'N' && PatientInfo?.PatientHistoryCount > 0){
-              <!-- <a class="badgeCustom bg-blue-200 text-blue-400 border rounded rounded-lg " type="button" fill="clear"
+              <!-- @if(test.DataType == 'N' && PatientInfo?.PatientHistoryCount > 0){
+              <a class="badgeCustom bg-blue-200 text-blue-400 border rounded rounded-lg " type="button" fill="clear"
                 role="button" data-bs-toggle="collapse" [href]="'#collapsetest'+i+j" [attr.aria-expanded]="false"
                 [attr.aria-controls]="'collapsetest'+i+j"
                 (click)="test.IsExpandTrendChart = !test.IsExpandTrendChart;getTrendData(test)">
                 <ion-icon name="analytics-outline" color="mybluewhite"></ion-icon> 
                 <span class="text-xxs ms-1 text-blue-500"> Trend </span>
-              </a> -->
-              }
+              </a>
+              } -->
             </div>
             @if(test.BRInterval){
             <div class="d-flex">
