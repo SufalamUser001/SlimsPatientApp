@@ -17,7 +17,7 @@ import { BaseChartDirective } from 'ng2-charts';
     standalone: true,
     imports: [IonNote, IonContent, IonIcon,
     CommonModule, FormsModule,
-    IonList, IonItem, BaseChartDirective, IonBadge],
+    IonList, IonItem, BaseChartDirective, IonBadge, IonButton],
 })
 
 export class TestResultInfoPage {
@@ -86,7 +86,6 @@ export class TestResultInfoPage {
             (response: any) => {
                 this.sharedService.isBusy = false;
                 if (response.IsSuccess) {
-                    debugger;
                     if (response.Success.Data != null && response.Success.Data.length > 0) {
 
                         const result = Number(this.average(response.Success.Data.map(m => parseFloat(m.ResultValue))).toFixed(2)); // 5
@@ -154,5 +153,33 @@ export class TestResultInfoPage {
         else{
             test.IsTrendDataAvailable = !test.IsTrendDataAvailable
         }
+    }
+
+    public GetCumulativeReport(data) {
+      var reportData = {
+        PatientId: data.PatientId, 
+        IsPDFWithLetterHead: true,
+        CumulativeBasedOnType: 'P', 
+        ReportFormat: 'C',
+        CumulativeOrderBy: 'A',
+        CumulativeDataOnType: 'C'
+      }
+      this.sharedService.isBusy = true;
+      this.slimsPatientService.GetCumulativeReport(reportData).subscribe(
+      (response: any) => {
+        this.sharedService.isBusy = false;
+        if (response.IsSuccess) {
+          let PDFData = response.Success.Data;
+          if (PDFData != null && PDFData) {
+            let filename =  'CumulativeReport_' + data.LabId + ".pdf";
+            if (filename) {
+              this.sharedService.saveFile(PDFData, filename,null,null);
+            }
+          }
+        } else {
+          this.sharedService.isBusy = false;
+          this.sharedService.HandleAuthenticationError(response.Error);
+        }
+      });
     }
 }

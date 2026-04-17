@@ -208,6 +208,10 @@ export class SlimsPatientApplicationService {
         return this.baseService.post(this.labcartApiEndPoint + 'GetTrendData', {PatientId : patientId, TestId : testId, ServiceId : serviceId });
       }
 
+      GetCumulativeReport(reportData){
+        return this.baseService.post(this.labcartApiEndPoint + 'GetCumulativeReport', reportData);
+      }
+
       //#endregion
 
 }
