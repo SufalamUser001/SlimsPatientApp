@@ -28,7 +28,7 @@
 
     <ion-col size="12">
         <ion-input label="Mobile" labelPlacement="stacked" fill="outline" inputmode="number" id="input1" name="userid"
-            mode="md" pattern="tel" [(ngModel)]="loginObj.UserId" placeholder="Mobile" required="true" type="tel"
+            mode="md" pattern="[0-9]{10}"  [(ngModel)]="loginObj.UserId" placeholder="Mobile" required="true" type="tel"
             maxlength="10" minlength="10">
         </ion-input>
     </ion-col>
